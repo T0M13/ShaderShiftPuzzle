@@ -6,19 +6,20 @@ using UnityEngine.InputSystem;
 public class PlayerReferences : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private PlayerMovement playerMovement;
-    [SerializeField] private PlayerLook playerLook;
-    [SerializeField] private PlayerStats playerStats;
-    [SerializeField] private PlayerToolSelector playerToolSelector;
-    [SerializeField] private PlayerColorTool playerColorTool;
-    [SerializeField] private PlayerHoldTool playerHoldTool;
-    [SerializeField] private PlayerInteractableTool playerInteractableTool;
-    [SerializeField] private PlayerPostProcessingHandler playerPostProcessingHandler;
-    [SerializeField] private Health playerHealth;
+    [ShowOnly][SerializeField] private InputManager inputManager;
+    [ShowOnly][SerializeField] private PlayerMovement playerMovement;
+    [ShowOnly][SerializeField] private PlayerLook playerLook;
+    [ShowOnly][SerializeField] private PlayerStats playerStats;
+    [ShowOnly][SerializeField] private PlayerToolSelector playerToolSelector;
+    [ShowOnly][SerializeField] private PlayerColorTool playerColorTool;
+    [ShowOnly][SerializeField] private PlayerHoldTool playerHoldTool;
+    [ShowOnly][SerializeField] private PlayerInteractableTool playerInteractableTool;
+    [ShowOnly][SerializeField] private PlayerInput playerInput;
+    [ShowOnly][SerializeField] private Health playerHealth;
     [Header("References Plus")]
     [SerializeField] private Rigidbody playerRigidBody;
     [SerializeField] private CapsuleCollider playerCollider;
+    [ShowOnly][SerializeField] private ToolState currentToolState = ToolState.HoldTool;
 
     public InputManager InputManager { get => inputManager; set => inputManager = value; }
     public PlayerMovement PlayerMovement { get => playerMovement; set => playerMovement = value; }
@@ -31,7 +32,8 @@ public class PlayerReferences : MonoBehaviour
     public PlayerToolSelector PlayerToolSelector { get => playerToolSelector; set => playerToolSelector = value; }
     public PlayerHoldTool PlayerHoldTool { get => playerHoldTool; set => playerHoldTool = value; }
     public PlayerInteractableTool PlayerInteractableTool { get => playerInteractableTool; set => playerInteractableTool = value; }
-    public PlayerPostProcessingHandler PlayerPostProcessingHandler { get => playerPostProcessingHandler; set => playerPostProcessingHandler = value; }
+    public PlayerInput PlayerInput { get => playerInput; set => playerInput = value; }
+    public ToolState CurrentToolState { get => currentToolState; set => currentToolState = value; }
 
     private void Awake()
     {
@@ -47,6 +49,9 @@ public class PlayerReferences : MonoBehaviour
     {
         if (InputManager == null)
             InputManager = InputManager.instance;
+
+        if (PlayerInput == null)
+            PlayerInput = GetComponent<PlayerInput>();
 
         if (PlayerMovement == null)
             PlayerMovement = GetComponent<PlayerMovement>();
@@ -75,8 +80,8 @@ public class PlayerReferences : MonoBehaviour
         if (PlayerToolSelector == null)
             PlayerToolSelector = GetComponentInChildren<PlayerToolSelector>();
 
-        if (PlayerPostProcessingHandler == null)
-            PlayerPostProcessingHandler = GetComponentInChildren<PlayerPostProcessingHandler>();
+        //if (PlayerPostProcessingHandler == null)
+        //    PlayerPostProcessingHandler = GetComponentInChildren<PlayerPostProcessingHandler>();
 
         if (PlayerHealth == null)
             PlayerHealth = GetComponent<Health>();
@@ -84,4 +89,10 @@ public class PlayerReferences : MonoBehaviour
     }
 
 
+}
+
+public enum ToolState
+{
+    HoldTool,
+    ColorTool,
 }

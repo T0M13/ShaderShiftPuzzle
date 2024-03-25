@@ -26,7 +26,7 @@ public class PlayerLook : MonoBehaviour
             GetPlayer();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         Look();
     }

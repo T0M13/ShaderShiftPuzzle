@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private MoveComponent moveComponent;
     [SerializeField] private Vector2 movement;
     [SerializeField] private bool canMove = true;
-    [SerializeField] private bool isMoving;
+    [ShowOnly][SerializeField] private bool isMoving;
     [SerializeField] private bool canSprint = true;
     [SerializeField] private bool isSprinting;
     [Header("Jump")]
@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jump;
     [SerializeField] private bool canJump = true;
     [SerializeField] private float fallingThreshhold = -10f;
-    [SerializeField] private bool isFalling;
+    [ShowOnly][SerializeField] private bool isFalling;
     [Header("Look")]
     [SerializeField] private LookComponent lookComponent;
     private PlayerLook playerLook;
@@ -135,23 +135,23 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Inputs
-    private void OnMove(InputValue value)
+    public void OnMove(InputAction.CallbackContext value)
     {
-        this.movement = value.Get<Vector2>();
+        this.movement = value.ReadValue<Vector2>();
     }
 
-    private void OnJump(InputValue value)
+    public void OnJump(InputAction.CallbackContext value)
     {
-        this.jump = value.Get<float>();
+        this.jump = value.ReadValue<float>();
     }
-    private void OnLook(InputValue value)
+    public void OnLook(InputAction.CallbackContext value)
     {
-        this.look = value.Get<Vector2>();
+        this.look = value.ReadValue<Vector2>();
     }
 
-    private void OnSprint(InputValue value)
+    public void OnSprint(InputAction.CallbackContext value)
     {
-        if (value.Get<float>() >= 1f)
+        if (value.ReadValue<float>() >= 1f)
         {
             isSprinting = true;
         }

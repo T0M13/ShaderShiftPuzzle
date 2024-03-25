@@ -5,24 +5,25 @@ TagManager:
   serializedVersion: 2
   tags:
   - Potion
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - LaserPart
   - Water
   - UI
   - Player
   - ColorObject
   - SnowLayer
   - RippleLayer
-  - WallLayer
+  - VolumeLayer
   - AI
   - AIInteractable
   - Camera
-  - PlayerInvisible
-  - Potion
-  - 
+  - Mirror
+  - PortalTransit
+  - Outline
   - 
   - 
   - 

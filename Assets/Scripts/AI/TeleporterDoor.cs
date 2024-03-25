@@ -8,9 +8,9 @@ public class TeleporterDoor : InteractableObject
 
     [SerializeField] private string newScene;
 
-    public override void Interact()
+    public override void Interact(PlayerReferences playerRef)
     {
-        base.Interact();
+        base.Interact(playerRef);
         TeleportToScene();
     }
 
