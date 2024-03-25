@@ -4988,7 +4988,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1240070285801251105
 Transform:
   m_ObjectHideFlags: 0
@@ -4998,7 +4998,7 @@ Transform:
   m_GameObject: {fileID: 1178297873656662441}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: -0.7071068}
-  m_LocalPosition: {x: 0, y: -0, z: -0.39}
+  m_LocalPosition: {x: 0, y: 0, z: -0.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5265,6 +5265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entryPlane: {fileID: 217785299366945400}
+  portalMeshBack: {fileID: 2223519417168423569}
   transitThreshold: -0.3
   planeSize: {x: 2.5, y: 4}
   exit: {fileID: 139987365620121227}
@@ -5548,7 +5549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2223519417168423569
 Transform:
   m_ObjectHideFlags: 0
@@ -5943,6 +5944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entryPlane: {fileID: 1597128541986804805}
+  portalMeshBack: {fileID: 1240070285801251105}
   transitThreshold: -0.3
   planeSize: {x: 2.5, y: 4}
   exit: {fileID: 1861482369105147006}
@@ -6379,10 +6381,10 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1597128541986804805}
+  - {fileID: 1240070285801251105}
   - {fileID: 8554851538024069727}
   - {fileID: 2763260110083070560}
   - {fileID: 5564517573788389654}
-  - {fileID: 1240070285801251105}
   - {fileID: 3956187971572861855}
   - {fileID: 1921675364019475313}
   - {fileID: 6929143029268519097}
@@ -6985,10 +6987,10 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 217785299366945400}
+  - {fileID: 2223519417168423569}
   - {fileID: 7385889082479294060}
   - {fileID: 8370459289152807954}
   - {fileID: 3548776906673856634}
-  - {fileID: 2223519417168423569}
   - {fileID: 7323118813552469759}
   - {fileID: 3366238601678595838}
   - {fileID: 7961571160394865179}
@@ -7245,7 +7247,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7229020788934814337}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.98, y: 0, z: 5.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

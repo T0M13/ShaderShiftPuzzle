@@ -11,6 +11,7 @@ namespace Knife.Portal
         public event UnityAction OnPortalClose;
 
         [SerializeField] private Transform entryPlane;
+        [SerializeField] private Transform portalMeshBack;
         [SerializeField] private float transitThreshold = 0.3f;
         [SerializeField] private Vector2 planeSize;
         [SerializeField] private PortalTransition exit;
@@ -57,6 +58,7 @@ namespace Knife.Portal
             }
             boxVolume.SetActive(true);
             PortalMesh.gameObject.SetActive(true);
+            portalMeshBack.gameObject.SetActive(true);
         }
 
         public void ClosePortal()
@@ -71,6 +73,7 @@ namespace Knife.Portal
             }
             boxVolume.SetActive(false);
             PortalMesh.gameObject.SetActive(false);
+            portalMeshBack.gameObject.SetActive(false);
 
         }
 
