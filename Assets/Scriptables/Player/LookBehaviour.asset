@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2c98fdd023e8a4d963b9a166dc72a0, type: 3}
   m_Name: LookBehaviour
   m_EditorClassIdentifier: 
-  minViewDistance: 90
-  sensitivity: 15
-  xRotation: 39.230827
+  minViewDistance: 75
+  sensitivity: 5
+  xRotation: 5.05694

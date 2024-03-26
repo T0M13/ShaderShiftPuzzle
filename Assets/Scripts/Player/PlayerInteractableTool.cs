@@ -47,18 +47,18 @@ public class PlayerInteractableTool : MonoBehaviour
             {
                 if (currentInteractableObject != null)
                 {
-                    SwapLayer(currentInteractableObject, lastObjectLayer, true);
+                    SwapLayer(currentInteractableObject, lastObjectLayer, false);
                 }
 
                 currentInteractableObject = rayhit.transform.gameObject;
                 lastObjectLayer = GetLayerNameFromGameObject(currentInteractableObject);
 
-                SwapLayer(currentInteractableObject, outlineLayer, true);
+                SwapLayer(currentInteractableObject, outlineLayer, false);
             }
         }
         else if (currentInteractableObject != null)
         {
-            SwapLayer(currentInteractableObject, lastObjectLayer, true);
+            SwapLayer(currentInteractableObject, lastObjectLayer, false);
             currentInteractableObject = null;
             lastObjectLayer = "";
         }

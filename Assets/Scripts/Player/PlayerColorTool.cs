@@ -7,24 +7,28 @@ public class PlayerColorTool : MonoBehaviour
 {
 
     [Header("References")]
-    [SerializeField] private PlayerReferences playerReferences;
+    [ShowOnly][SerializeField] private PlayerReferences playerReferences;
+    [ShowOnly][SerializeField] private ColorToolManager colorToolManager;
     [SerializeField] public Material colorPickingMaterial;
-    [SerializeField] public Color currentColor;
-    [SerializeField] public float currentAlpha;
+    [ShowOnly][SerializeField] public Color currentColor;
+    [ShowOnly][SerializeField] public float currentAlpha;
 
     [Header("Settings")]
     [SerializeField] private bool canShoot = true;
-    [SerializeField] private float shot;
-    [SerializeField] private bool isShooting;
-    [SerializeField] private Ray aimPosition;
+    [ShowOnly][SerializeField] private float shot;
+    [ShowOnly][SerializeField] private bool isShooting;
+    [ShowOnly][SerializeField] private Ray aimPosition;
     [SerializeField] private bool canAim = true;
-    [SerializeField] private float aim;
-    [SerializeField] private bool isAiming;
-    [SerializeField] private Coroutine aimCoroutine;
-    [SerializeField] private Coroutine shootCoroutine;
+    [ShowOnly][SerializeField] private float aim;
+    [ShowOnly][SerializeField] private bool isAiming;
+    [ShowOnly][SerializeField] private Coroutine aimCoroutine;
+    [ShowOnly][SerializeField] private Coroutine shootCoroutine;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float rayDistance = 6;
+    [SerializeField] private bool resetColorAfterSetting = false;
 
+
+    public ColorToolManager ColorToolManager { get => colorToolManager; set => colorToolManager = value; }
 
     private void Awake()
     {
@@ -76,6 +80,8 @@ public class PlayerColorTool : MonoBehaviour
                     currentAlpha = alpha;
                     Shader.SetGlobalColor("_PickedColor", currentColor);
                     Shader.SetGlobalFloat("_PickedAlpha", currentAlpha);
+                    if (ColorToolManager)
+                        ColorToolManager.ChangeOrbColor(color);
                 }
             }
 
@@ -122,6 +128,9 @@ public class PlayerColorTool : MonoBehaviour
         if (shot == 0) return;
         if (isShooting) return;
 
+        if (ColorToolManager)
+            if (ColorToolManager.IsDefaultColor) return;
+
         isShooting = true;
 
         shootCoroutine = StartCoroutine(ISetColor());
@@ -135,8 +144,19 @@ public class PlayerColorTool : MonoBehaviour
         RaycastHit hitData;
         if (Physics.Raycast(aimPosition, out hitData, rayDistance, layerMask, QueryTriggerInteraction.Ignore))
         {
+
+            if (colorToolManager)
+                colorToolManager.PlayPaintColorAtPosition(currentColor, hitData.point);
+
             if (hitData.transform.GetComponent<IColor>() != null)
+            {
                 SetColorAt(hitData, currentColor, currentAlpha);
+
+                if (colorToolManager && resetColorAfterSetting)
+                    colorToolManager.ChangeOrbBackToDefaultColor();
+
+            }
+
         }
 
         yield return new WaitForSeconds(1f);

@@ -24,7 +24,7 @@ public class PlayerHoldTool : MonoBehaviour
     [SerializeField] private float minThrowForce = 10f;
     [SerializeField] private float maxThrowForce = 40f;
     [SerializeField] private float maxChargeTime = 2f;
-    [ShowOnly][SerializeField] private float throwThreshold = .5f;
+    [SerializeField] private float throwThreshold = .5f;
     [ShowOnly][SerializeField] private float holdTimer = 0f;
     [ShowOnly][SerializeField] private bool isThrowing;
 
