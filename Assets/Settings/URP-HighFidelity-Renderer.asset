@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Active: 1
   OutlinesSettings:
     Color: {r: 1, g: 1, b: 1, a: 1}
-    Width: 2
+    Width: 2.74
     DepthThreshold: 10
     NormalThreshold: 1
     DepthFadeoutHardness: 0.98
