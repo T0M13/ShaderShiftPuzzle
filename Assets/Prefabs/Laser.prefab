@@ -4855,7 +4855,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -9996,19 +9996,20 @@ MonoBehaviour:
     type: 3}
   laserCloneParent: {fileID: 5747393270206351265}
   laserCloneChild: {fileID: 0}
+  laserChildren: []
   mainLaser: 1
   laserOn: 1
   maxReflectionCount: 5
   currentReflectionCount: 0
   maxStepDistance: 200
   currentStepDistance: 9.5
-  laserDirectionOffset: {x: 0, y: 0, z: 0}
+  laserDirectionOffset: {x: 0, y: 0, z: -89}
   currentLaserDirection: {x: -0, y: 0, z: 1}
   lastPosition: {x: 0, y: 0, z: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 81985
-  laserChildren: []
+  laserPortalOffset: 0.01
 --- !u!120 &3622316906818020457
 LineRenderer:
   serializedVersion: 2

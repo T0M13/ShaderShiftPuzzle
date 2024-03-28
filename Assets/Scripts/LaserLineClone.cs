@@ -33,7 +33,7 @@ public class LaserLineClone : MonoBehaviour
 
     private void CreateLaserCloneChild()
     {
-        if(laserCloneParent.CurrentReflectionCount < laserCloneParent.MaxReflectionCount)
+        if (laserCloneParent.CurrentReflectionCount < laserCloneParent.MaxReflectionCount)
         {
             GameObject newCloneChild = Instantiate(laserCloneParent.LaserClonePrefab, laserOtherClonesParent);
             laserCloneChild = newCloneChild.GetComponent<LaserLineClone>();
@@ -101,31 +101,61 @@ public class LaserLineClone : MonoBehaviour
 
     protected virtual void LaserHits(RaycastHit hit)
     {
-        //Mirror
-        MirrorHit(hit);
+        if (laserCloneChild == null) return;
+
+        bool mirrorHit = MirrorHit(hit);
+        bool portalHit = PortalHit(hit);
+
+        if (laserCloneChild.gameObject.activeInHierarchy && !mirrorHit && !portalHit)
+        {
+            laserCloneChild.gameObject.SetActive(false);
+        }
     }
 
-    protected virtual void MirrorHit(RaycastHit hit)
+    protected virtual bool MirrorHit(RaycastHit hit)
     {
-        if (laserCloneChild == null) return;
         var mirror = hit.collider.GetComponent<MirrorReflectionObject>();
         if (mirror != null)
         {
             if (!laserCloneChild.gameObject.activeInHierarchy)
             {
                 laserCloneChild.gameObject.SetActive(true);
-                laserCloneChild.LaserStartPoint = laserEndPoint;
             }
-            laserCloneChild.transform.position = hit.point;
+            laserCloneChild.LaserStartPoint.position = laserEndPoint.position;
             laserCloneChild.CurrentLaserDirection = Vector3.Reflect(currentLaserDirection + laserDirectionOffset, hit.normal);
+
+            return true;
         }
-        else
-        {
-            if (laserCloneChild.gameObject.activeInHierarchy)
-            {
-                laserCloneChild.gameObject.SetActive(false);
-            }
-        }
+        return false;
     }
 
+
+    protected virtual bool PortalHit(RaycastHit hit)
+    {
+        var portalMesh = hit.collider.GetComponent<PortalMesh>();
+        if (portalMesh != null)
+        {
+            if (!laserCloneChild.gameObject.activeInHierarchy)
+            {
+                laserCloneChild.gameObject.SetActive(true);
+            }
+
+            var portalTrans = portalMesh.OtherPortalTransition;
+            float distanceY = portalMesh.MeshCollider.transform.position.y - hit.point.y;
+            float distanceX = portalMesh.MeshCollider.transform.position.x - hit.point.x;
+            if (Mathf.Abs(distanceY) > portalMesh.MeshCollider.bounds.size.y / 2)
+            {
+                distanceY *= -1;
+            }
+            if (Mathf.Abs(distanceX) > portalMesh.MeshCollider.bounds.size.x / 2)
+            {
+                distanceX *= -1;
+            }
+            Vector3 newPos = new Vector3(portalTrans.PortalMesh.MeshCollider.transform.position.x - distanceX, portalTrans.PortalMesh.MeshCollider.transform.position.y - distanceY, portalTrans.PortalMesh.MeshCollider.transform.position.z);
+            laserCloneChild.LaserStartPoint.position = newPos + (-portalTrans.PortalMesh.MeshCollider.transform.forward * laserCloneParent.LaserPortalOffset);
+            laserCloneChild.CurrentLaserDirection = currentLaserDirection + laserDirectionOffset;
+            return true;
+        }
+        return false;
+    }
 }
