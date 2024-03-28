@@ -27,6 +27,9 @@ public class PlayerHoldTool : MonoBehaviour
     [SerializeField] private float throwThreshold = .5f;
     [ShowOnly][SerializeField] private float holdTimer = 0f;
     [ShowOnly][SerializeField] private bool isThrowing;
+    [Header("Object Settings")]
+    [SerializeField] private string ignorePlayerLayer = "IgnorePlayer";
+    [ShowOnly][SerializeField] private int currentObjectLayerTemp;
 
     [Header("Portal Settings")]
     [ShowOnly][SerializeField] private PortalTransientObject currentTransientObjectPortal;
@@ -102,7 +105,10 @@ public class PlayerHoldTool : MonoBehaviour
 
             currentObjectBody.transform.SetParent(holdArea);
 
+            //currentObjectLayerTemp = currentObject.layer;
+            //currentObject.layer = LayerMask.NameToLayer(ignorePlayerLayer);
             currentObject = gameObject;
+
 
             HoldingObject = true;
 
@@ -124,8 +130,10 @@ public class PlayerHoldTool : MonoBehaviour
 
         currentObjectBody.transform.SetParent(null);
         currentObjectBody = null;
-        currentObject = null;
 
+        //currentObject.layer = currentObjectLayerTemp;
+        //currentObjectLayerTemp = 0;
+        currentObject = null;
         HoldingObject = false;
 
         isThrowing = false;

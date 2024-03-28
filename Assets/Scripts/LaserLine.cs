@@ -4,227 +4,213 @@ using UnityEngine;
 
 public class LaserLine : MonoBehaviour
 {
-    public LineRenderer lineRenderer;
-    public Transform laserStartPoint;
-    public GameObject laserPointPrefab;
-    public Transform laserPointsParent;
-    public List<Transform> laserPoints;
-    public GameObject endMarker;
-    public bool laserOn = true;
-    [ShowOnly][SerializeField] private bool mainLaser = true;
+    [Header("This Laser References")]
+    [SerializeField] protected LineRenderer lineRenderer;
+    [SerializeField] protected Transform laserStartPoint;
+    [SerializeField] protected Transform laserEndPoint;
+    [Header("Laser Clone Child References")]
+    [SerializeField] private GameObject laserClonePrefab;
+    [SerializeField] protected Transform laserCloneParent;
+    [SerializeField] protected LaserLineClone laserCloneChild;
+    [SerializeField] private List<LaserLineClone> laserChildren;
+    [Header("Laser Settings")]
+    [SerializeField] protected bool mainLaser = true;
+    [SerializeField] protected bool laserOn = true;
     [SerializeField] private int maxReflectionCount = 5;
-    public float maxStepDistance = 200;
-    public Vector3 lastPosition;
-    [SerializeField] private LayerMask layerMask;
-    [SerializeField] private VolumeDirection volumeDirection = VolumeDirection.Z;
-    [ShowOnly][SerializeField] private Vector3[] laserPath;
-
-    [SerializeField] private LaserLine laserPrefab;
-    [SerializeField] private List<LaserThroughPortal> lasersThroughPortal;
-
-    private enum VolumeDirection { X, Y, Z }
-
-    public int MaxReflectionCount { get => maxReflectionCount; set => maxReflectionCount = value; }
-    public List<LaserThroughPortal> LasersThroughPortal { get => lasersThroughPortal; set => lasersThroughPortal = value; }
+    [SerializeField] private int currentReflectionCount = 0;
+    [SerializeField] protected float maxStepDistance = 200;
+    [ShowOnly][SerializeField] protected float currentStepDistance = 0;
+    [SerializeField] protected Vector3 laserDirectionOffset;
+    [ShowOnly][SerializeField] protected Vector3 currentLaserDirection;
+    [SerializeField] protected Vector3 lastPosition;
+    [SerializeField] protected LayerMask layerMask;
+    //[SerializeField] protected List<LaserThroughPortal> lasersThroughPortal;
+    //public List<LaserThroughPortal> LasersThroughPortal { get => lasersThroughPortal; set => lasersThroughPortal = value; }
     public bool MainLaser { get => mainLaser; set => mainLaser = value; }
+    public int CurrentReflectionCount { get => currentReflectionCount; set => currentReflectionCount = value; }
+    public List<LaserLineClone> LaserChildren { get => laserChildren; set => laserChildren = value; }
+    public int MaxReflectionCount { get => maxReflectionCount; set => maxReflectionCount = value; }
+    public GameObject LaserClonePrefab { get => laserClonePrefab; set => laserClonePrefab = value; }
 
-    void Awake()
+    protected void Awake()
     {
-        InitializePoints();
+        CreateLaserCloneChild();
     }
 
-    void InitializePoints()
-    {
-        for (int i = 0; i < MaxReflectionCount; i++)
-        {
-            GameObject point = Instantiate(laserPointPrefab, laserPointsParent);
-            point.SetActive(false);
-            laserPoints.Add(point.transform);
-        }
-    }
 
-    void Update()
+    protected virtual void Update()
     {
         if (!laserOn) return;
         EmitLaser();
 
     }
 
-    void OnDrawGizmos()
+    private void CreateLaserCloneChild()
     {
-        DrawLaserGizmo();
+        GameObject newCloneChild = Instantiate(LaserClonePrefab, laserCloneParent);
+        laserCloneChild = newCloneChild.GetComponent<LaserLineClone>();
+        laserCloneChild.LaserCloneParent = this;
+        LaserChildren.Add(laserCloneChild);
+        CurrentReflectionCount++;
     }
 
-    public void EmitLaser()
+
+    protected virtual void EmitLaser()
     {
-        laserPath = CalculateLaserPath();
+        Vector3[] laserPath = CalculateLaserPath();
         if (laserPath.Length > 0)
         {
             lineRenderer.positionCount = laserPath.Length;
             lineRenderer.SetPositions(laserPath);
 
-            if (endMarker != null)
+            if (laserEndPoint != null)
             {
-                lastPosition = laserPath[laserPath.Length - 1];
-                endMarker.transform.position = lastPosition;
-
+                laserEndPoint.position = laserPath[laserPath.Length - 1];
             }
         }
     }
 
-    void DrawLaserGizmo()
+    protected virtual Vector3[] CalculateLaserPath()
     {
-        Vector3[] laserPath = CalculateLaserPath();
-        for (int i = 0; i < laserPath.Length - 1; i++)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(laserPath[i], laserPath[i + 1]);
-        }
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(laserStartPoint.position, .1f);
-
-        if (laserPath.Length > 0)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(laserPath[laserPath.Length - 1], 0.1f);
-        }
-
-    }
-    Vector3[] CalculateLaserPath()
-    {
-        var path = new List<Vector3>();
-        int reflectionCount = 0;
-        float stepDistance = 0;
-        Vector3 laserDirection = laserStartPoint.forward;
         Vector3 currentPosition = laserStartPoint.position;
-        path.Add(currentPosition);
+        Vector3 laserDirection = currentLaserDirection;
+        Ray ray = new Ray(currentPosition, laserDirection);
 
-        // Deactivate all points initially
-        foreach (Transform point in laserPoints)
+        if (Physics.Raycast(ray, out RaycastHit hit, maxStepDistance, layerMask))
         {
-            point.gameObject.SetActive(false);
+            LaserHits(hit);
+            return new Vector3[] { currentPosition, hit.point };
         }
-
-        while (reflectionCount < MaxReflectionCount && stepDistance < maxStepDistance)
+        else
         {
-            Ray ray = new Ray(currentPosition, laserDirection);
-            if (Physics.Raycast(ray, out RaycastHit hit, maxStepDistance - stepDistance, layerMask))
-            {
-                stepDistance += hit.distance;
-                currentPosition = hit.point;
-                path.Add(currentPosition);
-
-                // Activate and position point
-                if (reflectionCount < laserPoints.Count)
-                {
-                    Transform hitPointTransform = laserPoints[reflectionCount];
-                    hitPointTransform.position = currentPosition;
-                    hitPointTransform.gameObject.SetActive(true);
-                }
-
-
-                //Portal
-                var portalMesh = hit.collider.GetComponent<PortalMesh>();
-                if (portalMesh != null && MainLaser)
-                {
-                    var portalTrans = portalMesh.OtherPortalTransition;
-                    if (LasersThroughPortal.Count > 0)
-                    {
-                        foreach (var laser in LasersThroughPortal)
-                        {
-                            if (laser.portal != portalTrans)
-                            {
-                                CreateNewLaser(portalTrans, reflectionCount);
-                            }
-                            else
-                            {
-                                if (!laser.newLaser.gameObject.activeSelf)
-                                    laser.newLaser.gameObject.SetActive(true);
-
-
-                                float distanceY = portalMesh.MeshCollider.transform.position.y - hit.point.y;
-                                float distanceX = portalMesh.MeshCollider.transform.position.x - hit.point.x;
-                                if (Mathf.Abs(distanceY) > portalMesh.MeshCollider.bounds.size.y / 2)
-                                {
-                                    distanceY *= -1;
-                                }
-                                if (Mathf.Abs(distanceX) > portalMesh.MeshCollider.bounds.size.x / 2)
-                                {
-                                    distanceX *= -1;
-                                }
-                                Vector3 newPos = new Vector3(portalTrans.PortalMesh.MeshCollider.transform.position.x - distanceX, portalTrans.PortalMesh.MeshCollider.transform.position.y - distanceY, portalTrans.PortalMesh.MeshCollider.transform.position.z);
-
-
-                                laser.newLaser.laserStartPoint.position = newPos;
-
-                                laser.newLaser.laserStartPoint.forward = laserDirection;
-                                laser.newLaser.EmitLaser();
-
-                            }
-                        }
-                    }
-                    else
-                    {
-                        CreateNewLaser(portalTrans, reflectionCount);
-                    }
-                }
-                else
-                {
-                    foreach (var laser in LasersThroughPortal)
-                    {
-                        if (laser.newLaser.gameObject.activeSelf)
-                            laser.newLaser.gameObject.SetActive(false);
-                    }
-                }
-
-                var mirror = hit.collider.GetComponent<MirrorReflectionObject>();
-                if (mirror != null)
-                {
-                    reflectionCount++;
-                    laserDirection = Vector3.Reflect(laserDirection, hit.normal);
-                }
-                else
-                {
-                    break;
-                }
-            }
-            else
-            {
-                path.Add(currentPosition + laserDirection * (maxStepDistance - stepDistance));
-                break;
-            }
+            // If no hit, project the laser to the maximum distance
+            return new Vector3[] { currentPosition, currentPosition + laserDirection * maxStepDistance };
         }
-
-        return path.ToArray();
     }
 
-    private void CreateNewLaser(PortalTransition portalTrans, int reflectionCount)
+    protected virtual void OnDrawGizmos()
     {
-        var newLaserTemp = Instantiate(laserPrefab);
-        var newLaserThrough = new LaserThroughPortal(this, newLaserTemp, portalTrans);
-        LasersThroughPortal.Add(newLaserThrough);
-        newLaserTemp.maxReflectionCount = newLaserThrough.newLaser.maxReflectionCount - reflectionCount;
-        newLaserTemp.MainLaser = false;
+        if (!laserOn || laserStartPoint == null) return;
+
+        Vector3[] laserPath = CalculateLaserPath();
+        if (laserPath.Length < 2) return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(laserPath[0], laserPath[1]);
+
+        Gizmos.DrawWireSphere(laserPath[0], 0.1f);
+        Gizmos.DrawWireSphere(laserPath[1], 0.1f);
     }
 
-
-    [System.Serializable]
-    public class LaserThroughPortal
+    protected virtual void LaserHits(RaycastHit hit)
     {
-        public LaserLine oldLaser;
-        public LaserLine newLaser;
-        public PortalTransition portal;
+        //Mirror
+        MirrorHit(hit);
 
-        public LaserThroughPortal(LaserLine oldLaser, LaserLine newLaser, PortalTransition portal)
-        {
-            this.oldLaser = oldLaser;
-            this.newLaser = newLaser;
-            this.portal = portal;
-        }
 
+
+        //Portal
+        //var portalMesh = hit.collider.GetComponent<PortalMesh>();
+        //if (portalMesh != null && MainLaser)
+        //{
+        //    var portalTrans = portalMesh.OtherPortalTransition;
+        //    if (LasersThroughPortal.Count > 0)
+        //    {
+        //        foreach (var laser in LasersThroughPortal)
+        //        {
+        //            if (laser.portal != portalTrans)
+        //            {
+        //                LaserThroughPortalNew(portalTrans, currentReflectionCount);
+        //            }
+        //            else
+        //            {
+        //                if (!laser.newLaser.gameObject.activeSelf)
+        //                    laser.newLaser.gameObject.SetActive(true);
+
+
+        //                float distanceY = portalMesh.MeshCollider.transform.position.y - hit.point.y;
+        //                float distanceX = portalMesh.MeshCollider.transform.position.x - hit.point.x;
+        //                if (Mathf.Abs(distanceY) > portalMesh.MeshCollider.bounds.size.y / 2)
+        //                {
+        //                    distanceY *= -1;
+        //                }
+        //                if (Mathf.Abs(distanceX) > portalMesh.MeshCollider.bounds.size.x / 2)
+        //                {
+        //                    distanceX *= -1;
+        //                }
+        //                Vector3 newPos = new Vector3(portalTrans.PortalMesh.MeshCollider.transform.position.x - distanceX, portalTrans.PortalMesh.MeshCollider.transform.position.y - distanceY, portalTrans.PortalMesh.MeshCollider.transform.position.z);
+
+        //                laser.newLaser.LaserStartPoint.position = newPos;
+
+        //                laser.newLaser.LaserStartPoint.forward = laserDirection;
+        //                laser.newLaser.EmitLaser();
+
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        LaserThroughPortalNew(portalTrans, currentReflectionCount);
+        //    }
+        //}
+        //else
+        //{
+        //    foreach (var laser in LasersThroughPortal)
+        //    {
+        //        if (laser.newLaser.gameObject.activeSelf)
+        //            laser.newLaser.gameObject.SetActive(false);
+        //    }
+        //}
 
 
     }
 
+
+    //protected virtual void LaserThroughPortalNew(PortalTransition portalTrans, int reflectionCount)
+    //{
+    //    LaserLineClone newLaserTemp = GetAClone();
+    //    var newLaserThrough = new LaserThroughPortal(this, newLaserTemp, portalTrans);
+    //    LasersThroughPortal.Add(newLaserThrough);
+    //    newLaserTemp.MaxReflectionCount = 1;
+    //}
+
+
+    //[System.Serializable]
+    //public class LaserThroughPortal
+    //{
+    //    public LaserLine oldLaser;
+    //    public LaserLineClone newLaser;
+    //    public PortalTransition portal;
+
+    //    public LaserThroughPortal(LaserLine oldLaser, LaserLineClone newLaser, PortalTransition portal)
+    //    {
+    //        this.oldLaser = oldLaser;
+    //        this.newLaser = newLaser;
+    //        this.portal = portal;
+    //    }
+    //}
+
+
+    protected virtual void MirrorHit(RaycastHit hit)
+    {
+        if (laserCloneChild == null) return;
+        var mirror = hit.collider.GetComponent<MirrorReflectionObject>();
+        if (mirror != null)
+        {
+            if (!laserCloneChild.gameObject.activeInHierarchy)
+            {
+                laserCloneChild.gameObject.SetActive(true);
+                laserCloneChild.LaserStartPoint = laserEndPoint;
+            }
+            laserCloneChild.transform.position = hit.point;
+            laserCloneChild.CurrentLaserDirection = Vector3.Reflect(currentLaserDirection + laserDirectionOffset, hit.normal);
+        }
+        else
+        {
+            if (laserCloneChild.gameObject.activeInHierarchy)
+            {
+                laserCloneChild.gameObject.SetActive(false);
+            }
+        }
+    }
 }
