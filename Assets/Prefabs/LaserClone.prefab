@@ -68,6 +68,19 @@ MonoBehaviour:
   laserCloneParent: {fileID: 0}
   laserOtherClonesParent: {fileID: 8961659504369425584}
   laserCloneChild: {fileID: 0}
+  defaultColor: {fileID: 2100000, guid: a4bca0406f22c28468bbefed570fa5cc, type: 2}
+  currentColor: {fileID: 2100000, guid: a4bca0406f22c28468bbefed570fa5cc, type: 2}
+  defaultColorType: 5
+  currentColorType: 5
+  mainColors:
+  - {fileID: 11400000, guid: 87904c38bba7eca41842b99911ee9c03, type: 2}
+  - {fileID: 11400000, guid: b92e77adcf1dc634b979acd58d2e0b28, type: 2}
+  - {fileID: 11400000, guid: 082c6d72ae7e73849b4a810df9a0e13d, type: 2}
+  - {fileID: 11400000, guid: ecc931bbca77422409ba22e6c06b0ca7, type: 2}
+  - {fileID: 11400000, guid: 0d2b1f81e7c36a9439baeb1135a5f7d2, type: 2}
+  - {fileID: 11400000, guid: 28bacd1cd58493a4dbe9acefd91a9ffc, type: 2}
+  startParticle: {fileID: 6494110791110311276}
+  endParticle: {fileID: 1693512068959972084}
   laserOn: 1
   maxStepDistance: 200
   currentStepDistance: 0

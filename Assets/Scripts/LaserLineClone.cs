@@ -1,5 +1,6 @@
 using Knife.Portal;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LaserLineClone : MonoBehaviour
@@ -13,6 +14,14 @@ public class LaserLineClone : MonoBehaviour
     [SerializeField] private LaserLine laserCloneParent;
     [SerializeField] private Transform laserOtherClonesParent;
     [SerializeField] private LaserLineClone laserCloneChild;
+    [Header("Laser Color Settings")]
+    [SerializeField] protected Material defaultColor;
+    [SerializeField] protected Material currentColor;
+    [SerializeField] protected ColorType defaultColorType;
+    [SerializeField] protected ColorType currentColorType;
+    [SerializeField] private ColorLaserMaterial[] mainColors;
+    [SerializeField] private ParticleSystem startParticle;
+    [SerializeField] private ParticleSystem endParticle;
     [Header("Laser Settings")]
     [SerializeField] private bool laserOn = true;
     [SerializeField] private float maxStepDistance = 200;
@@ -25,10 +34,48 @@ public class LaserLineClone : MonoBehaviour
     public LaserLine LaserCloneParent { get => laserCloneParent; set => laserCloneParent = value; }
     public Transform LaserStartPoint { get => laserStartPoint; set => laserStartPoint = value; }
     public Vector3 CurrentLaserDirection { get => currentLaserDirection; set => currentLaserDirection = value; }
+    public Material CurrentColor { get => currentColor; set => currentColor = value; }
+    public ColorType CurrentColorType { get => currentColorType; set => currentColorType = value; }
+
 
     private void Start()
     {
         CreateLaserCloneChild();
+        ChangeCurrentColorByType(currentColorType);
+
+    }
+    public void ChangeCurrentColorByMaterial(ColorLaserMaterial color)
+    {
+        CurrentColor = color.material;
+        CurrentColorType = color.colorType;
+        ChangeParticleColors(color.material.color);
+        ChangeLaserColor();
+    }
+
+    public void ChangeCurrentColorByType(ColorType type)
+    {
+        ChangeCurrentColorByMaterial(mainColors.FirstOrDefault(cm => cm.colorType == type));
+    }
+    public void ChangeLaserColor()
+    {
+        lineRenderer.material = CurrentColor;
+    }
+
+    private void ChangeParticleColors(Color newColor)
+    {
+
+        startParticle.Stop();
+        startParticle.Clear();
+
+        var mainStartModule = startParticle.main;
+        mainStartModule.startColor = newColor;
+
+        var mainEndModule = endParticle.main;
+        mainEndModule.startColor = newColor;
+
+
+        startParticle.Play();
+
     }
 
     private void CreateLaserCloneChild()
@@ -121,12 +168,45 @@ public class LaserLineClone : MonoBehaviour
             {
                 laserCloneChild.gameObject.SetActive(true);
             }
+            if (laserCloneChild.CurrentColorType != GetMixedColor(currentColorType, mirror.MirrorColorType))
+            {
+                laserCloneChild.CurrentColorType = GetMixedColor(currentColorType, mirror.MirrorColorType);
+                laserCloneChild.ChangeCurrentColorByType(laserCloneChild.CurrentColorType);
+            }
             laserCloneChild.LaserStartPoint.position = laserEndPoint.position;
             laserCloneChild.CurrentLaserDirection = Vector3.Reflect(currentLaserDirection + laserDirectionOffset, hit.normal);
 
             return true;
         }
         return false;
+    }
+
+    ColorType GetMixedColor(ColorType currentColorType, ColorType mirrorColorType)
+    {
+        if (mirrorColorType == ColorType.Transparent)
+        {
+            return currentColorType;
+        }
+        switch (currentColorType)
+        {
+            case ColorType.Red:
+                if (mirrorColorType == ColorType.Green) return ColorType.Yellow;
+                if (mirrorColorType == ColorType.Blue) return ColorType.Magenta;
+                break;
+            case ColorType.Green:
+                if (mirrorColorType == ColorType.Red) return ColorType.Yellow;
+                if (mirrorColorType == ColorType.Blue) return ColorType.Cyan;
+                break;
+            case ColorType.Blue:
+                if (mirrorColorType == ColorType.Red) return ColorType.Magenta;
+                if (mirrorColorType == ColorType.Green) return ColorType.Cyan;
+                break;
+                // Add cases for other primary and secondary colors as necessary
+        }
+
+        // For simplicity, if no mix is defined, return the mirror's color
+        // This can be changed to handle more complex color mixing logic
+        return mirrorColorType;
     }
 
 
@@ -139,6 +219,12 @@ public class LaserLineClone : MonoBehaviour
             {
                 laserCloneChild.gameObject.SetActive(true);
             }
+            if (laserCloneChild.CurrentColorType != currentColorType)
+            {
+                laserCloneChild.CurrentColorType = currentColorType;
+                laserCloneChild.ChangeCurrentColorByType(laserCloneChild.CurrentColorType);
+            }
+
 
             var portalTrans = portalMesh.OtherPortalTransition;
             float distanceY = portalMesh.MeshCollider.transform.position.y - hit.point.y;
