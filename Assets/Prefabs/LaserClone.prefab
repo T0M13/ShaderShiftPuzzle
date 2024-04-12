@@ -5112,6 +5112,7 @@ GameObject:
   - component: {fileID: 7579689770119637408}
   - component: {fileID: 6460385236330165255}
   - component: {fileID: 4162641981120965602}
+  - component: {fileID: 6506598023378628968}
   m_Layer: 3
   m_Name: LaserEnd
   m_TagString: Untagged
@@ -5206,6 +5207,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6506598023378628968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4729915102926221784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c248278f114102498e638ce81e5457f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserParent: {fileID: 0}
+  laserCloneParent: {fileID: 2114808016218995456}
 --- !u!1 &6781470925777269229
 GameObject:
   m_ObjectHideFlags: 0

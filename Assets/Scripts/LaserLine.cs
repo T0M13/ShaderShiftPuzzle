@@ -40,17 +40,13 @@ public class LaserLine : MonoBehaviour
     public int MaxReflectionCount { get => maxReflectionCount; set => maxReflectionCount = value; }
     public GameObject LaserClonePrefab { get => laserClonePrefab; set => laserClonePrefab = value; }
     public float LaserPortalOffset { get => laserPortalOffset; set => laserPortalOffset = value; }
-
-    private void OnValidate()
-    {
-        ChangeLaserColor(currentColor);
-    }
+    public Color CurrentColor { get => currentColor; set => currentColor = value; }
 
     protected void Awake()
     {
         propBlock = new MaterialPropertyBlock();
         CreateLaserCloneChild();
-        ChangeLaserColor(currentColor);
+        ChangeLaserColor(CurrentColor);
     }
 
 
@@ -159,9 +155,9 @@ public class LaserLine : MonoBehaviour
             {
                 laserCloneChild.gameObject.SetActive(true);
             }
-            if (laserCloneChild.CurrentColor != ColorUtils.MixColors(currentColor, mirror.MirrorColor))
+            if (laserCloneChild.CurrentColor != ColorUtils.MixColors(CurrentColor, mirror.MirrorColor))
             {
-                laserCloneChild.CurrentColor = ColorUtils.MixColors(currentColor, mirror.MirrorColor);
+                laserCloneChild.CurrentColor = ColorUtils.MixColors(CurrentColor, mirror.MirrorColor);
                 laserCloneChild.ChangeLaserColor(laserCloneChild.CurrentColor);
             }
             laserCloneChild.LaserStartPoint.position = laserEndPoint.position;
@@ -181,9 +177,9 @@ public class LaserLine : MonoBehaviour
             {
                 laserCloneChild.gameObject.SetActive(true);
             }
-            if (laserCloneChild.CurrentColor != currentColor)
+            if (laserCloneChild.CurrentColor != CurrentColor)
             {
-                laserCloneChild.CurrentColor = currentColor;
+                laserCloneChild.CurrentColor = CurrentColor;
                 laserCloneChild.ChangeLaserColor(laserCloneChild.CurrentColor);
             }
 

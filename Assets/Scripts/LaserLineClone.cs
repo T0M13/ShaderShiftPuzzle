@@ -31,13 +31,14 @@ public class LaserLineClone : MonoBehaviour
     public LaserLine LaserCloneParent { get => laserCloneParent; set => laserCloneParent = value; }
     public Transform LaserStartPoint { get => laserStartPoint; set => laserStartPoint = value; }
     public Vector3 CurrentLaserDirection { get => currentLaserDirection; set => currentLaserDirection = value; }
-    public Color CurrentColor { get => currentColor; set => currentColor = value; }
+    public Color CurrentColor { get => CurrentColor1; set => CurrentColor1 = value; }
+    public Color CurrentColor1 { get => currentColor; set => currentColor = value; }
 
     private void Start()
     {
         propBlock = new MaterialPropertyBlock();
         CreateLaserCloneChild();
-        ChangeLaserColor(currentColor);
+        ChangeLaserColor(CurrentColor1);
 
     }
     public void ChangeLaserColor(Color oldColor, Color newColor)
@@ -163,9 +164,9 @@ public class LaserLineClone : MonoBehaviour
             {
                 laserCloneChild.gameObject.SetActive(true);
             }
-            if (laserCloneChild.CurrentColor != ColorUtils.MixColors(currentColor, mirror.MirrorColor))
+            if (laserCloneChild.CurrentColor != ColorUtils.MixColors(CurrentColor1, mirror.MirrorColor))
             {
-                laserCloneChild.CurrentColor = ColorUtils.MixColors(currentColor, mirror.MirrorColor);
+                laserCloneChild.CurrentColor = ColorUtils.MixColors(CurrentColor1, mirror.MirrorColor);
                 laserCloneChild.ChangeLaserColor(laserCloneChild.CurrentColor);
             }
             laserCloneChild.LaserStartPoint.position = laserEndPoint.position;
@@ -186,9 +187,9 @@ public class LaserLineClone : MonoBehaviour
             {
                 laserCloneChild.gameObject.SetActive(true);
             }
-            if (laserCloneChild.CurrentColor != currentColor)
+            if (laserCloneChild.CurrentColor != CurrentColor1)
             {
-                laserCloneChild.CurrentColor = currentColor;
+                laserCloneChild.CurrentColor = CurrentColor1;
                 laserCloneChild.ChangeLaserColor(laserCloneChild.CurrentColor);
             }
 

@@ -4930,6 +4930,7 @@ GameObject:
   - component: {fileID: 6471113361154692859}
   - component: {fileID: 3764134356356041043}
   - component: {fileID: 6057140456127337043}
+  - component: {fileID: 4363939155842924659}
   m_Layer: 3
   m_Name: LaserEnd
   m_TagString: Untagged
@@ -5024,6 +5025,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4363939155842924659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3383168176014125482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c248278f114102498e638ce81e5457f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserParent: {fileID: 704890328247618755}
+  laserCloneParent: {fileID: 0}
 --- !u!1 &5343753282317242492
 GameObject:
   m_ObjectHideFlags: 0
@@ -10009,8 +10024,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 81985
-  defaultColor: {r: 0, g: 0.8226874, b: 1, a: 1}
-  currentColor: {r: 0, g: 0.8235294, b: 1, a: 1}
+  currentColor: {r: 0, g: 0, b: 1, a: 1}
   startParticle: {fileID: 6405197051067475096}
   endParticle: {fileID: 8724640607050199841}
   laserPortalOffset: 0.01
