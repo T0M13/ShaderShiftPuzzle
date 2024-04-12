@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class MirrorReflectionObject : MonoBehaviour
 {
-    [SerializeField] private ColorType mirrorColorType = ColorType.Transparent;
-    public ColorType MirrorColorType { get => mirrorColorType; set => mirrorColorType = value; }
+    [SerializeField] private Color mirrorColor;
+    public Color MirrorColor { get => mirrorColor; set => mirrorColor = value; }
 }

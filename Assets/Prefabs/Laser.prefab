@@ -10009,17 +10009,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 81985
-  defaultColor: {fileID: 2100000, guid: 7a82a558094060349add74dd804667b8, type: 2}
-  currentColor: {fileID: 2100000, guid: 7a82a558094060349add74dd804667b8, type: 2}
-  defaultColorType: 3
-  currentColorType: 3
-  mainColors:
-  - {fileID: 11400000, guid: 87904c38bba7eca41842b99911ee9c03, type: 2}
-  - {fileID: 11400000, guid: b92e77adcf1dc634b979acd58d2e0b28, type: 2}
-  - {fileID: 11400000, guid: 082c6d72ae7e73849b4a810df9a0e13d, type: 2}
-  - {fileID: 11400000, guid: ecc931bbca77422409ba22e6c06b0ca7, type: 2}
-  - {fileID: 11400000, guid: 0d2b1f81e7c36a9439baeb1135a5f7d2, type: 2}
-  - {fileID: 11400000, guid: 28bacd1cd58493a4dbe9acefd91a9ffc, type: 2}
+  defaultColor: {r: 0, g: 0.8226874, b: 1, a: 1}
+  currentColor: {r: 0, g: 0.8235294, b: 1, a: 1}
   startParticle: {fileID: 6405197051067475096}
   endParticle: {fileID: 8724640607050199841}
   laserPortalOffset: 0.01

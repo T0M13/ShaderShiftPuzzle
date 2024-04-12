@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ColorObject : MonoBehaviour, IColor
 {
-    protected static string _DEFAULTCOLOR = "_DefaultColor";
-    protected static string _DEFAULTALPHA = "_DefaultAlpha";
-    protected static string _ALPHA = "_Alpha";
-    protected static string _COLOR = "_Color";
+     protected static string _DEFAULTCOLOR = "_DefaultColor";
+     protected static string _DEFAULTALPHA = "_DefaultAlpha";
+     protected static string _ALPHA = "_Alpha";
+     protected static string _COLOR = "_Color";
     [SerializeField] protected Material myMaterial;
     [SerializeField] protected Collider myCollider;
     [SerializeField] protected ColorSettingsComponent colorSettings;
@@ -25,7 +25,7 @@ public class ColorObject : MonoBehaviour, IColor
         ResetObject();
     }
 
-    protected void GetRefs()
+    protected virtual void GetRefs()
     {
         myMaterial = GetComponent<Renderer>().sharedMaterial;
 
@@ -33,7 +33,7 @@ public class ColorObject : MonoBehaviour, IColor
             myCollider = GetComponent<Collider>();
     }
 
-    protected void ResetObject()
+    protected virtual void ResetObject()
     {
         SetColorAndAlpha(myMaterial.GetColor(_DEFAULTCOLOR), myMaterial.GetFloat(_DEFAULTALPHA));
     }

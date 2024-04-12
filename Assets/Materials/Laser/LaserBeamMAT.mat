@@ -55,7 +55,7 @@ Material:
     - _QueueOffset: 0
     - _UseGradient: 0
     m_Colors:
-    - _Color: {r: 0, g: 2.8650467, b: 13.262899, a: 1}
+    - _Color: {r: 23.640257, g: 23.640257, b: 23.640257, a: 1}
     - _MainSpeed: {r: -0.5, g: 0, b: 0, a: 0}
     - _NoiseSpeed: {r: -0.7, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
