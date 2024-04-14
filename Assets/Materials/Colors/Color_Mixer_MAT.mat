@@ -42,12 +42,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 1
+    - _Alpha: 0
     - _DefaultAlpha: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0, g: 0.17614937, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DefaultColor: {r: 1, g: 1, b: 1, a: 1}
     - _GetColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
