@@ -76,9 +76,9 @@ MonoBehaviour:
   m_Active: 1
   OutlinesSettings:
     Color: {r: 1, g: 1, b: 1, a: 1}
-    Width: 2
-    DepthThreshold: 10
-    NormalThreshold: 1
+    Width: 2.74
+    DepthThreshold: 40
+    NormalThreshold: 3
     DepthFadeoutHardness: 0.98
     DepthFadeoutThreshold: 0.8
     UseDepthFadeout: 0
@@ -86,4 +86,4 @@ MonoBehaviour:
   outlinesLayerMask:
     serializedVersion: 2
     m_Bits: 65536
-  useDepthMask: 1
+  useDepthMask: 0

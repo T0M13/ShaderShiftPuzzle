@@ -3,33 +3,32 @@ using UnityEngine;
 
 public class Gate : MonoBehaviour
 {
-    [SerializeField] private Vector3 closedPositionOffset;
-    [SerializeField] private Vector3 openedPositionOffset;
-    [SerializeField] private float moveSpeed = 2f;
-    [SerializeField] private bool open = false;
+    [SerializeField] protected Vector3 closedPositionOffset;
+    [SerializeField] protected Vector3 openedPositionOffset;
+    [SerializeField] protected float moveSpeed = 2f;
+    protected Vector3 closedPosition;
+    protected Vector3 openedPosition;
+    protected Vector3 targetPosition;
+    protected bool open = false;
 
-    private Vector3 closedPosition;
-    private Vector3 openedPosition;
-    private Vector3 targetPosition;
-
-    private void Start()
+    protected virtual void Start()
     {
         UpdatePositions();
     }
 
-    private void UpdatePositions()
+    protected void UpdatePositions()
     {
         closedPosition = transform.position + closedPositionOffset;
         openedPosition = transform.position + openedPositionOffset;
     }
 
-    private void OnValidate()
+    protected virtual void OnValidate()
     {
         if (!open)
             UpdatePositions();
     }
 
-    public void OpenGate()
+    public virtual void OpenGate()
     {
         targetPosition = openedPosition;
         StopAllCoroutines();
@@ -37,7 +36,7 @@ public class Gate : MonoBehaviour
         open = true;
     }
 
-    public void CloseGate()
+    public virtual void CloseGate()
     {
         targetPosition = closedPosition;
         StopAllCoroutines();
@@ -45,7 +44,7 @@ public class Gate : MonoBehaviour
         open = false;
     }
 
-    private IEnumerator MoveGate(Vector3 target)
+    protected IEnumerator MoveGate(Vector3 target)
     {
         while (Vector3.Distance(transform.position, target) > 0.01f)
         {
@@ -55,11 +54,10 @@ public class Gate : MonoBehaviour
         transform.position = target;
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(closedPosition, 0.1f);
-
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(openedPosition, 0.1f);
     }

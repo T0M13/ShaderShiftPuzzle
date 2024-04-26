@@ -11,6 +11,8 @@ public class PressurePlate : MonoBehaviour
     [SerializeField] private float pressureWeightCurrent = 0f;
     [SerializeField] private bool pressureNeedsToStay = false;
 
+    public UnityEvent<float> OnIncreasePressure;
+    public UnityEvent<float> OnDecreasePressure;
     public UnityEvent DoInteractOnPressure;
     public UnityEvent UndoInteractOnPressure;
 
@@ -23,9 +25,10 @@ public class PressurePlate : MonoBehaviour
     {
         if (other.GetComponent<Rigidbody>())
         {
+            float oldPressureWeight = pressureWeightCurrent;
             Rigidbody objectBody = other.GetComponent<Rigidbody>();
             pressureWeightCurrent += objectBody.mass;
-            CheckPressure();
+            CheckPressure(oldPressureWeight);
         }
     }
 
@@ -33,14 +36,25 @@ public class PressurePlate : MonoBehaviour
     {
         if (other.GetComponent<Rigidbody>())
         {
+            float oldPressureWeight = pressureWeightCurrent;
             Rigidbody objectBody = other.GetComponent<Rigidbody>();
             pressureWeightCurrent -= objectBody.mass;
-            CheckPressure();
+            CheckPressure(oldPressureWeight);
         }
     }
 
-    private void CheckPressure()
+    private void CheckPressure(float oldPressureWeight)
     {
+
+        if (oldPressureWeight < pressureWeightCurrent)
+        {
+            OnIncreasePressure?.Invoke(pressureWeightCurrent);
+        }
+        if (oldPressureWeight > pressureWeightCurrent)
+        {
+            OnDecreasePressure?.Invoke(pressureWeightCurrent);
+        }
+
         if (pressureWeightCurrent >= pressureWeightNeeded)
         {
             DoInteractOnPressure?.Invoke();
