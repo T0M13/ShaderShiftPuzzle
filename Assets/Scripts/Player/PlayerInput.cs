@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [DefaultExecutionOrder(-1)]
@@ -13,6 +14,8 @@ public class PlayerInput : MonoBehaviour
 
     public InputActionAsset PlayerControls { get => playerControlsActions; set => playerControlsActions = value; }
 
+
+    public Action TogglePause; 
 
     private void OnValidate()
     {
@@ -49,5 +52,13 @@ public class PlayerInput : MonoBehaviour
     public InputAction GetAction(string actionName)
     {
         return playerControlsActions.FindAction(actionName, true);
+    }
+
+    public void OnPause(InputAction.CallbackContext value)
+    {
+        if (value.performed)
+        {
+            TogglePause?.Invoke();
+        }
     }
 }

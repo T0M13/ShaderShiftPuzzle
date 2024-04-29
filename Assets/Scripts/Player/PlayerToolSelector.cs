@@ -98,6 +98,8 @@ public class PlayerToolSelector : MonoBehaviour
 
     public void OnScroll(InputAction.CallbackContext value)
     {
+        if (playerReferences.CurrentState != PlayerState.Playing) return;
+
         if (value.performed)
         {
             var scrollValue = value.ReadValue<Vector2>();

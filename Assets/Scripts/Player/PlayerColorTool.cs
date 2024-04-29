@@ -45,7 +45,7 @@ public class PlayerColorTool : MonoBehaviour
 
     private void Update()
     {
-        if (!ActiveToolState()) return;
+        if (!ActiveToolState() || playerReferences.CurrentState != PlayerState.Playing) return;
 
         GetColor();
         SetColor();
@@ -209,13 +209,13 @@ public class PlayerColorTool : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext value)
     {
-        if (!ActiveToolState()) return;
+        if (!ActiveToolState() || playerReferences.CurrentState != PlayerState.Playing) return;
         this.shot = value.ReadValue<float>();
     }
 
     public void OnAim(InputAction.CallbackContext value)
     {
-        if (!ActiveToolState()) return;
+        if (!ActiveToolState() || playerReferences.CurrentState != PlayerState.Playing) return;
         this.aim = value.ReadValue<float>();
     }
 

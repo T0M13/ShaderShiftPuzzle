@@ -668,6 +668,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 72a96c06-2790-4853-8676-fa921750509c
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8092869307736730234}
+        m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 63477380-e2f4-4806-a5af-9d54a093d8e3
+    m_ActionName: Player/Pause[/Keyboard/escape,/Keyboard/p]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -727,7 +743,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerReferences: {fileID: 1512069233132160446}
   holdArea: {fileID: 5821068942441509465}
-  pickUpRange: 15
   pickUpForce: 150
   moveDirectionThreshold: 0.1
   currentObject: {fileID: 0}
@@ -744,7 +759,6 @@ MonoBehaviour:
   throwThreshold: 0.5
   holdTimer: 0
   isThrowing: 0
-  ignorePlayerLayer: IgnorePlayer
   currentObjectLayerTemp: 0
   currentTransientObjectPortal: {fileID: 0}
   currentTransientTempCanUse: 0

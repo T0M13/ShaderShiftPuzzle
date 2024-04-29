@@ -28,7 +28,7 @@ public class AIMouse : MonoBehaviour
     [SerializeField] private Transform chaser;
     [SerializeField] private Transform[] runAwayPositions;
     [SerializeField] private float displacementDist = 1f;
-    [SerializeField] private float waitTillIdle = 3f;
+    //[SerializeField] private float waitTillIdle = 3f;
     [SerializeField] private float runAwaySpeed = 13f;
     [SerializeField] private Coroutine runAwayCoroutine;
     [SerializeField] private Vector3 pointToRunAwayTo;

@@ -30,6 +30,8 @@ public class PlayerInteractableTool : MonoBehaviour
 
     private void Update()
     {
+        if (playerReferences.CurrentState != PlayerState.Playing) return;
+
         UpdateMessageInteractions();
         UpdatePressMessageInteractions();
         UpdateOutline();
@@ -123,6 +125,7 @@ public class PlayerInteractableTool : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext value)
     {
+        if (playerReferences.CurrentState != PlayerState.Playing) return;
         if (!value.performed) return;
         if (playerReferences.PlayerHoldTool.HoldingObject) return;
 

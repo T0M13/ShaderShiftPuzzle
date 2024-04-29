@@ -20,6 +20,7 @@ public class PlayerReferences : MonoBehaviour
     [SerializeField] private Rigidbody playerRigidBody;
     [SerializeField] private CapsuleCollider playerCollider;
     [ShowOnly][SerializeField] private ToolState currentToolState = ToolState.HoldTool;
+    [ShowOnly][SerializeField] private PlayerState currentState = PlayerState.Playing;
 
     public InputManager InputManager { get => inputManager; set => inputManager = value; }
     public PlayerMovement PlayerMovement { get => playerMovement; set => playerMovement = value; }
@@ -34,6 +35,7 @@ public class PlayerReferences : MonoBehaviour
     public PlayerInteractableTool PlayerInteractableTool { get => playerInteractableTool; set => playerInteractableTool = value; }
     public PlayerInput PlayerInput { get => playerInput; set => playerInput = value; }
     public ToolState CurrentToolState { get => currentToolState; set => currentToolState = value; }
+    public PlayerState CurrentState { get => currentState; set => currentState = value; }
 
     private void Awake()
     {
@@ -95,4 +97,10 @@ public enum ToolState
 {
     HoldTool,
     ColorTool,
+}
+
+public enum PlayerState
+{
+    Playing,
+    Freeze,
 }

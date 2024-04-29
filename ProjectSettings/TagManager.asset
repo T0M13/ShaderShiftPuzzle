@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Potion
   - FxTemporaire
+  - Canvas
   layers:
   - Default
   - TransparentFX

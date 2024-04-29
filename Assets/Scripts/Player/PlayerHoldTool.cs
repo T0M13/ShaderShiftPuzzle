@@ -11,7 +11,7 @@ public class PlayerHoldTool : MonoBehaviour
     [ShowOnly][SerializeField] private PlayerReferences playerReferences;
     [SerializeField] private Transform holdArea;
     [Header("Pick Up Settings")]
-    [SerializeField] private float pickUpRange = 15f;
+    //[SerializeField] private float pickUpRange = 15f;
     [SerializeField] private float pickUpForce = 150f;
     [SerializeField] private float moveDirectionThreshold = 0.1f;
     [ShowOnly][SerializeField] private GameObject currentObject;
@@ -28,7 +28,7 @@ public class PlayerHoldTool : MonoBehaviour
     [ShowOnly][SerializeField] private float holdTimer = 0f;
     [ShowOnly][SerializeField] private bool isThrowing;
     [Header("Object Settings")]
-    [SerializeField] private string ignorePlayerLayer = "IgnorePlayer";
+    //[SerializeField] private string ignorePlayerLayer = "IgnorePlayer";
     [ShowOnly][SerializeField] private int currentObjectLayerTemp;
 
     [Header("Portal Settings")]
@@ -51,7 +51,7 @@ public class PlayerHoldTool : MonoBehaviour
 
     private void Update()
     {
-        if (!ActiveToolState()) return;
+        if (!ActiveToolState() || playerReferences.CurrentState != PlayerState.Playing) return;
 
         if (currentObject != null)
             if (Vector3.Distance(currentObject.transform.position, holdArea.position) > holdRange)
@@ -67,7 +67,7 @@ public class PlayerHoldTool : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!ActiveToolState()) return;
+        if (!ActiveToolState() || playerReferences.CurrentState != PlayerState.Playing) return;
 
         if (currentObject != null)
         {
@@ -174,7 +174,7 @@ public class PlayerHoldTool : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        if (!ActiveToolState()) return;
+        if (!ActiveToolState() || playerReferences.CurrentState != PlayerState.Playing) return;
 
         if (context.started)
         {

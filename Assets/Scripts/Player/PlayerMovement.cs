@@ -67,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (playerReferences.CurrentState != PlayerState.Playing) return;
         Look();
         IsGrounded();
         Fall();
@@ -74,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (playerReferences.CurrentState != PlayerState.Playing) return;
         Move();
         Jump();
     }
@@ -137,20 +139,28 @@ public class PlayerMovement : MonoBehaviour
     #region Inputs
     public void OnMove(InputAction.CallbackContext value)
     {
+        if (playerReferences.CurrentState != PlayerState.Playing) return;
+
         this.movement = value.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext value)
     {
+        if (playerReferences.CurrentState != PlayerState.Playing) return;
+
         this.jump = value.ReadValue<float>();
     }
     public void OnLook(InputAction.CallbackContext value)
     {
+        if (playerReferences.CurrentState != PlayerState.Playing) return;
+
         this.look = value.ReadValue<Vector2>();
     }
 
     public void OnSprint(InputAction.CallbackContext value)
     {
+        if (playerReferences.CurrentState != PlayerState.Playing) return;
+
         if (value.ReadValue<float>() >= 1f)
         {
             isSprinting = true;
