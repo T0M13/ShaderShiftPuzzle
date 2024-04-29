@@ -431,7 +431,6 @@ GameObject:
   - component: {fileID: 3954172582589972525}
   - component: {fileID: 2801339465625953816}
   - component: {fileID: 7594290484182761436}
-  - component: {fileID: 6052818941992510446}
   - component: {fileID: 2470504821176272764}
   - component: {fileID: 6990219065714296215}
   m_Layer: 6
@@ -797,7 +796,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  rayDistance: 17
+  rayDistance: 5
   interactDistance: 2
 --- !u!114 &6919184196532914993
 MonoBehaviour:
@@ -883,21 +882,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canUsePortal: 1
---- !u!114 &6052818941992510446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6293764909049747958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 939a38d6b99db3e4180406de2ab6e008, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activationDistance: 20
-  objectsToActivate: []
-  showGizmos: 1
 --- !u!54 &2470504821176272764
 Rigidbody:
   m_ObjectHideFlags: 0
