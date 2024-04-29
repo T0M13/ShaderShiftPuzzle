@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Other/MouseShowcase/MouseShowcase.unity
-    guid: 7348c95ed50327743aa01e3d608c04fd
+    path: Assets/Scenes/MainMenu/MainMenu.unity
+    guid: db75dbe230a926d47ab7e2a4a46e84a6
   - enabled: 1
-    path: Assets/Other/WaterShowcase/WaterShowcase.unity
-    guid: db8c386e846133a4c91d857c52652f96
+    path: Assets/Scenes/Level0/Level0.unity
+    guid: 7ed1f59ab72d0984cb422c90fcec1af2
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d64efbff14127da488151015e9a521a7,
       type: 2}
