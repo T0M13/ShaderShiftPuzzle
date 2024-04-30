@@ -60,12 +60,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("GameManager: No canvas object found!");
         }
-        else
-        {
-            canvasManager.ToggleCanvasPause -= OnToggleCanvas;
-            canvasManager.ToggleCanvasPause += OnToggleCanvas;
-
-        }
 
     }
 
@@ -74,11 +68,6 @@ public class GameManager : MonoBehaviour
         if (Player != null && Player.PlayerInput != null)
         {
             Player.PlayerInput.TogglePause -= OnPause;
-        }
-
-        if (CanvasManager != null )
-        {
-            CanvasManager.ToggleCanvasPause -= OnToggleCanvas;
         }
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
@@ -127,30 +116,22 @@ public class GameManager : MonoBehaviour
 
     private void OnToggleCanvas(bool value)
     {
-        foreach (var item in canvasManager.transformsToActivateOnPause)
-        {
-            item.gameObject.SetActive(value);
-        }
-
-        foreach (var item in canvasManager.transformsToDeactivateOnPause)
-        {
-            item.gameObject.SetActive(!value);
-        }
+        canvasManager.OnToggleCanvas(value);
     }
 
     private void EnterMainMenu()
     {
         Debug.Log("Entering Main Menu.");
-        Time.timeScale = 1;
-        //SetPlayerState(PlayerState.Freeze);
+        //Time.timeScale = 1;
+        SetPlayerState(PlayerState.Freeze);
         SetCursorState(true);
     }
 
     private void EnterGame()
     {
         Debug.Log("Entering Game.");
-        Time.timeScale = 1;
-        //SetPlayerState(PlayerState.Playing);
+        //Time.timeScale = 1;
+        SetPlayerState(PlayerState.Playing);
         SetCursorState(false);
         OnToggleCanvas(false);
     }
@@ -158,8 +139,8 @@ public class GameManager : MonoBehaviour
     private void EnterPaused()
     {
         Debug.Log("Game is Paused.");
-        Time.timeScale = 0;
-        //SetPlayerState(PlayerState.Freeze);
+        //Time.timeScale = 0;
+        SetPlayerState(PlayerState.Freeze);
         SetCursorState(true);
         OnToggleCanvas(true);
     }
@@ -167,8 +148,8 @@ public class GameManager : MonoBehaviour
     private void EnterGameOver()
     {
         Debug.Log("Game Over.");
-        Time.timeScale = 0;
-        //SetPlayerState(PlayerState.Freeze);
+        //Time.timeScale = 0;
+        SetPlayerState(PlayerState.Freeze);
         SetCursorState(true);
     }
 
@@ -180,8 +161,12 @@ public class GameManager : MonoBehaviour
 
     private void SetPlayerState(PlayerState state)
     {
+
         if (player != null)
+        {
+            player.FreezePlayer();
             player.CurrentState = state;
+        }
     }
 
     public void OnPause()

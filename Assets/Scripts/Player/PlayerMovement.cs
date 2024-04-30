@@ -99,7 +99,6 @@ public class PlayerMovement : MonoBehaviour
         jump = 0;
     }
 
-
     private void Fall()
     {
         if (jumpComponent.IsJumping) return;
@@ -124,6 +123,12 @@ public class PlayerMovement : MonoBehaviour
         playerReferences.PlayerLook.LookPos = this.look;
     }
 
+    public void Freeze()
+    {
+        movement = Vector2.zero;
+        moveComponent.Move(playerRigidBody, this.movement, this.isSprinting);
+    }
+
     #region Gizmos
     private void OnDrawGizmosSelected()
     {
@@ -140,27 +145,23 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext value)
     {
         if (playerReferences.CurrentState != PlayerState.Playing) return;
-
         this.movement = value.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext value)
     {
         if (playerReferences.CurrentState != PlayerState.Playing) return;
-
         this.jump = value.ReadValue<float>();
     }
     public void OnLook(InputAction.CallbackContext value)
     {
         if (playerReferences.CurrentState != PlayerState.Playing) return;
-
         this.look = value.ReadValue<Vector2>();
     }
 
     public void OnSprint(InputAction.CallbackContext value)
     {
         if (playerReferences.CurrentState != PlayerState.Playing) return;
-
         if (value.ReadValue<float>() >= 1f)
         {
             isSprinting = true;

@@ -83,8 +83,8 @@ namespace Michsky.UI.Dark
         {
             try
             {
-                panels[currentPanelIndex].panelObject.GetComponent<Animator>().Play("Instant In");
-                panels[currentPanelIndex].panelButton.GetComponent<Animator>().Play("Instant In");
+                panels[currentPanelIndex].panelObject.GetComponent<Animator>().Play("Panel In");
+                panels[currentPanelIndex].panelButton.GetComponent<Animator>().Play("Panel In");
                 Canvas.ForceUpdateCanvases();
                 LayoutRebuilder.ForceRebuildLayoutImmediate(panels[currentPanelIndex].panelObject.GetComponent<RectTransform>());
             }

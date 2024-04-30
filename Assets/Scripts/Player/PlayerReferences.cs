@@ -89,9 +89,15 @@ public class PlayerReferences : MonoBehaviour
             PlayerHealth = GetComponent<Health>();
 
     }
-
+    public void FreezePlayer()
+    {
+        //Movement
+        playerMovement.Freeze();
+    }
 
 }
+
+
 
 public enum ToolState
 {

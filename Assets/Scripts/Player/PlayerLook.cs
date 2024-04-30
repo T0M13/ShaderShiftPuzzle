@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerLook : MonoBehaviour
 {
     [Header("Look")]
+    [SerializeField] private PlayerReferences playerReferences;
     [SerializeField] private LookComponent lookComponent;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Vector2 lookPos;
@@ -28,6 +29,7 @@ public class PlayerLook : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (playerReferences.CurrentState != PlayerState.Playing) return;
         Look();
     }
 
