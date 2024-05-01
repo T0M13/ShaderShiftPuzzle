@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Outlines
   m_EditorClassIdentifier: 
   m_Active: 1
-  renderPassEvent: 350
+  renderPassEvent: 300
   outlinesLayerMask:
     serializedVersion: 2
     m_Bits: 65536
@@ -22,10 +22,10 @@ MonoBehaviour:
     outlineScale: 3
     depthThreshold: 1.5
     robertsCrossMultiplier: 0
-    normalThreshold: 1
+    normalThreshold: 0.9
     steepAngleThreshold: 0.2
     steepAngleMultiplier: 25
-    colorFormat: 0
+    colorFormat: 9
     depthBufferBits: 0
     filterMode: 0
     backgroundColor: {r: 0, g: 0, b: 0, a: 0}
@@ -48,11 +48,11 @@ MonoBehaviour:
   m_Settings:
     AOMethod: 1
     Downsample: 0
-    AfterOpaque: 0
+    AfterOpaque: 1
     Source: 1
     NormalSamples: 1
     Intensity: 0.5
-    DirectLightingStrength: 0.25
+    DirectLightingStrength: 0
     Radius: 0.25
     Samples: 0
     BlurQuality: 0
@@ -67,49 +67,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 3302065f671a8450b82c9ddf07426f3a, type: 3}
   - {fileID: 2800000, guid: 56a77a3e8d64f47b6afe9e3c95cb57d5, type: 3}
   m_Shader: {fileID: 4800000, guid: 0849e84e3d62649e8882e9d6f056a017, type: 3}
---- !u!114 &-1021458988570248251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: Outlines
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  settings:
-    passTag: Outlines
-    Event: 300
-    filterSettings:
-      RenderQueueType: 0
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 65536
-      PassNames: []
-    overrideMaterial: {fileID: 0}
-    overrideMaterialPassIndex: 0
-    overrideShader: {fileID: -6465566751694194690, guid: 780a262ed4bbb2b4b8b0c93f790b11d5,
-      type: 3}
-    overrideShaderPassIndex: 0
-    overrideMode: 2
-    overrideDepthState: 1
-    depthCompareFunction: 4
-    enableWrite: 1
-    stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
-      passOperation: 0
-      failOperation: 0
-      zFailOperation: 0
-    cameraSettings:
-      overrideCamera: 0
-      restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,8 +86,7 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -1878332245247344467}
   - {fileID: -4018662780450617843}
-  - {fileID: -1021458988570248251}
-  m_RendererFeatureMap: adc0de57c6d2eee50d4628337ed73ac8c5fba339760cd3f1
+  m_RendererFeatureMap: adc0de57c6d2eee50d4628337ed73ac8
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}

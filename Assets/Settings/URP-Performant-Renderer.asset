@@ -22,10 +22,10 @@ MonoBehaviour:
     outlineScale: 3
     depthThreshold: 1.5
     robertsCrossMultiplier: 0
-    normalThreshold: 1
+    normalThreshold: 0.9
     steepAngleThreshold: 0.2
     steepAngleMultiplier: 25
-    colorFormat: 0
+    colorFormat: 9
     depthBufferBits: 0
     filterMode: 0
     backgroundColor: {r: 0, g: 0, b: 0, a: 0}
