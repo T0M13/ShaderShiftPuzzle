@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -9,7 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameState currentState;
     [SerializeField] private PlayerReferences player;
     [SerializeField] private CanvasManager canvasManager;
-
+    //[Header("Pause Settings")]
+    //[SerializeField] private float pauseCooldown = 2.0f; // Cooldown time in seconds
+    //[SerializeField][ShowOnly] private bool isCooldown = false; // Cooldown status flag
     public GameState CurrentState
     {
         get => currentState;
@@ -171,9 +174,17 @@ public class GameManager : MonoBehaviour
 
     public void OnPause()
     {
+        if (canvasManager.mainPanelManager.currentPanelIndex != 0) return;
         if (currentState == GameState.Game)
             ChangeState(GameState.Paused);
         else if (currentState == GameState.Paused)
             ChangeState(GameState.Game);
     }
+
+    //private IEnumerator HandleCooldown()
+    //{
+    //    isCooldown = true; // Set cooldown flag to true
+    //    yield return new WaitForSecondsRealtime(pauseCooldown); // Wait for cooldown period in real time
+    //    isCooldown = false; // Reset cooldown flag after waiting
+    //}
 }

@@ -92,6 +92,37 @@ namespace Michsky.UI.Dark
             catch { }
         }
 
+        public void ToggleFirstPanel(bool value)
+        {
+            if (value)
+            {
+               
+                try
+                {
+                    panels[currentPanelIndex].panelObject.GetComponent<Animator>().Play("Panel In");
+                    panels[currentPanelIndex].panelButton.GetComponent<Animator>().Play("Panel In");
+                    Canvas.ForceUpdateCanvases();
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(panels[currentPanelIndex].panelObject.GetComponent<RectTransform>());
+                }
+
+                catch { }
+            }
+            else
+            {
+
+
+                try
+                {
+                    panels[currentPanelIndex].panelObject.GetComponent<Animator>().Play("Panel Out");
+                    panels[currentPanelIndex].panelButton.GetComponent<Animator>().Play("Panel Out");
+                    Canvas.ForceUpdateCanvases();
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(panels[currentPanelIndex].panelObject.GetComponent<RectTransform>());
+                }
+
+                catch { }
+            }
+        }
+
         public void OpenFirstTab()
         {
             if (currentPanelIndex != 0)

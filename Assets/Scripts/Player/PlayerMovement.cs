@@ -127,6 +127,8 @@ public class PlayerMovement : MonoBehaviour
     {
         movement = Vector2.zero;
         moveComponent.Move(playerRigidBody, this.movement, this.isSprinting);
+        look = Vector2.zero;
+        playerReferences.PlayerLook.LookPos = this.look;
     }
 
     #region Gizmos

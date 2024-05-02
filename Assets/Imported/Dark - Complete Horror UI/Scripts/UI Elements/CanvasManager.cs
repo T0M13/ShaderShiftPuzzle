@@ -26,9 +26,9 @@ public class CanvasManager : MonoBehaviour
         foreach (var item in transformsToActivateOnPause)
         {
             item.gameObject.SetActive(value);
-            mainPanelManager.OpenFirstTab();
-            mainPanelManager.EnableFirstPanel();
         }
+        mainPanelManager.OpenFirstTab();
+        mainPanelManager.ToggleFirstPanel(value);
 
         foreach (var item in transformsToDeactivateOnPause)
         {

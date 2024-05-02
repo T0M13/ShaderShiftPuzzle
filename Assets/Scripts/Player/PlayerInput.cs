@@ -15,7 +15,8 @@ public class PlayerInput : MonoBehaviour
     public InputActionAsset PlayerControls { get => playerControlsActions; set => playerControlsActions = value; }
 
 
-    public Action TogglePause; 
+    public Action TogglePause;
+
 
     private void OnValidate()
     {
