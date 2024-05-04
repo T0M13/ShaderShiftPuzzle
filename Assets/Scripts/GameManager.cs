@@ -10,9 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameState currentState;
     [SerializeField] private PlayerReferences player;
     [SerializeField] private CanvasManager canvasManager;
-    //[Header("Pause Settings")]
-    //[SerializeField] private float pauseCooldown = 2.0f; // Cooldown time in seconds
-    //[SerializeField][ShowOnly] private bool isCooldown = false; // Cooldown status flag
+    [SerializeField] private SaveManager saveManager;
+
     public GameState CurrentState
     {
         get => currentState;
@@ -29,6 +28,11 @@ public class GameManager : MonoBehaviour
     {
         get => canvasManager;
         private set => canvasManager = value;
+    }
+    public SaveManager SaveManager
+    {
+        get => saveManager;
+        private set => saveManager = value;
     }
 
     private void Awake()
@@ -62,6 +66,12 @@ public class GameManager : MonoBehaviour
         if (canvasManager == null)
         {
             Debug.LogError("GameManager: No canvas object found!");
+        }
+
+        saveManager = GameObject.FindGameObjectWithTag("SaveManager")?.GetComponent<SaveManager>();
+        if (saveManager == null)
+        {
+            Debug.LogError("GameManager: No saveManager object found!");
         }
 
     }
@@ -125,7 +135,6 @@ public class GameManager : MonoBehaviour
     private void EnterMainMenu()
     {
         Debug.Log("Entering Main Menu.");
-        //Time.timeScale = 1;
         SetPlayerState(PlayerState.Freeze);
         SetCursorState(true);
     }
@@ -133,7 +142,6 @@ public class GameManager : MonoBehaviour
     private void EnterGame()
     {
         Debug.Log("Entering Game.");
-        //Time.timeScale = 1;
         SetPlayerState(PlayerState.Playing);
         SetCursorState(false);
         OnToggleCanvas(false);
@@ -142,7 +150,6 @@ public class GameManager : MonoBehaviour
     private void EnterPaused()
     {
         Debug.Log("Game is Paused.");
-        //Time.timeScale = 0;
         SetPlayerState(PlayerState.Freeze);
         SetCursorState(true);
         OnToggleCanvas(true);
@@ -150,10 +157,23 @@ public class GameManager : MonoBehaviour
 
     private void EnterGameOver()
     {
+        //Save before?
         Debug.Log("Game Over.");
-        //Time.timeScale = 0;
         SetPlayerState(PlayerState.Freeze);
         SetCursorState(true);
+    }
+
+    public void RestartLevel()
+    {
+        //Load Level/Save File?
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
+
+    public void ExitGame()
+    {
+        //Save before?
+        Application.Quit();
     }
 
     private void SetCursorState(bool visible)
