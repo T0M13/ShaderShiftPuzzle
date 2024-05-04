@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -23,8 +24,11 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private SaveManager saveManager;
     [SerializeField] private Transform loadedFileParent;
     [SerializeField] private GameObject loadPrefab;
-    [SerializeField] private string tempDeleteFileName = "";
+    [SerializeField][ShowOnly] private string tempDeleteFileName = "";
     [SerializeField] private ModalWindowManager deleteSaveFileWindow;
+
+    [SerializeField][ShowOnly] private string tempLoadFileName = "";
+    [SerializeField] private ModalWindowManager loadSaveFileWindow;
 
     public SaveManager SaveManager
     {
@@ -107,6 +111,27 @@ public class MainMenuManager : MonoBehaviour
         // Example: saveManager.Load<GameData>(saveName);
     }
 
+    private void LoadChapter(string level)
+    {
+        SceneManager.LoadScene(level);
+    }
+
+    public void AddLoadGameString(string chapterName)
+    {
+        tempLoadFileName = chapterName;
+    }
+
+    public void RemoveLoadGameString()
+    {
+        tempLoadFileName = "";
+    }
+
+    public void LoadTempGameFile()
+    {
+        LoadChapter(tempLoadFileName);
+    }
+
+
     public void AddDeleteGameString(string saveName)
     {
         tempDeleteFileName = saveName;
@@ -119,9 +144,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void DeleteTempGameFile()
     {
-        saveManager.DeleteSave(tempDeleteFileName);
-        CreateLoadButtons();
-
+        DeleteGame(tempDeleteFileName);
     }
 
     private void DeleteGame(string saveName)
