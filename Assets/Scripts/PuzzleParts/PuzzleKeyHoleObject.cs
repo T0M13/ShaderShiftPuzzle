@@ -8,6 +8,7 @@ public class PuzzleKeyHoleObject : MonoBehaviour
 {
 
     [SerializeField] private PuzzleKeyObject key;
+    [SerializeField] private bool hasToStay = true;
 
     public UnityEvent onKeyPlaced;
     public UnityEvent onKeyExited;
@@ -22,7 +23,7 @@ public class PuzzleKeyHoleObject : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<PuzzleKeyObject>() == key)
+        if (other.GetComponent<PuzzleKeyObject>() == key && hasToStay)
         {
             onKeyExited?.Invoke();
         }

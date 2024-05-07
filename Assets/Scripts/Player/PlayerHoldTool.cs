@@ -15,6 +15,7 @@ public class PlayerHoldTool : MonoBehaviour
     [SerializeField] private float pickUpForce = 150f;
     [SerializeField] private float moveDirectionThreshold = 0.1f;
     [ShowOnly][SerializeField] private GameObject currentObject;
+    [ShowOnly][SerializeField] private HoldableObject currentHoldObject;
     [ShowOnly][SerializeField] private Rigidbody currentObjectBody;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float rayDistance = 2;
@@ -96,6 +97,22 @@ public class PlayerHoldTool : MonoBehaviour
     {
         if (gameObject.GetComponent<IHoldable>() == null) return;
 
+        if (gameObject.GetComponent<HoldableObject>())
+        {
+            currentHoldObject = gameObject.GetComponent<HoldableObject>();
+        }
+
+        if (!currentHoldObject.canBeHeld)
+        {
+            currentHoldObject = null;
+            return;
+        }
+        else
+        {
+            currentHoldObject.playerHoldToolRef = this;
+        }
+
+
         if (gameObject.GetComponent<Rigidbody>())
         {
             currentObjectBody = gameObject.GetComponent<Rigidbody>();
@@ -124,6 +141,10 @@ public class PlayerHoldTool : MonoBehaviour
 
     public void DropObject()
     {
+
+        currentHoldObject.playerHoldToolRef = null;
+        currentHoldObject = null;
+
         currentObjectBody.useGravity = true;
         currentObjectBody.drag = 1;
         currentObjectBody.constraints = RigidbodyConstraints.None;

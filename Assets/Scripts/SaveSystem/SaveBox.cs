@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using tomi.SaveSystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveBox : MonoBehaviour
 {
@@ -24,9 +25,10 @@ public class SaveBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<PlayerReferences>() != null)
+        if (other.GetComponent<PlayerReferences>() != null)
         {
-            saveManager.SaveAsync(null, SaveData.PlayerProfile, true);
+            SaveData.PlayerGameData.currentLevelName = SceneManager.GetActiveScene().name;
+            saveManager.SaveAsync(null, SaveData.Current, true);
         }
     }
 

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class HoldableObject : MonoBehaviour, IHoldable
 {
+    public PlayerHoldTool playerHoldToolRef = null;
+    public bool canBeHeld = true;
     [SerializeField] private Vector3 spawnPosition;
 
     private void Awake()
