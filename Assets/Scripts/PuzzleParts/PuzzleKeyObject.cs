@@ -34,17 +34,27 @@ public class PuzzleKeyObject : MonoBehaviour
                 transform.position = targetPosition.position;
                 transform.rotation = targetPosition.rotation;
                 transform.localScale = targetPosition.localScale;
-                startLerp = false; 
+                startLerp = false;
             }
         }
     }
 
     public void LerpToPosition()
     {
-        thisHoldableObject.playerHoldToolRef.DropObject();
+        if (thisHoldableObject.playerHoldToolRef != null)
+        {
+            thisHoldableObject.playerHoldToolRef.DropObject();
+        }
         thisHoldableObject.canBeHeld = false;
+
         boxCollider.enabled = false;
         rbody.useGravity = false;
         startLerp = true;
+    }
+
+    public void ReactivateKeyObject()
+    {
+        boxCollider.enabled = true;
+        rbody.useGravity = true;
     }
 }
