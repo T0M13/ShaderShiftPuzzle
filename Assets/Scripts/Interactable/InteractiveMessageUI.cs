@@ -9,6 +9,7 @@ public class InteractiveMessageUI : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI messageUI;
     [SerializeField] private TextMeshProUGUI useButtonUI;
+    [SerializeField] private TextMeshProUGUI taskMessageUI;
 
     private void Awake()
     {
@@ -31,6 +32,13 @@ public class InteractiveMessageUI : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        ChangeMessage("");
+        ChangePressMessage("");
+        ChangeTaskMessage("");
+    }
+
     public void ChangeMessage(string message)
     {
         messageUI.text = message;
@@ -39,5 +47,10 @@ public class InteractiveMessageUI : MonoBehaviour
     public void ChangePressMessage(string message)
     {
         useButtonUI.text = message;
+    }
+
+    public void ChangeTaskMessage(string message)
+    {
+        taskMessageUI.text = message;
     }
 }
