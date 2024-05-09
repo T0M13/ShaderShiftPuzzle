@@ -67,12 +67,18 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("GameManager: No canvas object found!");
         }
+        else
+        {
+            canvasManager.SetButtonFunctions(this);
+        }
 
         saveManager = GameObject.FindGameObjectWithTag("SaveManager")?.GetComponent<SaveManager>();
         if (saveManager == null)
         {
             Debug.LogError("GameManager: No saveManager object found!");
         }
+
+
 
     }
 
@@ -168,6 +174,12 @@ public class GameManager : MonoBehaviour
         //Load Level/Save File?
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
+    }
+
+    public void BackToMainMenu()
+    {
+        //Save before?
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void ExitGame()
