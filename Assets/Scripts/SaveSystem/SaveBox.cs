@@ -27,7 +27,7 @@ public class SaveBox : MonoBehaviour
     {
         if (other.GetComponent<PlayerReferences>() != null)
         {
-            SaveData.PlayerGameData.currentLevelName = SceneManager.GetActiveScene().name;
+            SaveData.Current.playerGameData.currentLevelName = SceneManager.GetActiveScene().name;
             saveManager.SaveAsync(null, SaveData.Current, true);
         }
     }

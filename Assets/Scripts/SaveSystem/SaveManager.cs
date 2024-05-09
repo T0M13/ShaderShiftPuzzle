@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using tomi.SaveSystem;
 
 [System.Serializable]
 public class SaveMetaData
@@ -38,7 +39,7 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public async void SaveAsync(string saveName = null, object saveData = null, bool isAutoSave = false)
+    public async void SaveAsync(string saveName = null, SaveData saveData = null, bool isAutoSave = false)
     {
         if (saveName == null)
         {
@@ -53,35 +54,32 @@ public class SaveManager : MonoBehaviour
             SaveData(saveName, saveData, metaDataPath, dataPath, isAutoSave);
         });
 
-        // Post actions on the main thread
         StartCoroutine(CaptureThumbnail(saveName));
         RefreshSaveFilesList();
         Debug.Log("Saved: " + metaDataPath);
     }
 
-    // This function is designed to be run in the background
-    private void SaveData(string saveName, object saveData, string metaDataPath, string dataPath, bool isAutoSave)
-    {
-        string description = GenerateSaveDescription(isAutoSave);
-        SaveMetaData metaData = new SaveMetaData(saveName, description);
 
+    private void SaveData(string saveName, SaveData saveData, string metaDataPath, string dataPath, bool isAutoSave)
+    {
+        SaveMetaData metaData = new SaveMetaData(saveName, GenerateSaveDescription(isAutoSave));
         string jsonMeta = JsonUtility.ToJson(metaData);
         File.WriteAllText(metaDataPath, jsonMeta);
 
         if (saveData != null)
         {
-            string jsonData = JsonUtility.ToJson(saveData);
+            string jsonData = JsonUtility.ToJson(saveData, true); 
             File.WriteAllText(dataPath, jsonData);
         }
     }
 
-    public void Load<T>(string saveName) where T : class
+    public void Load(string saveName)
     {
         string path = GetFilePath(saveName);
         if (File.Exists(path))
         {
             string jsonData = File.ReadAllText(path);
-            T data = JsonUtility.FromJson<T>(jsonData);
+            SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
             Debug.Log("Data loaded successfully.");
         }
         else
