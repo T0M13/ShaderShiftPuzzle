@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         canvasManager = GameObject.FindGameObjectWithTag("Canvas")?.GetComponent<CanvasManager>();
         if (canvasManager == null)
         {
-            Debug.LogError("GameManager: No canvas object found!");
+            Debug.LogWarning("GameManager: No canvas object found!");
         }
         else
         {
@@ -135,6 +135,11 @@ public class GameManager : MonoBehaviour
 
     private void OnToggleCanvas(bool value)
     {
+        if (canvasManager == null)
+        {
+            Debug.LogWarning("Canvas Missing");
+            return;
+        }
         canvasManager.OnToggleCanvas(value);
     }
 
