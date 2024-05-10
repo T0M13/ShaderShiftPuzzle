@@ -2,6 +2,7 @@ using Michsky.UI.Dark;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using tomi.SaveSystem;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,6 +24,8 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("LoadSave Files")]
     [SerializeField] private SaveManager saveManager;
+    [SerializeField] private Transform chapterLoadParent;
+    [SerializeField] private GameObject chapterLoadGameObject;
     [SerializeField] private Transform loadedFileParent;
     [SerializeField] private GameObject loadPrefab;
     [SerializeField][ShowOnly] private string tempDeleteFileName = "";
@@ -47,6 +50,7 @@ public class MainMenuManager : MonoBehaviour
         }
         else
         {
+            UpdateChapterLoadButton();
             CreateLoadButtons();
         }
 
@@ -63,6 +67,43 @@ public class MainMenuManager : MonoBehaviour
             SetNewTimer();
         }
     }
+    private void UpdateChapterLoadButton()
+    {
+        if (saveManager.saveFiles.Count > 0)
+        {
+            // Assuming saveFiles is sorted or you sort it as needed
+            string mostRecentSaveFileName = saveManager.saveFiles.Last();
+
+            // Load the most recent save data
+            SaveData mostRecentSaveData = saveManager.Load(mostRecentSaveFileName);
+            if (mostRecentSaveData != null)
+            {
+                ChapterLoadSaveButton chapterLoadSaveButton = chapterLoadGameObject.GetComponent<ChapterLoadSaveButton>();
+
+                if (chapterLoadSaveButton != null)
+                {
+                    //string saveName = mostRecentSaveData.saveMetaData.saveName;
+                    string backgroundTitle = mostRecentSaveData.saveMetaData.autoSave ? "AUTOSAVE FILE" : "SAVE FILE";
+                    string description = mostRecentSaveData.saveMetaData.description;
+
+
+                    chapterLoadSaveButton.title.text = "CONTINUE";
+                    chapterLoadSaveButton.backgroundTitle.text = backgroundTitle;
+                    chapterLoadSaveButton.desc.text = description;
+                    chapterLoadSaveButton.thumbnail.sprite = saveManager.levelImages[mostRecentSaveData.playerGameData.currentLevelThumbnailIndex];
+
+                    chapterLoadSaveButton.button.onClick.AddListener(() => AddLoadGameString(mostRecentSaveData.playerGameData.currentLevelName));
+
+                    chapterLoadGameObject.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No save files found to create a chapter load button.");
+        }
+    }
+
 
     private void CreateLoadButtons()
     {
@@ -146,6 +187,7 @@ public class MainMenuManager : MonoBehaviour
     {
         saveManager.DeleteSave(saveName);
         CreateLoadButtons();
+        UpdateChapterLoadButton();
     }
 
 
