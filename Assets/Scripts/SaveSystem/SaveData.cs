@@ -12,6 +12,10 @@ namespace tomi.SaveSystem
                     _current = new SaveData();
                 return _current;
             }
+            set
+            {
+                _current = value;
+            }
         }
 
         public PlayerProfile playerProfile;

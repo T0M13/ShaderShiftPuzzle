@@ -32,6 +32,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private ModalWindowManager deleteSaveFileWindow;
 
     [SerializeField][ShowOnly] private string tempLoadFileName = "";
+    [SerializeField][ShowOnly] private string tempLoadFilePath = "";
     [SerializeField] private ModalWindowManager loadSaveFileWindow;
 
     public SaveManager SaveManager
@@ -92,7 +93,9 @@ public class MainMenuManager : MonoBehaviour
                     chapterLoadSaveButton.desc.text = description;
                     chapterLoadSaveButton.thumbnail.sprite = saveManager.levelImages[mostRecentSaveData.playerGameData.currentLevelThumbnailIndex];
 
+                    chapterLoadSaveButton.button.onClick.AddListener(() => AddLoadGamePathString(mostRecentSaveData.saveMetaData.saveName));
                     chapterLoadSaveButton.button.onClick.AddListener(() => AddLoadGameString(mostRecentSaveData.playerGameData.currentLevelName));
+
 
                     chapterLoadGameObject.SetActive(true);
                 }
@@ -133,23 +136,24 @@ public class MainMenuManager : MonoBehaviour
 
 
                 // Assign callbacks to the buttons
-                loadSaveButton.button.onClick.AddListener(() => LoadGame(saveName));
+                loadSaveButton.button.onClick.AddListener(() => AddLoadGameString(data.playerGameData.currentLevelName));
+                loadSaveButton.button.onClick.AddListener(() => AddLoadGamePathString(data.saveMetaData.saveName));
+                loadSaveButton.button.onClick.AddListener(() => loadSaveFileWindow.ModalWindowIn());
                 loadSaveButton.deleteButton.onClick.AddListener(() => AddDeleteGameString(saveName));
                 loadSaveButton.deleteButton.onClick.AddListener(() => deleteSaveFileWindow.ModalWindowIn());
             }
         }
     }
 
-    private void LoadGame(string saveName)
-    {
-        Debug.Log("Loading game: " + saveName);
-        // Load the game here using saveManager
-        // Example: saveManager.Load<GameData>(saveName);
-    }
 
     private void LoadChapter(string level)
     {
         SceneManager.LoadScene(level);
+    }
+
+    public void AddLoadGamePathString(string saveName)
+    {
+        tempLoadFilePath = saveName;
     }
 
     public void AddLoadGameString(string chapterName)
@@ -160,10 +164,12 @@ public class MainMenuManager : MonoBehaviour
     public void RemoveLoadGameString()
     {
         tempLoadFileName = "";
+        tempLoadFilePath = "";
     }
 
     public void LoadTempGameFile()
     {
+        SaveData.Current = saveManager.Load(tempLoadFilePath);
         LoadChapter(tempLoadFileName);
     }
 

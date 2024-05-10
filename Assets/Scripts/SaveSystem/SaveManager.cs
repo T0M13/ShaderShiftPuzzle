@@ -82,12 +82,12 @@ public class SaveManager : MonoBehaviour
         {
             string jsonData = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
-            Debug.Log("Data loaded successfully.");
+            //Debug.Log("Data loaded successfully.");
             return data;
         }
         else
         {
-            Debug.LogError("Save file not found.");
+            //Debug.LogError("Save file not found.");
             return null;
         }
     }
