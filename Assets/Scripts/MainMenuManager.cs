@@ -24,6 +24,7 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("LoadSave Files")]
     [SerializeField] private SaveManager saveManager;
+    [SerializeField] private LoadingScreenManager loadingScreenManager;
     [SerializeField] private Transform chapterLoadParent;
     [SerializeField] private GameObject chapterLoadGameObject;
     [SerializeField] private Transform loadedFileParent;
@@ -53,6 +54,12 @@ public class MainMenuManager : MonoBehaviour
         {
             UpdateChapterLoadButton();
             CreateLoadButtons();
+        }
+
+        loadingScreenManager = GameObject.FindGameObjectWithTag("LoadingScreenManager")?.GetComponent<LoadingScreenManager>();
+        if (loadingScreenManager == null)
+        {
+            Debug.LogError("MainMenuManager: No loadingScreenManager object found! ");
         }
 
         eventsOnStart?.Invoke();
@@ -103,6 +110,7 @@ public class MainMenuManager : MonoBehaviour
         }
         else
         {
+            chapterLoadGameObject.SetActive(false);
             Debug.LogWarning("No save files found to create a chapter load button.");
         }
     }
@@ -148,7 +156,15 @@ public class MainMenuManager : MonoBehaviour
 
     private void LoadChapter(string level)
     {
-        SceneManager.LoadScene(level);
+        //SceneManager.LoadSceneAsync(level);
+        if (loadingScreenManager != null)
+        {
+            loadingScreenManager.SwitchToScene(level);
+        }
+        else
+        {
+            Debug.LogWarning("No LoadingScreen");
+        }
     }
 
     public void AddLoadGamePathString(string saveName)

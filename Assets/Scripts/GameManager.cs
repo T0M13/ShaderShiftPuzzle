@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerReferences player;
     [SerializeField] private CanvasManager canvasManager;
     [SerializeField] private SaveManager saveManager;
+    [SerializeField] private LoadingScreenManager loadingScreenManager;
+
 
     public GameState CurrentState
     {
@@ -33,6 +35,12 @@ public class GameManager : MonoBehaviour
     {
         get => saveManager;
         private set => saveManager = value;
+    }
+
+    public LoadingScreenManager LoadingScreenManager
+    {
+        get => loadingScreenManager;
+        private set => loadingScreenManager = value;
     }
 
     private void Awake()
@@ -78,6 +86,19 @@ public class GameManager : MonoBehaviour
             Debug.LogError("GameManager: No saveManager object found!");
         }
 
+        loadingScreenManager = GameObject.FindGameObjectWithTag("LoadingScreenManager")?.GetComponent<LoadingScreenManager>();
+        if (loadingScreenManager == null)
+        {
+            Debug.LogError("GameManager: No LoadingScreenManager object found!");
+        }
+        else
+        {
+            loadingScreenManager.onBeforeLoadingScreen -= OnBeforeLoadingScreen;
+            loadingScreenManager.onBeforeLoadingScreen += OnBeforeLoadingScreen;
+            loadingScreenManager.onAfterLoadingScreen -= OnAfterLoadingScreen;
+            loadingScreenManager.onAfterLoadingScreen += OnAfterLoadingScreen;
+        }
+
 
 
     }
@@ -118,18 +139,18 @@ public class GameManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.MainMenu:
-                EnterMainMenu();
-                break;
+            //case GameState.MainMenu:
+            //    EnterMainMenu();
+            //    break;
             case GameState.Game:
                 EnterGame();
                 break;
             case GameState.Paused:
                 EnterPaused();
                 break;
-            case GameState.GameOver:
-                EnterGameOver();
-                break;
+                //case GameState.GameOver:
+                //    EnterGameOver();
+                //break;
         }
     }
 
@@ -141,13 +162,6 @@ public class GameManager : MonoBehaviour
             return;
         }
         canvasManager.OnToggleCanvas(value);
-    }
-
-    private void EnterMainMenu()
-    {
-        Debug.Log("Entering Main Menu.");
-        SetPlayerState(PlayerState.Freeze);
-        SetCursorState(true);
     }
 
     private void EnterGame()
@@ -166,25 +180,39 @@ public class GameManager : MonoBehaviour
         OnToggleCanvas(true);
     }
 
-    private void EnterGameOver()
-    {
-        //Save before?
-        Debug.Log("Game Over.");
-        SetPlayerState(PlayerState.Freeze);
-        SetCursorState(true);
-    }
+    //private void EnterGameOver()
+    //{
+    //    //Save before?
+    //    Debug.Log("Game Over.");
+    //    SetPlayerState(PlayerState.Freeze);
+    //    SetCursorState(true);
+    //}
 
     public void RestartLevel()
     {
         //Load Level/Save File?
         Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
+        if (loadingScreenManager != null)
+        {
+            loadingScreenManager.SwitchToScene(currentScene.name);
+        }
+        else
+        {
+            Debug.LogWarning("No LoadingScreen");
+        }
     }
 
     public void BackToMainMenu()
     {
         //Save before?
-        SceneManager.LoadScene("MainMenu");
+        if (loadingScreenManager != null)
+        {
+            loadingScreenManager.SwitchToScene("MainMenu");
+        }
+        else
+        {
+            Debug.LogWarning("No LoadingScreen");
+        }
     }
 
     public void ExitGame()
@@ -209,6 +237,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OnBeforeLoadingScreen()
+    {
+        //Before Loading Screen
+    }
+
+    public void OnAfterLoadingScreen()
+    {
+        //After Loading Screen
+
+    }
+
+
     public void OnPause()
     {
         if (canvasManager.mainPanelManager.currentPanelIndex != 0) return;
@@ -218,10 +258,4 @@ public class GameManager : MonoBehaviour
             ChangeState(GameState.Game);
     }
 
-    //private IEnumerator HandleCooldown()
-    //{
-    //    isCooldown = true; // Set cooldown flag to true
-    //    yield return new WaitForSecondsRealtime(pauseCooldown); // Wait for cooldown period in real time
-    //    isCooldown = false; // Reset cooldown flag after waiting
-    //}
 }

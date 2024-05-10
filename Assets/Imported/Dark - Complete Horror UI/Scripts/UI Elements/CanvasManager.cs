@@ -17,6 +17,9 @@ public class CanvasManager : MonoBehaviour
     public Button restartButton;
     public Button resumeButton;
 
+    [Header("Other References")]
+    public UIDissolveEffect uiDissolveEffect;
+
     public UnityEvent onLevelStart;
 
 
