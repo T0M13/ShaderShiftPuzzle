@@ -2,28 +2,16 @@ using UnityEngine;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using tomi.SaveSystem;
-
-[System.Serializable]
-public class SaveMetaData
-{
-    public string saveName;
-    public string description;
-    public string thumbnailPath;  // Path to the screenshot thumbnail, if any
-
-    public SaveMetaData(string name, string desc)
-    {
-        saveName = name;
-        description = desc;
-        thumbnailPath = "";
-    }
-}
 
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
     public List<string> saveFiles = new List<string>(); // List to hold the names and descriptions of all save files
+    public Sprite[] levelImages; // Array to hold level images
+    private const int MaxAutosaves = 5;
 
     private void Awake()
     {
@@ -41,39 +29,53 @@ public class SaveManager : MonoBehaviour
 
     public async void SaveAsync(string saveName = null, SaveData saveData = null, bool isAutoSave = false)
     {
+        if (isAutoSave)
+        {
+            ManageAutosaves();  // Check and manage autosave files
+        }
+
         if (saveName == null)
         {
             saveName = GenerateSaveName(isAutoSave);
         }
 
-        string metaDataPath = GetFilePath(saveName + "_meta");
         string dataPath = GetFilePath(saveName);
+
+        saveData.saveMetaData = new SaveMetaData();
+
+        saveData.saveMetaData.saveName = saveName;
+        saveData.saveMetaData.description = GenerateSaveDescription();
+        saveData.saveMetaData.autoSave = isAutoSave;
 
         await Task.Run(() =>
         {
-            SaveData(saveName, saveData, metaDataPath, dataPath, isAutoSave);
+            string jsonData = JsonUtility.ToJson(saveData, true);
+            File.WriteAllText(dataPath, jsonData);
         });
 
-        StartCoroutine(CaptureThumbnail(saveName));
         RefreshSaveFilesList();
-        Debug.Log("Saved: " + metaDataPath);
+        Debug.Log("Saved: " + dataPath);
     }
 
-
-    private void SaveData(string saveName, SaveData saveData, string metaDataPath, string dataPath, bool isAutoSave)
+    private void ManageAutosaves()
     {
-        SaveMetaData metaData = new SaveMetaData(saveName, GenerateSaveDescription(isAutoSave));
-        string jsonMeta = JsonUtility.ToJson(metaData);
-        File.WriteAllText(metaDataPath, jsonMeta);
+        var autosaveFiles = Directory.GetFiles(Application.persistentDataPath + "/saves", "autosave_*.json")
+            .Select(path => new FileInfo(path))
+            .OrderBy(file => file.CreationTime)
+            .ToList();
 
-        if (saveData != null)
+        while (autosaveFiles.Count >= MaxAutosaves)
         {
-            string jsonData = JsonUtility.ToJson(saveData, true); 
-            File.WriteAllText(dataPath, jsonData);
+            if (autosaveFiles.Any())
+            {
+                File.Delete(autosaveFiles[0].FullName);
+                autosaveFiles.RemoveAt(0);
+                Debug.Log("Deleted oldest autosave.");
+            }
         }
     }
 
-    public void Load(string saveName)
+    public SaveData Load(string saveName)
     {
         string path = GetFilePath(saveName);
         if (File.Exists(path))
@@ -81,51 +83,34 @@ public class SaveManager : MonoBehaviour
             string jsonData = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
             Debug.Log("Data loaded successfully.");
+            return data;
         }
         else
         {
             Debug.LogError("Save file not found.");
+            return null;
         }
     }
 
     public void DeleteSave(string saveName)
     {
-        string basePath = Application.persistentDataPath + "/saves/" + saveName;
-        string[] fileExtensions = { ".json", "_meta.json", "_thumbnail.png" };
-
-        foreach (var extension in fileExtensions)
+        string filePath = GetFilePath(saveName);
+        if (File.Exists(filePath))
         {
-            string filePath = basePath + extension;
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-                Debug.Log("Deleted file: " + filePath);
-            }
+            File.Delete(filePath);
+            Debug.Log("Deleted file: " + filePath);
         }
-
         RefreshSaveFilesList();
     }
-
 
     private string GenerateSaveName(bool isAutoSave)
     {
         return (isAutoSave ? "autosave_" : "save_") + System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
     }
 
-    private string GenerateSaveDescription(bool isAutoSave)
+    private string GenerateSaveDescription()
     {
-        string time = System.DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-        return isAutoSave ? "Autosave | " + time : "Manual Save | " + time;
-    }
-
-    private IEnumerator CaptureThumbnail(string saveName)
-    {
-        yield return new WaitForEndOfFrame(); // Wait for the frame to be rendered
-        Texture2D screenshot = ScreenCapture.CaptureScreenshotAsTexture();
-        byte[] bytes = screenshot.EncodeToPNG();
-        string filePath = Application.persistentDataPath + "/saves/" + saveName + "_thumbnail.png";
-        File.WriteAllBytes(filePath, bytes);
-        Destroy(screenshot); // Free the texture memory
+        return System.DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"); ;
     }
 
     private string GetFilePath(string fileName)
@@ -138,12 +123,15 @@ public class SaveManager : MonoBehaviour
         saveFiles.Clear();
         string path = Application.persistentDataPath + "/saves";
         Directory.CreateDirectory(path); // Ensure directory exists
-        var files = Directory.GetFiles(path, "*_meta.json");
+        var files = Directory.GetFiles(path, "*.json");
         foreach (var file in files)
         {
             string json = File.ReadAllText(file);
-            SaveMetaData metaData = JsonUtility.FromJson<SaveMetaData>(json);
-            saveFiles.Add(metaData.saveName + " | " + metaData.description);
+            SaveData loadedData = JsonUtility.FromJson<SaveData>(json);
+            if (loadedData != null && loadedData.saveMetaData != null)
+            {
+                saveFiles.Add(loadedData.saveMetaData.saveName);
+            }
         }
     }
 }

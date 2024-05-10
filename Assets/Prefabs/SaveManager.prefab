@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveFiles: []
+  levelImages:
+  - {fileID: 21300000, guid: 054e10fb6151ba64abad0dcf04f30810, type: 3}

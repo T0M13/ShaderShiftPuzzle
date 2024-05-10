@@ -2,6 +2,7 @@ using Michsky.UI.Dark;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using tomi.SaveSystem;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -71,30 +72,24 @@ public class MainMenuManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+
+
         foreach (var saveFile in saveManager.saveFiles)
         {
+            SaveData data = saveManager.Load(saveFile);
             GameObject buttonObj = Instantiate(loadPrefab, loadedFileParent);
             LoadSaveButton loadSaveButton = buttonObj.GetComponent<LoadSaveButton>();
 
             if (loadSaveButton != null)
             {
-                string[] parts = saveFile.Split('|');
-                string saveName = parts[0].Trim();
-                string title = parts[1].Trim();
-                string description = parts[2].Trim();
+                string saveName = data.saveMetaData.saveName;
+                string title = data.saveMetaData.autoSave ? "Autosave" : "Save";
+                string description = data.saveMetaData.description;
 
                 loadSaveButton.title.text = title;
                 loadSaveButton.desc.text = description;
+                loadSaveButton.thumbnail.sprite = saveManager.levelImages[data.playerGameData.currentLevelThumbnailIndex];
 
-                // Load the thumbnail if it exists
-                string thumbnailPath = Application.persistentDataPath + "/saves/" + saveName + "_thumbnail.png";
-                if (File.Exists(thumbnailPath))
-                {
-                    byte[] imageData = File.ReadAllBytes(thumbnailPath);
-                    Texture2D texture = new Texture2D(2, 2);
-                    texture.LoadImage(imageData);
-                    loadSaveButton.thumbnail.sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
-                }
 
                 // Assign callbacks to the buttons
                 loadSaveButton.button.onClick.AddListener(() => LoadGame(saveName));
@@ -150,7 +145,7 @@ public class MainMenuManager : MonoBehaviour
     private void DeleteGame(string saveName)
     {
         saveManager.DeleteSave(saveName);
-        CreateLoadButtons(); 
+        CreateLoadButtons();
     }
 
 

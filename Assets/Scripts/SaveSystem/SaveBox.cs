@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class SaveBox : MonoBehaviour
 {
     [SerializeField] private SaveManager saveManager;
-    [SerializeField] private bool hasBeenSaved = true;
+    [SerializeField] private bool hasBeenSaved = false;
     public SaveManager SaveManager
     {
         get => saveManager;
@@ -25,10 +25,12 @@ public class SaveBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<PlayerReferences>() != null)
+        if (other.GetComponent<PlayerReferences>() != null && !hasBeenSaved)
         {
             SaveData.Current.playerGameData.currentLevelName = SceneManager.GetActiveScene().name;
+            SaveData.Current.playerGameData.currentLevelThumbnailIndex = SceneManager.GetActiveScene().buildIndex - 1; // -1 Because of MainMenu
             saveManager.SaveAsync(null, SaveData.Current, true);
+            hasBeenSaved = true;
         }
     }
 

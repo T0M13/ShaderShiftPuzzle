@@ -10,6 +10,7 @@ namespace tomi.SaveSystem
     {
         public List<string> unlockedLevels = new List<string>();
         public string currentLevelName;
+        public int currentLevelThumbnailIndex;
 
         public PlayerGameData()
         {

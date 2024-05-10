@@ -16,11 +16,13 @@ namespace tomi.SaveSystem
 
         public PlayerProfile playerProfile;
         public PlayerGameData playerGameData;
+        public SaveMetaData saveMetaData;
 
         public SaveData()
         {
             playerProfile = new PlayerProfile();
             playerGameData = new PlayerGameData();
+            saveMetaData = new SaveMetaData();
         }
     }
 }
