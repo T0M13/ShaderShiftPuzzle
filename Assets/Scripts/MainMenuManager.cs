@@ -56,6 +56,7 @@ public class MainMenuManager : MonoBehaviour
         }
         else
         {
+
             UpdateChapters();
             UpdateChapterLoadButton();
             CreateLoadButtons();
@@ -89,7 +90,7 @@ public class MainMenuManager : MonoBehaviour
 
             // Load the most recent save data
             SaveData mostRecentSaveData = saveManager.Load(mostRecentSaveFileName);
-            if (mostRecentSaveData != null)
+            if (mostRecentSaveData != null && !string.IsNullOrEmpty(mostRecentSaveData.playerGameData.currentLevelName))
             {
                 ChapterLoadSaveButton chapterLoadSaveButton = chapterLoadGameObject.GetComponent<ChapterLoadSaveButton>();
 
@@ -134,6 +135,8 @@ public class MainMenuManager : MonoBehaviour
         foreach (var saveFile in saveManager.saveFiles)
         {
             SaveData data = saveManager.Load(saveFile);
+            if (string.IsNullOrEmpty(data.playerGameData.currentLevelName)) continue;
+
             GameObject buttonObj = Instantiate(loadPrefab, loadedFileParent);
             LoadSaveButton loadSaveButton = buttonObj.GetComponent<LoadSaveButton>();
 
@@ -163,6 +166,7 @@ public class MainMenuManager : MonoBehaviour
     {
         if (saveManager.saveFiles.Count > 0)
         {
+
             string mostRecentSaveFileName = saveManager.saveFiles.Last();
 
             SaveData mostRecentSaveData = saveManager.Load(mostRecentSaveFileName);
@@ -182,7 +186,7 @@ public class MainMenuManager : MonoBehaviour
                     chapterWindows[tempIndex].lockScreen.gameObject.SetActive(true);
                 }
             }
-            
+
 
         }
 

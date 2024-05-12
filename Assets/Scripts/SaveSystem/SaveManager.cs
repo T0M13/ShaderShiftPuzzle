@@ -19,6 +19,13 @@ public class SaveManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            //Create Default Save
+            if (saveFiles.Count <= 0)
+            {
+                SaveAsync(null, SaveData.Current, true);
+            }
+
             RefreshSaveFilesList();
         }
         else
@@ -148,7 +155,7 @@ public class SaveManager : MonoBehaviour
         return Application.persistentDataPath + "/saves/" + fileName + ".json";
     }
 
-    private void RefreshSaveFilesList()
+    public void RefreshSaveFilesList()
     {
         saveFiles.Clear();
         string path = Application.persistentDataPath + "/saves";
