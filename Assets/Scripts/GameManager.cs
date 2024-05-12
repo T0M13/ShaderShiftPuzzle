@@ -1,4 +1,5 @@
 using System.Collections;
+using tomi.SaveSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -123,6 +124,10 @@ public class GameManager : MonoBehaviour
                 InitializeGame();
                 ChangeState(GameState.Game);
                 break;
+            case "Level1":
+                InitializeGame();
+                ChangeState(GameState.Game);
+                break;
             default:
                 Debug.LogWarning("Loaded scene not explicitly handled: " + scene.name);
                 break;
@@ -185,6 +190,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("CheatMenu Activated");
         SetPlayerState(PlayerState.Freeze);
         SetCursorState(true);
+    }
+
+    public void UnlockLevel(string levelname)
+    {
+        if (!SaveData.Current.playerGameData.unlockedLevels.Contains(levelname))
+            SaveData.Current.playerGameData.unlockedLevels.Add(levelname);
+
+        saveManager.SaveAsync(null, SaveData.Current, true);
     }
 
     //private void EnterGameOver()

@@ -97,10 +97,40 @@ public class SaveManager : MonoBehaviour
         string filePath = GetFilePath(saveName);
         if (File.Exists(filePath))
         {
+            // Load the data before deleting
+            SaveData dataToDelete = Load(saveName);
             File.Delete(filePath);
             Debug.Log("Deleted file: " + filePath);
+
+            RefreshSaveFilesList();
+
+            if (saveFiles.Any())
+                UpdateNextMostRecentSave(dataToDelete);
         }
-        RefreshSaveFilesList();
+    }
+
+    private void UpdateNextMostRecentSave(SaveData dataToDelete)
+    {
+        string nextMostRecentSaveFile = GetNextMostRecentSaveFile();
+        if (!string.IsNullOrEmpty(nextMostRecentSaveFile))
+        {
+            SaveData nextMostRecentSaveData = Load(nextMostRecentSaveFile);
+            if (nextMostRecentSaveData != null)
+            {
+                nextMostRecentSaveData.playerProfile = dataToDelete.playerProfile;
+                nextMostRecentSaveData.playerGameData = dataToDelete.playerGameData;
+
+                // Re-save the updated next most recent save data
+                SaveAsync(nextMostRecentSaveFile, nextMostRecentSaveData, nextMostRecentSaveData.saveMetaData.autoSave);
+                Debug.Log("Updated next most recent save file: " + nextMostRecentSaveFile);
+            }
+        }
+    }
+
+    private string GetNextMostRecentSaveFile()
+    {
+        // Get the latest file after deletion
+        return saveFiles.OrderByDescending(f => f).FirstOrDefault();
     }
 
     private string GenerateSaveName(bool isAutoSave)

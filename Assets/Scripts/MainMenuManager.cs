@@ -7,6 +7,7 @@ using tomi.SaveSystem;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class MainMenuManager : MonoBehaviour
 
     public UnityEvent portalOpen;
     public UnityEvent portalClose;
+
+    [Header("Chapters")]
+    [SerializeField] private ChapterLockWindow[] chapterWindows;
 
     [Header("LoadSave Files")]
     [SerializeField] private SaveManager saveManager;
@@ -52,6 +56,7 @@ public class MainMenuManager : MonoBehaviour
         }
         else
         {
+            UpdateChapters();
             UpdateChapterLoadButton();
             CreateLoadButtons();
         }
@@ -154,6 +159,35 @@ public class MainMenuManager : MonoBehaviour
     }
 
 
+    public void UpdateChapters()
+    {
+        if (saveManager.saveFiles.Count > 0)
+        {
+            string mostRecentSaveFileName = saveManager.saveFiles.Last();
+
+            SaveData mostRecentSaveData = saveManager.Load(mostRecentSaveFileName);
+
+
+            for (int tempIndex = 0; tempIndex < chapterWindows.Length; tempIndex++)
+            {
+                if (tempIndex < mostRecentSaveData.playerGameData.unlockedLevels.Count &&
+                    !string.IsNullOrEmpty(mostRecentSaveData.playerGameData.unlockedLevels[tempIndex]))
+                {
+                    chapterWindows[tempIndex].chapterButton.interactable = true;
+                    chapterWindows[tempIndex].lockScreen.gameObject.SetActive(false);
+                }
+                else
+                {
+                    chapterWindows[tempIndex].chapterButton.interactable = false;
+                    chapterWindows[tempIndex].lockScreen.gameObject.SetActive(true);
+                }
+            }
+            
+
+        }
+
+    }
+
     private void LoadChapter(string level)
     {
         //SceneManager.LoadSceneAsync(level);
@@ -230,5 +264,12 @@ public class MainMenuManager : MonoBehaviour
     private void SetNewTimer()
     {
         timer = Random.Range(minRandomTime, maxRandomTime);
+    }
+
+    [System.Serializable]
+    public class ChapterLockWindow
+    {
+        public Button chapterButton;
+        public Transform lockScreen;
     }
 }

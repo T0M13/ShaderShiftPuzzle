@@ -6,15 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class SaveBox : MonoBehaviour
 {
-    [SerializeField] private SaveManager saveManager;
-    [SerializeField] private bool hasBeenSaved = false;
+    [SerializeField] protected SaveManager saveManager;
+    [SerializeField] protected bool hasBeenSaved = false;
     public SaveManager SaveManager
     {
         get => saveManager;
         private set => saveManager = value;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         saveManager = GameObject.FindGameObjectWithTag("SaveManager")?.GetComponent<SaveManager>();
         if (saveManager == null)
@@ -23,7 +23,7 @@ public class SaveBox : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<PlayerReferences>() != null && !hasBeenSaved)
         {
