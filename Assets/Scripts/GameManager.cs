@@ -148,9 +148,9 @@ public class GameManager : MonoBehaviour
             case GameState.Paused:
                 EnterPaused();
                 break;
-                //case GameState.GameOver:
-                //    EnterGameOver();
-                //break;
+            case GameState.CheatMenu:
+                EnterCheatMenu();
+                break;
         }
     }
 
@@ -178,6 +178,13 @@ public class GameManager : MonoBehaviour
         SetPlayerState(PlayerState.Freeze);
         SetCursorState(true);
         OnToggleCanvas(true);
+    }
+
+    private void EnterCheatMenu()
+    {
+        Debug.Log("CheatMenu Activated");
+        SetPlayerState(PlayerState.Freeze);
+        SetCursorState(true);
     }
 
     //private void EnterGameOver()
@@ -248,7 +255,18 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void ToggleCheatMenu(bool value)
+    {
+        if (value && currentState == GameState.Game)
+        {
+            ChangeState(GameState.CheatMenu);
+            if (player != null)
+                player.FreezePlayer();
+        }
+        else if (currentState == GameState.CheatMenu)
+            ChangeState(GameState.Game);
 
+    }
     public void OnPause()
     {
         if (canvasManager.mainPanelManager.currentPanelIndex != 0) return;
