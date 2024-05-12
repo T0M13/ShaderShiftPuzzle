@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2beaf8c350c100d40be01942e8f4031a, type: 3}
   m_Name: JumpBehaviour
   m_EditorClassIdentifier: 
-  jumpForce: 4
+  jumpForce: 5
   isGrounded: 1
   isJumping: 0
   groundDetectionRange: 0.1
