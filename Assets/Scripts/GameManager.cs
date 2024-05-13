@@ -197,7 +197,7 @@ public class GameManager : MonoBehaviour
         if (!SaveData.Current.playerGameData.unlockedLevels.Contains(levelname))
             SaveData.Current.playerGameData.unlockedLevels.Add(levelname);
 
-        saveManager.SaveAsync(null, SaveData.Current, true);
+        saveManager.SaveAsync(SaveData.Current);
     }
 
     //private void EnterGameOver()

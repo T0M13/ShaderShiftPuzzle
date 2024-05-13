@@ -15,7 +15,7 @@ public class SaveBoxUnlock : SaveBox
             SaveData.Current.playerGameData.unlockedLevels.Add(unLockLevel);
             SaveData.Current.playerGameData.currentLevelName = unLockLevel;
             SaveData.Current.playerGameData.currentLevelThumbnailIndex = SceneManager.GetActiveScene().buildIndex - 1 + 1; // MainMenu + NextLevel
-            saveManager.SaveAsync(null, SaveData.Current, true);
+            saveManager.SaveAsync(SaveData.Current);
             hasBeenSaved = true;
         }
     }

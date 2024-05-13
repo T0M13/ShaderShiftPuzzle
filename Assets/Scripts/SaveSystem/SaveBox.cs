@@ -29,7 +29,7 @@ public class SaveBox : MonoBehaviour
         {
             SaveData.Current.playerGameData.currentLevelName = SceneManager.GetActiveScene().name;
             SaveData.Current.playerGameData.currentLevelThumbnailIndex = SceneManager.GetActiveScene().buildIndex - 1; // -1 Because of MainMenu
-            saveManager.SaveAsync(null, SaveData.Current, true);
+            saveManager.SaveAsync(SaveData.Current);
             hasBeenSaved = true;
         }
     }

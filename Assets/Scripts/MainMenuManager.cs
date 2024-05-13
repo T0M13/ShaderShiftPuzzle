@@ -56,10 +56,9 @@ public class MainMenuManager : MonoBehaviour
         }
         else
         {
-
             UpdateChapters();
             UpdateChapterLoadButton();
-            CreateLoadButtons();
+            //CreateLoadButtons();
         }
 
         loadingScreenManager = GameObject.FindGameObjectWithTag("LoadingScreenManager")?.GetComponent<LoadingScreenManager>();
@@ -81,39 +80,43 @@ public class MainMenuManager : MonoBehaviour
             SetNewTimer();
         }
     }
-    private void UpdateChapterLoadButton()
+
+    private void UpdateChapters()
     {
-        if (saveManager.saveFiles.Count > 0)
+        for (int i = 0; i < chapterWindows.Length; i++)
         {
-            // Assuming saveFiles is sorted or you sort it as needed
-            string mostRecentSaveFileName = saveManager.saveFiles.Last();
-
-            // Load the most recent save data
-            SaveData mostRecentSaveData = saveManager.Load(mostRecentSaveFileName);
-            if (mostRecentSaveData != null && !string.IsNullOrEmpty(mostRecentSaveData.playerGameData.currentLevelName))
+            if (i < SaveData.Current.playerGameData.unlockedLevels.Count && !string.IsNullOrEmpty(SaveData.Current.playerGameData.unlockedLevels[i]))
             {
-                ChapterLoadSaveButton chapterLoadSaveButton = chapterLoadGameObject.GetComponent<ChapterLoadSaveButton>();
-
-                if (chapterLoadSaveButton != null)
-                {
-                    //string saveName = mostRecentSaveData.saveMetaData.saveName;
-                    string backgroundTitle = mostRecentSaveData.saveMetaData.autoSave ? "AUTOSAVE FILE" : "SAVE FILE";
-                    string description = mostRecentSaveData.saveMetaData.description;
-
-
-                    chapterLoadSaveButton.title.text = "CONTINUE";
-                    chapterLoadSaveButton.backgroundTitle.text = backgroundTitle;
-                    chapterLoadSaveButton.desc.text = description;
-                    chapterLoadSaveButton.thumbnail.sprite = saveManager.levelImages[mostRecentSaveData.playerGameData.currentLevelThumbnailIndex];
-
-                    chapterLoadSaveButton.button.onClick.AddListener(() => AddLoadGamePathString(mostRecentSaveData.saveMetaData.saveName));
-                    chapterLoadSaveButton.button.onClick.AddListener(() => AddLoadGameString(mostRecentSaveData.playerGameData.currentLevelName));
-
-
-                    chapterLoadGameObject.SetActive(true);
-                }
+                chapterWindows[i].chapterButton.interactable = true;
+                chapterWindows[i].lockScreen.gameObject.SetActive(false);
+            }
+            else
+            {
+                chapterWindows[i].chapterButton.interactable = false;
+                chapterWindows[i].lockScreen.gameObject.SetActive(true);
             }
         }
+    }
+
+    private void UpdateChapterLoadButton()
+    {
+        if (!string.IsNullOrEmpty(SaveData.Current.playerGameData.currentLevelName))
+        {
+            ChapterLoadSaveButton chapterLoadSaveButton = chapterLoadGameObject.GetComponent<ChapterLoadSaveButton>();
+
+            if (chapterLoadSaveButton != null)
+            {
+                chapterLoadSaveButton.title.text = "CONTINUE";
+                chapterLoadSaveButton.backgroundTitle.text = "CONTINUE";
+                chapterLoadSaveButton.desc.text = SaveData.Current.saveMetaData.description;
+                chapterLoadSaveButton.thumbnail.sprite = saveManager.levelImages[SaveData.Current.playerGameData.currentLevelThumbnailIndex];
+
+                chapterLoadSaveButton.button.onClick.AddListener(() => AddLoadGameString(SaveData.Current.playerGameData.currentLevelName));
+
+                chapterLoadGameObject.SetActive(true);
+            }
+        }
+
         else
         {
             chapterLoadGameObject.SetActive(false);
@@ -122,79 +125,9 @@ public class MainMenuManager : MonoBehaviour
     }
 
 
-    private void CreateLoadButtons()
-    {
-        // Clear existing buttons first
-        foreach (Transform child in loadedFileParent)
-        {
-            Destroy(child.gameObject);
-        }
-
-
-
-        foreach (var saveFile in saveManager.saveFiles)
-        {
-            SaveData data = saveManager.Load(saveFile);
-            if (string.IsNullOrEmpty(data.playerGameData.currentLevelName)) continue;
-
-            GameObject buttonObj = Instantiate(loadPrefab, loadedFileParent);
-            LoadSaveButton loadSaveButton = buttonObj.GetComponent<LoadSaveButton>();
-
-            if (loadSaveButton != null)
-            {
-                string saveName = data.saveMetaData.saveName;
-                string title = data.saveMetaData.autoSave ? "Autosave" : "Save";
-                string description = data.saveMetaData.description;
-
-                loadSaveButton.title.text = title;
-                loadSaveButton.desc.text = description;
-                loadSaveButton.thumbnail.sprite = saveManager.levelImages[data.playerGameData.currentLevelThumbnailIndex];
-
-
-                // Assign callbacks to the buttons
-                loadSaveButton.button.onClick.AddListener(() => AddLoadGameString(data.playerGameData.currentLevelName));
-                loadSaveButton.button.onClick.AddListener(() => AddLoadGamePathString(data.saveMetaData.saveName));
-                loadSaveButton.button.onClick.AddListener(() => loadSaveFileWindow.ModalWindowIn());
-                loadSaveButton.deleteButton.onClick.AddListener(() => AddDeleteGameString(saveName));
-                loadSaveButton.deleteButton.onClick.AddListener(() => deleteSaveFileWindow.ModalWindowIn());
-            }
-        }
-    }
-
-
-    public void UpdateChapters()
-    {
-        if (saveManager.saveFiles.Count > 0)
-        {
-
-            string mostRecentSaveFileName = saveManager.saveFiles.Last();
-
-            SaveData mostRecentSaveData = saveManager.Load(mostRecentSaveFileName);
-
-
-            for (int tempIndex = 0; tempIndex < chapterWindows.Length; tempIndex++)
-            {
-                if (tempIndex < mostRecentSaveData.playerGameData.unlockedLevels.Count &&
-                    !string.IsNullOrEmpty(mostRecentSaveData.playerGameData.unlockedLevels[tempIndex]))
-                {
-                    chapterWindows[tempIndex].chapterButton.interactable = true;
-                    chapterWindows[tempIndex].lockScreen.gameObject.SetActive(false);
-                }
-                else
-                {
-                    chapterWindows[tempIndex].chapterButton.interactable = false;
-                    chapterWindows[tempIndex].lockScreen.gameObject.SetActive(true);
-                }
-            }
-
-
-        }
-
-    }
 
     private void LoadChapter(string level)
     {
-        //SceneManager.LoadSceneAsync(level);
         if (loadingScreenManager != null)
         {
             loadingScreenManager.SwitchToScene(level);
@@ -203,11 +136,6 @@ public class MainMenuManager : MonoBehaviour
         {
             Debug.LogWarning("No LoadingScreen");
         }
-    }
-
-    public void AddLoadGamePathString(string saveName)
-    {
-        tempLoadFilePath = saveName;
     }
 
     public void AddLoadGameString(string chapterName)
@@ -223,33 +151,9 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadTempGameFile()
     {
-        SaveData.Current = saveManager.Load(tempLoadFilePath);
+        SaveData.Current = saveManager.Load();
         LoadChapter(tempLoadFileName);
     }
-
-
-    public void AddDeleteGameString(string saveName)
-    {
-        tempDeleteFileName = saveName;
-    }
-
-    public void RemoveDeleteGameString()
-    {
-        tempDeleteFileName = "";
-    }
-
-    public void DeleteTempGameFile()
-    {
-        DeleteGame(tempDeleteFileName);
-    }
-
-    private void DeleteGame(string saveName)
-    {
-        saveManager.DeleteSave(saveName);
-        CreateLoadButtons();
-        UpdateChapterLoadButton();
-    }
-
 
     private void TogglePortal()
     {
