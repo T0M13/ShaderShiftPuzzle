@@ -33,6 +33,9 @@ public class PlayerMovement : MonoBehaviour
     private PlayerLook playerLook;
     [SerializeField] private Vector2 look;
     [SerializeField] private bool canLook = true;
+    [Header("NoClip")]
+    [SerializeField] private bool noClipActive = false;
+
 
     [Header("Gizmos")]
     [SerializeField] private bool showJumpGizmos = false;
@@ -129,6 +132,16 @@ public class PlayerMovement : MonoBehaviour
         moveComponent.Move(playerRigidBody, this.movement, this.isSprinting);
         look = Vector2.zero;
         playerReferences.PlayerLook.LookPos = this.look;
+    }
+
+    public void ToggleNoClip()
+    {
+        noClipActive = !noClipActive;
+        playerCollider.enabled = !noClipActive;
+        if (playerRigidBody != null)
+        {
+            playerRigidBody.useGravity = !noClipActive;
+        }
     }
 
     #region Gizmos

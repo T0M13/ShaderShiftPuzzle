@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 821855083441497725}
   - component: {fileID: 5709333222357832188}
   - component: {fileID: 5417126577637423677}
+  - component: {fileID: 2357511860378229769}
   m_Layer: 0
   m_Name: PressurePlate_MeshCollider
   m_TagString: Untagged
@@ -105,6 +106,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.000002, y: 0.09791671, z: 4.999999}
   m_Center: {x: -2.500001, y: 0.045907862, z: 2.4999995}
+--- !u!114 &2357511860378229769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3286979734281780002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc981c50f303f2e4ab2668c2e462caca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canInteract: 0
+  outline: 1
+  message: Pressure Plate
+  pressButtonMessage: 
 --- !u!1 &3401533347615839089
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,8 +281,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.3425903, y: 4.1135263, z: 4.2578487}
-  m_Center: {x: 0.31080627, y: 1.943237, z: 1.1613235}
+  m_Size: {x: 3.420639, y: 4.1135263, z: 3.7086434}
+  m_Center: {x: 0.7717819, y: 1.9432368, z: 1.4359262}
 --- !u!114 &2437011106466621821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +297,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IsGlobal: 0
   priority: 0
-  blendDistance: 3
+  blendDistance: 1
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 2cf52c357f11889458243d1a2d5ad296, type: 2}

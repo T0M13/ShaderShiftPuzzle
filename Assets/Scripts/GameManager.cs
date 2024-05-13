@@ -144,9 +144,6 @@ public class GameManager : MonoBehaviour
     {
         switch (state)
         {
-            //case GameState.MainMenu:
-            //    EnterMainMenu();
-            //    break;
             case GameState.Game:
                 EnterGame();
                 break;
@@ -192,22 +189,6 @@ public class GameManager : MonoBehaviour
         SetCursorState(true);
     }
 
-    public void UnlockLevel(string levelname)
-    {
-        if (!SaveData.Current.playerGameData.unlockedLevels.Contains(levelname))
-            SaveData.Current.playerGameData.unlockedLevels.Add(levelname);
-
-        saveManager.SaveAsync(SaveData.Current);
-    }
-
-    //private void EnterGameOver()
-    //{
-    //    //Save before?
-    //    Debug.Log("Game Over.");
-    //    SetPlayerState(PlayerState.Freeze);
-    //    SetCursorState(true);
-    //}
-
     public void RestartLevel()
     {
         //Load Level/Save File?
@@ -215,6 +196,19 @@ public class GameManager : MonoBehaviour
         if (loadingScreenManager != null)
         {
             loadingScreenManager.SwitchToScene(currentScene.name);
+        }
+        else
+        {
+            Debug.LogWarning("No LoadingScreen");
+        }
+    }
+
+    public void SwitchToLevel(string levelName)
+    {
+        //Load Level/Save File?
+        if (loadingScreenManager != null)
+        {
+            loadingScreenManager.SwitchToScene(levelName);
         }
         else
         {
