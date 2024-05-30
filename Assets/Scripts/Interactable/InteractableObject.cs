@@ -8,6 +8,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
     [SerializeField] private bool outline = false;
     [SerializeField] protected string message = "";
     [SerializeField] protected string pressButtonMessage = "";
+    //[SerializeField] protected string taskMessage = "";
 
     public bool CanInteract { get => canInteract; set => canInteract = value; }
     public bool ShowOutlineValue { get => outline; set => outline = value; }
@@ -43,6 +44,15 @@ public class InteractableObject : MonoBehaviour, IInteractable
         else
             Debug.LogWarning("No InteractiveMessageUI Object in Scene");
     }
+
+    //public void ShowTaskButtonMessage()
+    //{
+    //    if (InteractiveMessageUI.Instance)
+    //        InteractiveMessageUI.Instance.ChangeTaskMessage(taskMessage);
+    //    else
+    //        Debug.LogWarning("No InteractiveMessageUI Object in Scene");
+    //}
+
 
     public void SetEmpty()
     {
