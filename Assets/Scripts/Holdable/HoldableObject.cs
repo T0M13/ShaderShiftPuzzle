@@ -14,6 +14,11 @@ public class HoldableObject : MonoBehaviour, IHoldable
     public void Respawn()
     {
         transform.position = spawnPosition;
+
+        if (GetComponent<AnimateCutoutPlus>())
+        {
+            GetComponent<AnimateCutoutPlus>().StartDissolve(false);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

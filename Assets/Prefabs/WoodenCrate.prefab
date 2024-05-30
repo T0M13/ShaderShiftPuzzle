@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8012768939837223010}
   - component: {fileID: 2059793378162378986}
   - component: {fileID: 9169776580762578013}
+  - component: {fileID: 3580550748973682722}
   m_Layer: 0
   m_Name: WoodenCrate
   m_TagString: Untagged
@@ -65,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 42b64fdb315e3054ea757d8d1c4bcfa7, type: 2}
+  - {fileID: 2100000, guid: 072f56eae00fa874e8db189f1e85a044, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -148,6 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd96d1c77965db74fa3e2928ec61910e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHoldToolRef: {fileID: 0}
+  canBeHeld: 1
   spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &9169776580762578013
 MonoBehaviour:
@@ -165,3 +168,19 @@ MonoBehaviour:
   outline: 1
   message: Wooden Crate
   pressButtonMessage: 
+--- !u!114 &3580550748973682722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617231976004861818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fb963bb14439524a91e4914769de0fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 0}
+  clipValue: 0
+  dissolveSpeed: 1
+  activated: 1

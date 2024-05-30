@@ -44,5 +44,12 @@ public class InteractableObject : MonoBehaviour, IInteractable
             Debug.LogWarning("No InteractiveMessageUI Object in Scene");
     }
 
+    public void SetEmpty()
+    {
+        canInteract = false;
+        outline = false;
+        message = "";
+        pressButtonMessage = "";
+    }
   
 }

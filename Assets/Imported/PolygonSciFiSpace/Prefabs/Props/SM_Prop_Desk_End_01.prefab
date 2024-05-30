@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8692508128180147538}
   - component: {fileID: 3344281138697952192}
   - component: {fileID: 5384196122095852404}
+  - component: {fileID: 6979003824703333498}
   m_Layer: 0
   m_Name: SM_Prop_Desk_End_01
   m_TagString: Untagged
@@ -65,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4cee7a5983b187943adc589b9cb1f084, type: 2}
+  - {fileID: 2100000, guid: 1ec594c359259f5468803fa462266587, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -117,7 +118,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1090822837561816}
   serializedVersion: 4
-  m_Mass: 2
+  m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -167,3 +168,19 @@ MonoBehaviour:
   playerHoldToolRef: {fileID: 0}
   canBeHeld: 1
   spawnPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &6979003824703333498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090822837561816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fb963bb14439524a91e4914769de0fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 0}
+  clipValue: 0
+  dissolveSpeed: 1
+  activated: 1

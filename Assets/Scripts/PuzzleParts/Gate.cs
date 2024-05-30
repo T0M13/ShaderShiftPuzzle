@@ -5,7 +5,7 @@ public class Gate : MonoBehaviour
 {
     [SerializeField] protected Vector3 closedPositionOffset;
     [SerializeField] protected Vector3 openedPositionOffset;
-    [SerializeField] protected float moveSpeed = 2f;
+    [SerializeField] protected float moveSpeed = 0.3f;
     protected Vector3 closedPosition;
     protected Vector3 openedPosition;
     protected Vector3 targetPosition;
