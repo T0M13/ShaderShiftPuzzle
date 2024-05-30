@@ -18,4 +18,9 @@ public class TaskMessageBox : MonoBehaviour
         if (other.GetComponent<PlayerReferences>() != null)
             InteractiveMessageUI.Instance.ChangeTaskMessage("");
     }
+
+    public void SetMessageEmpty()
+    {
+        InteractiveMessageUI.Instance.ChangeTaskMessage("");
+    }
 }

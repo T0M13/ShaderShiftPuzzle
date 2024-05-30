@@ -10,6 +10,7 @@ public class PuzzleKeyObject : MonoBehaviour
     [SerializeField] private Transform targetPosition;
     [SerializeField] private float lerpSpeed = 5.0f;
     [SerializeField] private bool startLerp = false;
+    [SerializeField] private bool setInTargetAsChild = false;
     private void Update()
     {
         LerpingToPosition();
@@ -34,6 +35,13 @@ public class PuzzleKeyObject : MonoBehaviour
                 transform.position = targetPosition.position;
                 transform.rotation = targetPosition.rotation;
                 transform.localScale = targetPosition.localScale;
+                if (setInTargetAsChild)
+                {
+                    transform.SetParent(targetPosition, false);
+                    transform.localPosition = Vector3.zero;
+                    transform.localRotation = Quaternion.identity;
+                    transform.localScale = Vector3.one;
+                }
                 startLerp = false;
             }
         }
