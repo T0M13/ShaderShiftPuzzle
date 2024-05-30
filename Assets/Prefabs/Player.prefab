@@ -792,7 +792,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  rayDistance: 3
+  rayDistance: 2
   resetColorAfterSetting: 0
 --- !u!114 &798564424066607219
 MonoBehaviour:
@@ -813,7 +813,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  rayDistance: 4
+  rayDistance: 2
   interactDistance: 2
 --- !u!114 &6919184196532914993
 MonoBehaviour:

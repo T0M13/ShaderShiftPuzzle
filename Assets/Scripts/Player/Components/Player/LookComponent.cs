@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using tomi.SaveSystem;
 using UnityEngine;
 namespace tomi.CharacterController3D
 {
@@ -7,13 +8,18 @@ namespace tomi.CharacterController3D
     public class LookComponent : ScriptableObject, LookBehaviour
     {
         [SerializeField] float minViewDistance = 25f;
-        [SerializeField] float sensitivity = 100f;
-        [SerializeField] float xRotation = 0f;
+        //[SerializeField] float sensitivity = 100f;
+        [SerializeField][ShowOnly] float xRotation = 0f;
+        [SerializeField] bool reverseMouse = false;
 
         public void Look(Transform transform, Vector2 mouse, Transform playerTransform)
         {
-            float mouseX = mouse.x * sensitivity * Time.deltaTime;
-            float mouseY = mouse.y * sensitivity * Time.deltaTime;
+            float mouseX = mouse.x * SaveData.Current.playerProfile.aimSensitivity * Time.deltaTime;
+            float mouseY = 0;
+            if (!SaveData.Current.playerProfile.reverseMouse)
+                mouseY = mouse.y * SaveData.Current.playerProfile.aimSensitivity * Time.deltaTime;
+            else
+                mouseY = -mouse.y * SaveData.Current.playerProfile.aimSensitivity * Time.deltaTime;
 
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, minViewDistance);

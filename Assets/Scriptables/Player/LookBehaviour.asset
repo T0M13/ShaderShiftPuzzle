@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LookBehaviour
   m_EditorClassIdentifier: 
   minViewDistance: 75
-  sensitivity: 6
-  xRotation: 9.793951
+  xRotation: 10.19135
+  reverseMouse: 0

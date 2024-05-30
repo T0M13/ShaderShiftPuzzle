@@ -89,6 +89,12 @@ public class SaveManager : MonoBehaviour
 
     private string GetFilePath(string fileName)
     {
-        return Application.persistentDataPath + "/saves/" + fileName;
+        string folderPath = Application.persistentDataPath + "/saves";
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+        return Path.Combine(folderPath, fileName);
     }
+
 }

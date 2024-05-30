@@ -1,12 +1,16 @@
 ﻿using Michsky.UI.Dark;
 using System;
+using TMPro;
+using tomi.SaveSystem;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
     public MainPanelManager mainPanelManager;
+    public GameManager gameManager;
     public CanvasScaler canvasScaler;
     public Transform[] transformsToActivateOnPause;
     public Transform[] transformsToDeactivateOnPause;
@@ -25,6 +29,12 @@ public class CanvasManager : MonoBehaviour
 
     void Start()
     {
+
+        if(gameManager == null)
+        {
+            gameManager = GameManager.Instance;
+        }
+
         if (canvasScaler == null)
             canvasScaler = gameObject.GetComponent<CanvasScaler>();
 
@@ -58,4 +68,5 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
+  
 }
