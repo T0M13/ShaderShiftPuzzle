@@ -18,14 +18,22 @@ namespace tomi.SaveSystem
         [Range(1, 100)] public float aimSensitivity;
         public bool reverseMouse;
 
+        [Header("Quality")]
+        [Range(1, 100)] public float gamma;
+        [Range(1, 100)] public float brightness;
+
+
         public PlayerProfile()
         {
-            masterVolume  = 0.5f;
+            masterVolume = 0.5f;
             musicVolume = 0.5f;
             effectsVolume = 0.5f;
 
             aimSensitivity = 20f;
             reverseMouse = false;
+
+            gamma = 0;
+            brightness = 0;
         }
     }
 }

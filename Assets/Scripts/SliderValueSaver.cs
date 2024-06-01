@@ -4,14 +4,16 @@ using tomi.SaveSystem;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
-public class SliderValueSaver : MonoBehaviour, IPointerUpHandler
+public class SliderValueSaver : MonoBehaviour, IPointerUpHandler, IDragHandler
 {
     [SerializeField] private Slider slider;
 
     public UnityEvent onStart;
     public UnityEvent onSave;
+    public UnityEvent onDrag;
 
     private void Start()
     {
@@ -19,7 +21,6 @@ public class SliderValueSaver : MonoBehaviour, IPointerUpHandler
             slider = GetComponent<Slider>();
         onStart?.Invoke();
     }
-
 
     public void OnPointerUp(PointerEventData eventData)
     {
@@ -31,7 +32,10 @@ public class SliderValueSaver : MonoBehaviour, IPointerUpHandler
         onSave?.Invoke();
         SaveManager.Instance.SaveAsync(SaveData.Current);
     }
-
+    public void OnDrag(PointerEventData eventData)
+    {
+        onDrag?.Invoke();
+    }
 
     #region AimSens
     public void SaveAimSensitivity()
@@ -80,6 +84,37 @@ public class SliderValueSaver : MonoBehaviour, IPointerUpHandler
         slider.value = SaveData.Current.playerProfile.effectsVolume;
     }
     #endregion
+
+    #region Brightness
+    public void SaveBrightness()
+    {
+        QualityProfileSettings.Instance.SetPostExposure(slider.value);
+        SaveData.Current.playerProfile.brightness = slider.value;
+    }
+
+    public void GetBrightness()
+    {
+        slider.value = SaveData.Current.playerProfile.brightness;
+        QualityProfileSettings.Instance.SetPostExposure(SaveData.Current.playerProfile.brightness);
+    }
+
+    #endregion
+
+    #region Gamma
+    public void SaveGamma()
+    {
+        QualityProfileSettings.Instance.SetGamma(slider.value);
+        SaveData.Current.playerProfile.gamma = slider.value;
+    }
+
+    public void GetGamma()
+    {
+        slider.value = SaveData.Current.playerProfile.gamma;
+        QualityProfileSettings.Instance.SetGamma(SaveData.Current.playerProfile.gamma);
+    }
+
+    #endregion
+
 
 
 }

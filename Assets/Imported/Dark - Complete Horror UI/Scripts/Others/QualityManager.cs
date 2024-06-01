@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 using TMPro;
+using tomi.SaveSystem;
 
 namespace Michsky.UI.Dark
 {
@@ -29,9 +30,9 @@ namespace Michsky.UI.Dark
 
         void Start()
         {
-            if (mixer != null && masterSlider != null) { mixer.SetFloat("Master", Mathf.Log10(PlayerPrefs.GetFloat(masterSlider.sliderTag + "Slider")) * 20); }
-            if (mixer != null && musicSlider != null) { mixer.SetFloat("Music", Mathf.Log10(PlayerPrefs.GetFloat(musicSlider.sliderTag + "Slider")) * 20); }
-            if (mixer != null && sfxSlider != null) { mixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat(sfxSlider.sliderTag + "Slider")) * 20); }
+            if (mixer != null && masterSlider != null) { mixer.SetFloat("Master", Mathf.Log10(SaveData.Current.playerProfile.masterVolume) * 20); }
+            if (mixer != null && musicSlider != null) { mixer.SetFloat("Music", Mathf.Log10(SaveData.Current.playerProfile.musicVolume) * 20); }
+            if (mixer != null && sfxSlider != null) { mixer.SetFloat("SFX", Mathf.Log10(SaveData.Current.playerProfile.effectsVolume) * 20); }
             if (isMobile == false)
             {
                 resolutions = Screen.resolutions;

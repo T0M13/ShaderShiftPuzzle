@@ -29,8 +29,14 @@ public class SaveManagerEditor : Editor
             EditorGUILayout.Slider("Master Volume", SaveData.Current.playerProfile.masterVolume, 0, 100);
             EditorGUILayout.Slider("Music Volume", SaveData.Current.playerProfile.musicVolume, 0, 100);
             EditorGUILayout.Slider("Effects Volume", SaveData.Current.playerProfile.effectsVolume, 0, 100);
+            EditorGUILayout.Space();
             EditorGUILayout.Slider("Aim Sensitivity", SaveData.Current.playerProfile.aimSensitivity, 1f, 100f);
             EditorGUILayout.Toggle("Reverse Mouse", SaveData.Current.playerProfile.reverseMouse);
+            EditorGUILayout.Space();
+            EditorGUILayout.Slider("Brightness", SaveData.Current.playerProfile.brightness, -.5f, .5f);
+            EditorGUILayout.Slider("Gamma", SaveData.Current.playerProfile.gamma, -.5f, .5f);
+
+
         }
         else
         {

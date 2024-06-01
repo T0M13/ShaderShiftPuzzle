@@ -40,6 +40,9 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField][ShowOnly] private string tempLoadFilePath = "";
     [SerializeField] private ModalWindowManager loadSaveFileWindow;
 
+    [Header("Settings")]
+    [SerializeField] private SliderValueSaver[] sliders;
+
     public SaveManager SaveManager
     {
         get => saveManager;
@@ -58,6 +61,7 @@ public class MainMenuManager : MonoBehaviour
         {
             UpdateChapters();
             UpdateChapterLoadButton();
+            UpdateSettings();
             //CreateLoadButtons();
         }
 
@@ -78,6 +82,14 @@ public class MainMenuManager : MonoBehaviour
         {
             TogglePortal();
             SetNewTimer();
+        }
+    }
+
+    private void UpdateSettings()
+    {
+        foreach (var slider in sliders)
+        {
+            slider.onStart?.Invoke();
         }
     }
 
