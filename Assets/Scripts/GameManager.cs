@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasManager canvasManager;
     [SerializeField] private SaveManager saveManager;
     [SerializeField] private LoadingScreenManager loadingScreenManager;
+    [Header("Settings")]
+    [SerializeField] private bool canPause = true;
 
 
     public GameState CurrentState
@@ -277,11 +279,17 @@ public class GameManager : MonoBehaviour
     }
     public void OnPause()
     {
+        if (!canPause) return;
         if (canvasManager.mainPanelManager.currentPanelIndex != 0) return;
         if (currentState == GameState.Game)
             ChangeState(GameState.Paused);
         else if (currentState == GameState.Paused)
             ChangeState(GameState.Game);
+    }
+
+    public void UpdatePauseValue(bool value)
+    {
+        canPause = value;
     }
 
 }

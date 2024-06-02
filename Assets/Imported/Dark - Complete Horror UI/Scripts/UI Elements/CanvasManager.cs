@@ -29,10 +29,10 @@ public class CanvasManager : MonoBehaviour
 
     void Start()
     {
-
+        gameManager = GameManager.Instance;
         if(gameManager == null)
         {
-            gameManager = GameManager.Instance;
+            gameManager = FindAnyObjectByType<GameManager>();
         }
 
         if (canvasScaler == null)
@@ -40,6 +40,18 @@ public class CanvasManager : MonoBehaviour
 
         onLevelStart?.Invoke();
     }
+
+    private void OnEnable()
+    {
+        gameManager = GameManager.Instance;
+        if (gameManager == null)
+        {
+            gameManager = FindAnyObjectByType<GameManager>();
+        }
+        if (canvasScaler == null)
+            canvasScaler = gameObject.GetComponent<CanvasScaler>();
+    }
+
     public void SetButtonFunctions(GameManager gameManager)
     {
         exitGameButton.onClick.AddListener(gameManager.ExitGame);
@@ -68,5 +80,11 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
-  
+
+    public void UpdatePauseValue(bool value)
+    {
+        if (gameManager != null)
+            gameManager.UpdatePauseValue(value);
+    }
+
 }

@@ -34,43 +34,52 @@ namespace Michsky.UI.Dark
 
         void OnEnable()
         {
-            if (showOnlyOnce && GameObject.Find("[Dark UI - Splash Screen Helper]") != null) 
-            { 
-                disableSplashScreen = true; 
+            if (showOnlyOnce && GameObject.Find("[Dark UI - Splash Screen Helper]") != null)
+            {
+                disableSplashScreen = true;
             }
 
             if (disableSplashScreen)
             {
                 splashScreen.SetActive(false);
+
                 modalWindowParent.SetActive(true);
 
                 mainPanelParent.gameObject.SetActive(true);
-                transitionHelper.gameObject.SetActive(true);
+
+                if (transitionHelper != null)
+                    transitionHelper.gameObject.SetActive(true);
 
                 mainPanelManager.EnableFirstPanel();
 
-                transitionHelper.location = 0;
-                transitionHelper.DissolveOut();
+                if (transitionHelper != null)
+                {
+                    transitionHelper.location = 0;
+                    transitionHelper.DissolveOut();
+                }
 
                 onSplashScreenEnd.Invoke();
             }
-
             else
             {
                 splashScreen.SetActive(true);
                 modalWindowParent.SetActive(false);
 
                 mainPanelParent.gameObject.SetActive(false);
-                transitionHelper.gameObject.SetActive(false);
+                if (transitionHelper != null)
+                    transitionHelper.gameObject.SetActive(false);
 
-                InitializeTitles();         
+                InitializeTitles();
             }
 
             if (showOnlyOnce)
             {
-                GameObject tempHelper = new GameObject();
-                tempHelper.name = "[Dark UI - Splash Screen Helper]";
-                DontDestroyOnLoad(tempHelper);
+                if (GameObject.Find("[Dark UI - Splash Screen Helper]") == null)
+                {
+                    GameObject tempHelper = new GameObject();
+                    tempHelper.name = "[Dark UI - Splash Screen Helper]";
+                    DontDestroyOnLoad(tempHelper);
+                }
             }
         }
 
@@ -139,7 +148,7 @@ namespace Michsky.UI.Dark
         IEnumerator ProcessStartDelay()
         {
             yield return new WaitForSecondsRealtime(startDelay);
-        
+
             currentTitleObj.SetActive(true);
 
             StopCoroutine("ProcessStartDelay");
@@ -149,10 +158,10 @@ namespace Michsky.UI.Dark
         IEnumerator InitializeTitleDuration()
         {
             yield return new WaitForSecondsRealtime(currentTitleDuration);
-           
+
             currentTitleObj.SetActive(false);
             currentTitleIndex++;
-            
+
             try
             {
                 currentTitleDuration = splashScreenTitles[currentTitleIndex].screenTime;
@@ -161,7 +170,7 @@ namespace Michsky.UI.Dark
                 StartCoroutine("InitializeTitleDuration");
             }
 
-            catch 
+            catch
             {
                 StopCoroutine("InitializeTitleDuration");
             }
@@ -175,12 +184,17 @@ namespace Michsky.UI.Dark
             modalWindowParent.SetActive(true);
 
             mainPanelParent.gameObject.SetActive(true);
-            transitionHelper.gameObject.SetActive(true);
+            if (transitionHelper != null)
+                transitionHelper.gameObject.SetActive(true);
 
             mainPanelManager.EnableFirstPanel();
 
-            transitionHelper.location = 0;
-            transitionHelper.DissolveOut();
+            if (transitionHelper != null)
+            {
+
+                transitionHelper.location = 0;
+                transitionHelper.DissolveOut();
+            }
 
             onSplashScreenEnd.Invoke();
 
