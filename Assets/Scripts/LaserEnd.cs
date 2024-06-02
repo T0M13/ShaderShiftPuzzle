@@ -9,4 +9,21 @@ public class LaserEnd : MonoBehaviour
 
     public LaserLine LaserParent { get => laserParent; set => laserParent = value; }
     public LaserLineClone LaserCloneParent { get => laserCloneParent; set => laserCloneParent = value; }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.GetComponent<IEnergy>() != null)
+        {
+            other.GetComponent<IEnergy>().OnEnergy();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<IEnergy>() != null)
+        {
+            other.GetComponent<IEnergy>().OffEnergy();
+        }
+    }
 }

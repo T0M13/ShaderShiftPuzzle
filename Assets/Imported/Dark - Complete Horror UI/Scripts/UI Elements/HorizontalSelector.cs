@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using tomi.SaveSystem;
 
 namespace Michsky.UI.Dark
 {
@@ -35,7 +36,7 @@ namespace Michsky.UI.Dark
         [Range(0.25f, 2.5f)] public float iconScale = 1;
         [Range(1, 50)] public int contentSpacing = 15;
         public int defaultIndex = 0;
-        [HideInInspector] public int index = 0;
+         [ShowOnly] public int index = 0;
 
         // Items
         public List<Item> itemList = new List<Item>();
@@ -174,7 +175,9 @@ namespace Michsky.UI.Dark
                     selectorAnimator.Play("Previous");
 
                 if (saveValue == true)
+                {
                     PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
+                }
             }
 
             if (saveValue == true)

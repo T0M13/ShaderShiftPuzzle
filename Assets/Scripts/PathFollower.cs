@@ -12,14 +12,35 @@ public class PathFollower : MonoBehaviour
 
     [SerializeField][ShowOnly] private int currentWaypointIndex = 0;   // Index of the current waypoint the GameObject is moving towards
     [SerializeField][ShowOnly] private bool isFollowingPath = false;   // Is the GameObject currently following the path?
+    [SerializeField] private bool loop = false;
+    [SerializeField] private bool onEndActivated = false;
+
+    private Vector3 initialPosition; // Store initial position
+    private Quaternion initialRotation; // Store initial rotation
+
+
 
     void Start()
     {
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
+
         if (waypoints.Count > 0)
         {
-            onStartPath.Invoke();           // Trigger the start path event
+            onStartPath.Invoke();
             isFollowingPath = true;
         }
+    }
+
+    private void OnEnable()
+    {
+        onStartPath.Invoke();
+        isFollowingPath = true;
+    }
+
+    private void OnDisable()
+    {
+        isFollowingPath = false;
     }
 
     void Update()
@@ -30,12 +51,24 @@ public class PathFollower : MonoBehaviour
         }
         else if (isFollowingPath && currentWaypointIndex >= waypoints.Count)
         {
-            onEndPath.Invoke();            // Trigger the end path event
-            isFollowingPath = false;       // Stop path following
+            if (!onEndActivated)
+            {
+                onEndPath.Invoke();
+                onEndActivated = true;
+            }
+            isFollowingPath = false;
             if (destroyAtEnd)
             {
                 Destroy(gameObject);
             }
+        }
+
+        if (loop && !isFollowingPath && currentWaypointIndex >= waypoints.Count && !destroyAtEnd)
+        {
+            transform.position = initialPosition;
+            transform.rotation = initialRotation;
+            currentWaypointIndex = 0;
+            isFollowingPath = true;
         }
     }
 
@@ -56,5 +89,13 @@ public class PathFollower : MonoBehaviour
             // Move towards the waypoint
             transform.position += movementDirection.normalized * step;
         }
+    }
+    public void ResetPositionAndTransform() // Reset to initial position and rotation
+    {
+        transform.position = initialPosition;
+        transform.rotation = initialRotation;
+        currentWaypointIndex = 0;
+        isFollowingPath = false;
+        onEndActivated = false;
     }
 }

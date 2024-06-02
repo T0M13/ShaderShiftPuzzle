@@ -19,8 +19,10 @@ namespace tomi.SaveSystem
         public bool reverseMouse;
 
         [Header("Quality")]
-        [Range(1, 100)] public float gamma;
-        [Range(1, 100)] public float brightness;
+        [Range(-.5f, .5f)] public float gamma;
+        [Range(-.5f, .5f)] public float brightness;
+        public int resolutionValue;
+        public int windowModeValue;
 
 
         public PlayerProfile()

@@ -10,17 +10,26 @@ public class PuzzleMultipleKeyHole : MonoBehaviour
     [SerializeField] private int currentActivations = 0;
 
     public UnityEvent onAllActivationsDone;
+    public UnityEvent onDectivation;
 
     public void OnActivation()
     {
-        if (currentActivations < activationsNeeded)
-        {
-            currentActivations++;
-        }
+        currentActivations++;
         if (currentActivations >= activationsNeeded)
         {
             currentActivations = activationsNeeded;
             onAllActivationsDone?.Invoke();
+
+        }
+    }
+
+    public void OnDeactivation()
+    {
+        currentActivations--;
+        if (currentActivations <= 0)
+        {
+            currentActivations = 0;
+            onDectivation?.Invoke();
 
         }
     }
