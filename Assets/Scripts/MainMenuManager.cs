@@ -136,12 +136,11 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-
-
     private void LoadChapter(string level)
     {
         if (loadingScreenManager != null)
         {
+            loadingScreenManager.ChangeBackground(level);
             loadingScreenManager.SwitchToScene(level);
         }
         else

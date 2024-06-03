@@ -15,9 +15,20 @@ public class LoadingScreenManager : MonoBehaviour
     [SerializeField] private UIDissolveEffect uIDissolveEffect;
     [SerializeField] private float beforeWaitTime = 1f;
     [SerializeField] private float additionalWaitTime = 0.2f;
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private List<LevelBackgrounds> levelBackgrounds = new List<LevelBackgrounds>();
+    private Dictionary<string, Sprite> levelBackgroundsDic = new Dictionary<string, Sprite>();
+
 
     public Action onBeforeLoadingScreen;
     public Action onAfterLoadingScreen;
+
+    [System.Serializable]
+    private class LevelBackgrounds
+    {
+        public string levelName;
+        public Sprite backgroundImage;
+    }
 
     private void Awake()
     {
@@ -32,7 +43,16 @@ public class LoadingScreenManager : MonoBehaviour
         }
 
         loadingScreenUI.SetActive(false);
-  
+        InitializeLevelBackgrounds();
+
+    }
+
+    private void InitializeLevelBackgrounds()
+    {
+        foreach (var levelbackground in levelBackgrounds)
+        {
+            levelBackgroundsDic.Add(levelbackground.levelName, levelbackground.backgroundImage);
+        }
     }
 
     public void SwitchToScene(int id)
@@ -79,5 +99,23 @@ public class LoadingScreenManager : MonoBehaviour
         uIDissolveEffect.DissolveOut();
     }
 
+    public void ChangeBackground(string levelName)
+    {
+        if (levelBackgrounds.Count == 0)
+        {
+            Debug.LogWarning("No background images set in the LoadingScreenManager.");
+            return;
+        }
+
+        if (levelBackgroundsDic.TryGetValue(levelName, out Sprite backgroundImageSprite))
+        {
+            backgroundImage.sprite = backgroundImageSprite;
+        }
+        else
+        {
+            Debug.LogWarning("No background found for level: " + levelName);
+        }
+
+    }
 
 }
