@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Level1
   m_EditorClassIdentifier: 
   workflow: 0
-  probesSpacing: 1
+  probesSpacing: 3
   cornersDetectionThreshold: 0.4
   cornerProbesSpacing: 0.5
   distanceFromGeometry: 0.1
   divideVolumeOnProbesCount: 5000
-  useVolumeBottom: 0
+  useVolumeBottom: 1
   selectedObjectsAsGlobal: 0
-  maxHeightAboveGeometry: 3.5
-  maxHeightAboveTerrain: 3.5
+  maxHeightAboveGeometry: 5
+  maxHeightAboveTerrain: 5
   collisionDetectionLayers:
     serializedVersion: 2
     m_Bits: 1
@@ -35,6 +35,6 @@ MonoBehaviour:
   equivalentVolumeFillingRate: 0
   fillUnlitVolume: 0
   unlitVolumeFillingRate: 0
-  optimizeForMixedLighting: 0
+  optimizeForMixedLighting: 1
   tryPreventLightLeakage: 0
   boundsDisplayMode: 0
