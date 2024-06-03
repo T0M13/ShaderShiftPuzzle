@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class InteractiveMessageUI : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class InteractiveMessageUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI messageUI;
     [SerializeField] private TextMeshProUGUI useButtonUI;
     [SerializeField] private TextMeshProUGUI taskMessageUI;
+    [SerializeField] private Slider chargeSlider;
 
     private void Awake()
     {
@@ -30,6 +32,10 @@ public class InteractiveMessageUI : MonoBehaviour
         {
             Debug.LogWarning("useButton Reference Missing");
         }
+        if (chargeSlider == null)
+        {
+            Debug.LogWarning("Charge Slider Reference Missing");
+        }
     }
 
     private void Start()
@@ -37,6 +43,7 @@ public class InteractiveMessageUI : MonoBehaviour
         ChangeMessage("");
         ChangePressMessage("");
         ChangeTaskMessage("");
+        ResetChargeSlider();
     }
 
     public void ChangeMessage(string message)
@@ -52,5 +59,22 @@ public class InteractiveMessageUI : MonoBehaviour
     public void ChangeTaskMessage(string message)
     {
         taskMessageUI.text = message;
+    }
+
+    public void SetChargeValue(float value)
+    {
+        if (!chargeSlider.gameObject.activeSelf)
+            chargeSlider.gameObject.SetActive(true);
+        if (chargeSlider != null)
+            chargeSlider.value = value;
+    }
+
+    public void ResetChargeSlider()
+    {
+        if (chargeSlider != null)
+            chargeSlider.value = 0;
+
+        chargeSlider.gameObject.SetActive(false);
+
     }
 }

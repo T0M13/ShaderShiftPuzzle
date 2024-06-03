@@ -63,6 +63,11 @@ public class PlayerHoldTool : MonoBehaviour
         if (isThrowing)
         {
             holdTimer = Mathf.Min(holdTimer + Time.deltaTime, maxChargeTime);
+
+            if (InteractiveMessageUI.Instance)
+                InteractiveMessageUI.Instance.SetChargeValue(holdTimer / maxChargeTime);
+            else
+                Debug.Log("InteractiveMessageUI is missing");
         }
     }
 
@@ -207,6 +212,10 @@ public class PlayerHoldTool : MonoBehaviour
             {
                 isThrowing = true;
                 holdTimer = 0f;
+                if (InteractiveMessageUI.Instance)
+                    InteractiveMessageUI.Instance.ResetChargeSlider();
+                else
+                    Debug.Log("InteractiveMessageUI is missing");
             }
         }
         else if (context.canceled && holdingObject)
@@ -223,6 +232,11 @@ public class PlayerHoldTool : MonoBehaviour
                 }
                 isThrowing = false;
                 holdTimer = 0f;
+                holdTimer = 0f;
+                if (InteractiveMessageUI.Instance)
+                    InteractiveMessageUI.Instance.ResetChargeSlider();
+                else
+                    Debug.Log("InteractiveMessageUI is missing");
             }
         }
     }
