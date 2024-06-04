@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd96d1c77965db74fa3e2928ec61910e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHoldToolRef: {fileID: 0}
+  canBeHeld: 1
   spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &6750303607309881829
 MonoBehaviour:
@@ -145,7 +147,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eef4a915951b10240bc5dc2b595fe42a, type: 2}
+  - {fileID: 2100000, guid: 3c434c5f356f017428cb67e4bfcd36b4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

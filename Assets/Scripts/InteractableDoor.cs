@@ -21,6 +21,15 @@ public class InteractableDoor : InteractableObject
         StartCoroutine(AdjustDoorRotation());
     }
 
+
+    public void OpenDoor()
+    {
+        if (!CanInteract) return;
+
+        StopAllCoroutines();
+        StartCoroutine(AdjustDoorRotation());
+    }
+
     private IEnumerator AdjustDoorRotation()
     {
         float time = 0;

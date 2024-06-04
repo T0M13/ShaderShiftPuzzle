@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PickupableTool : InteractableObject
 {
     [SerializeField] private GameObject toolToPickup;
+
+    public UnityEvent onPickedUp;
 
     public override void Interact(PlayerReferences playRef)
     {
@@ -15,6 +18,8 @@ public class PickupableTool : InteractableObject
 
         if (toSpawnTool.GetComponent<ColorToolManager>())
             playRef.PlayerColorTool.ColorToolManager = toSpawnTool.GetComponent<ColorToolManager>();
+
+        onPickedUp?.Invoke();
 
         Destroy(gameObject);
     }
