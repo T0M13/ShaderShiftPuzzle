@@ -165,6 +165,11 @@ public class PlayerHoldTool : MonoBehaviour
         isThrowing = false;
         holdTimer = 0f;
 
+        if (InteractiveMessageUI.Instance)
+            InteractiveMessageUI.Instance.ResetChargeSlider();
+        else
+            Debug.Log("InteractiveMessageUI is missing");
+
         if (currentTransientObjectPortal != null)
         {
             currentTransientObjectPortal.CanUsePortal = currentTransientTempCanUse;

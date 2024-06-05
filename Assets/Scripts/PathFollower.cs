@@ -14,6 +14,7 @@ public class PathFollower : MonoBehaviour
     [SerializeField][ShowOnly] private bool isFollowingPath = false;   // Is the GameObject currently following the path?
     [SerializeField] private bool loop = false;
     [SerializeField] private bool onEndActivated = false;
+    [SerializeField] private bool activateOnce = true;
 
     private Vector3 initialPosition; // Store initial position
     private Quaternion initialRotation; // Store initial rotation
@@ -96,6 +97,7 @@ public class PathFollower : MonoBehaviour
         transform.rotation = initialRotation;
         currentWaypointIndex = 0;
         isFollowingPath = false;
-        onEndActivated = false;
+        if (!activateOnce)
+            onEndActivated = false;
     }
 }

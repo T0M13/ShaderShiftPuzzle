@@ -9,6 +9,7 @@ public class InteractableDoor : InteractableObject
     [SerializeField] private Vector3 openDoorRotation;
     [SerializeField] private bool isDoorOpen = false;
     [SerializeField] private bool interactOnce = false;
+    [SerializeField][ShowOnly] private bool oneInteraction = false;
     [SerializeField] private float speedMultiplier = 1.0f;
 
     public override void Interact(PlayerReferences playerRef)
@@ -17,15 +18,15 @@ public class InteractableDoor : InteractableObject
 
         base.Interact(playerRef);
 
-        StopAllCoroutines();
-        StartCoroutine(AdjustDoorRotation());
+        OpenDoor();
     }
 
 
     public void OpenDoor()
     {
-        if (!CanInteract) return;
-
+        if (oneInteraction) return;
+        if (interactOnce)
+            oneInteraction = true;
         StopAllCoroutines();
         StartCoroutine(AdjustDoorRotation());
     }
