@@ -4,15 +4,18 @@ using UnityEngine.Events;
 public class EnergyPortPuzzle : MonoBehaviour, IEnergy
 {
     [SerializeField]
-    private UnityEvent onEnergyReceived;
+    protected UnityEvent onEnergyReceived;
 
     [SerializeField]
-    private UnityEvent onEnergyGone;
+    protected UnityEvent onEnergyGone;
 
-    private bool isEnergyOn = false;
+    public bool isEnergyOn = false;
+    public bool needsToStay = true;
+
 
     public void OffEnergy()
     {
+        if(!needsToStay) return;
         if (isEnergyOn)
         {
             isEnergyOn = false;

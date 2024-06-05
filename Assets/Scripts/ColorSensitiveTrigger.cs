@@ -1,22 +1,16 @@
 using UnityEngine;
 
-public class ColorSensitiveTrigger : MonoBehaviour
+public class ColorSensitiveTrigger : EnergyPortPuzzle
 {
     [SerializeField] private Color targetColor;
     [SerializeField] private float tolerance = 0.1f;
-    [SerializeField] private bool actionPerformed = false;
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("OnTriggerEnter called with: " + other.gameObject.name);
-    }
-
+    [SerializeField] private bool performOnce = true;
+    [SerializeField][ShowOnly] private bool performed = false;
 
     private void OnTriggerStay(Collider other)
     {
         Debug.Log("OnTriggerStay called with: " + other.gameObject.name);
-        if (actionPerformed) return;
+        if (performed) return;
 
         if (other.GetComponent<LaserEnd>())
         {
@@ -34,18 +28,24 @@ public class ColorSensitiveTrigger : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<LaserEnd>())
+        {
+            ResetAction();
+        }
+    }
+
     private void CheckLaserColor(Color laserColor)
     {
-        if (IsColorMatch(laserColor) && !actionPerformed)
+        if (IsColorMatch(laserColor))
         {
             PerformAction();
-            actionPerformed = true;
         }
     }
 
     private bool IsColorMatch(Color color)
     {
-        // Using Unity's built-in method to convert colors to strings for precise comparison/logging
         string targetColorString = ColorUtility.ToHtmlStringRGB(targetColor);
         string incomingColorString = ColorUtility.ToHtmlStringRGB(color);
 
@@ -65,11 +65,16 @@ public class ColorSensitiveTrigger : MonoBehaviour
 
     private void PerformAction()
     {
-        Debug.Log("Action performed: Color match!");
+        if (performOnce && !performed)
+        {
+            performed = true;
+            OnEnergy();
+        }
     }
 
     public void ResetAction()
     {
-        actionPerformed = false;
+        if (performOnce) return;
+        OffEnergy();
     }
 }

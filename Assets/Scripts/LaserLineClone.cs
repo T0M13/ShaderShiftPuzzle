@@ -33,6 +33,7 @@ public class LaserLineClone : MonoBehaviour
     public Vector3 CurrentLaserDirection { get => currentLaserDirection; set => currentLaserDirection = value; }
     public Color CurrentColor { get => CurrentColor1; set => CurrentColor1 = value; }
     public Color CurrentColor1 { get => currentColor; set => currentColor = value; }
+    public Transform LaserEndPoint { get => laserEndPoint; set => laserEndPoint = value; }
 
     private void Start()
     {
@@ -102,9 +103,9 @@ public class LaserLineClone : MonoBehaviour
             lineRenderer.positionCount = laserPath.Length;
             lineRenderer.SetPositions(laserPath);
 
-            if (laserEndPoint != null)
+            if (LaserEndPoint != null)
             {
-                laserEndPoint.position = laserPath[laserPath.Length - 1];
+                LaserEndPoint.position = laserPath[laserPath.Length - 1];
             }
         }
     }
@@ -169,7 +170,7 @@ public class LaserLineClone : MonoBehaviour
                 laserCloneChild.CurrentColor = ColorUtils.MixColors(CurrentColor1, mirror.MirrorColor);
                 laserCloneChild.ChangeLaserColor(laserCloneChild.CurrentColor);
             }
-            laserCloneChild.LaserStartPoint.position = laserEndPoint.position;
+            laserCloneChild.LaserStartPoint.position = LaserEndPoint.position;
             laserCloneChild.CurrentLaserDirection = Vector3.Reflect(currentLaserDirection + laserDirectionOffset, hit.normal);
 
             return true;

@@ -23,6 +23,11 @@ public class ColorMirrorObject : ColorObject
 
         if (myCollider == null)
             myCollider = GetComponent<Collider>();
+
+        if (mirror != null)
+        {
+           myRenderer.sharedMaterial.SetColor(_DEFAULTCOLOR, mirror.MirrorColor);
+        }
     }
 
     public override void SetColorAndAlpha(Color color, float alpha)
