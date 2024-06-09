@@ -6375,8 +6375,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3920800757701002346}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 123.31, y: 1.5, z: 5.97}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 124.05, y: 1.5, z: 5.97}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -6390,7 +6390,7 @@ Transform:
   - {fileID: 6929143029268519097}
   - {fileID: 1423892438770162036}
   m_Father: {fileID: 7570970245228821790}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &477021649852946052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6405,7 +6405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 0}
   portalViewCamera: {fileID: 7005163662715842466}
-  portalViewResolution: 256
+  portalViewResolution: 512
   portalRoot1: {fileID: 8052677373391685900}
   portalRoot2: {fileID: 6376435924298587558}
   nearClipPlaneThreshold: 2
@@ -6981,8 +6981,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6229544225107263997}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 112.15, y: 1.5, z: -109.19}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 110.02, y: 1.5, z: -110.722}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -6996,7 +6996,7 @@ Transform:
   - {fileID: 7961571160394865179}
   - {fileID: 7752021917465935968}
   m_Father: {fileID: 7570970245228821790}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3506927226907140474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7011,7 +7011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 0}
   portalViewCamera: {fileID: 6913066081383621176}
-  portalViewResolution: 256
+  portalViewResolution: 512
   portalRoot1: {fileID: 6376435924298587558}
   portalRoot2: {fileID: 8052677373391685900}
   nearClipPlaneThreshold: 2
