@@ -45,7 +45,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497290685260868943}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -87,7 +87,7 @@ SkinnedMeshRenderer:
   m_Mesh: {fileID: 4300002, guid: 982edc8d5019ea346b9aeab3a0e64809, type: 3}
   m_Bones: []
   m_BlendShapeWeights:
-  - 100
+  - 0
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0.016264826, y: 0.02235489, z: -0.021218032}
@@ -1001,7 +1001,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 200
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5125,7 +5125,7 @@ Camera:
   m_GameObject: {fileID: 1330639808386635624}
   m_Enabled: 0
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -5155,7 +5155,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967293
+    m_Bits: 1
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5198,7 +5198,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -5414,7 +5414,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619997780678632251}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -5497,7 +5497,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1747352472354045533}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -6099,7 +6099,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3579246596966838199}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6140,7 +6140,7 @@ SkinnedMeshRenderer:
   m_Mesh: {fileID: 4300002, guid: a9d1f9b34a55443498a2d5a528a6fc75, type: 3}
   m_Bones: []
   m_BlendShapeWeights:
-  - 90
+  - 0
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0, y: -0.0005753515, z: -0.00000029802322}
@@ -6278,7 +6278,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.38823533, g: 0.64885736, b: 1, a: 1}
   m_Intensity: 0
-  m_Range: 10
+  m_Range: 5.7
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -6376,8 +6376,8 @@ Transform:
   m_GameObject: {fileID: 3920800757701002346}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -1.064, y: 0.94, z: 0.958}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 123.31, y: 1.5, z: 5.97}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1597128541986804805}
@@ -6405,10 +6405,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 0}
   portalViewCamera: {fileID: 7005163662715842466}
-  portalViewResolution: 512
+  portalViewResolution: 256
   portalRoot1: {fileID: 8052677373391685900}
   portalRoot2: {fileID: 6376435924298587558}
-  nearClipPlaneThreshold: 3
+  nearClipPlaneThreshold: 2
 --- !u!1 &4660052761782934595
 GameObject:
   m_ObjectHideFlags: 0
@@ -6537,7 +6537,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4861912267448421329}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6579,7 +6579,7 @@ SkinnedMeshRenderer:
   m_Mesh: {fileID: 4300002, guid: 982edc8d5019ea346b9aeab3a0e64809, type: 3}
   m_Bones: []
   m_BlendShapeWeights:
-  - 90
+  - 0
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0.016264826, y: 0.02235489, z: -0.021218032}
@@ -6909,7 +6909,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6157066823374127166}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6950,7 +6950,7 @@ SkinnedMeshRenderer:
   m_Mesh: {fileID: 4300002, guid: a9d1f9b34a55443498a2d5a528a6fc75, type: 3}
   m_Bones: []
   m_BlendShapeWeights:
-  - 100
+  - 0
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0, y: -0.0005753515, z: -0.00000029802322}
@@ -6982,8 +6982,8 @@ Transform:
   m_GameObject: {fileID: 6229544225107263997}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 24.51, y: 0.94, z: -3.59}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 112.15, y: 1.5, z: -109.19}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 217785299366945400}
@@ -7011,10 +7011,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 0}
   portalViewCamera: {fileID: 6913066081383621176}
-  portalViewResolution: 512
+  portalViewResolution: 256
   portalRoot1: {fileID: 6376435924298587558}
   portalRoot2: {fileID: 8052677373391685900}
-  nearClipPlaneThreshold: 3
+  nearClipPlaneThreshold: 2
 --- !u!1 &6713035304218762310
 GameObject:
   m_ObjectHideFlags: 0
@@ -7129,7 +7129,7 @@ Camera:
   m_GameObject: {fileID: 7133543909929595265}
   m_Enabled: 0
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -7159,7 +7159,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967293
+    m_Bits: 1
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -7202,7 +7202,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -7350,7 +7350,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.38823533, g: 0.64885736, b: 1, a: 1}
   m_Intensity: 0
-  m_Range: 10
+  m_Range: 5.7
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -8292,7 +8292,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 200
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -12309,8 +12309,8 @@ MonoBehaviour:
   physicsMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  radius: 2.5
-  force: 3000
+  radius: 5
+  force: 14000
   distanceCurve:
     serializedVersion: 2
     m_Curve:
