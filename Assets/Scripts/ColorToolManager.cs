@@ -16,6 +16,11 @@ public class ColorToolManager : MonoBehaviour
     public bool IsDefaultColor { get => isDefaultColor; set => isDefaultColor = value; }
     public Color DefaultColor { get => defaultColor; }
 
+    private void Awake()
+    {
+        ChangeOrbBackToDefaultColor();
+    }
+
     public void ChangeOrbColor(Color color)
     {
         foreach (var particle in orbParticles)
