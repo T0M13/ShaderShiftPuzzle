@@ -81,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
         if (playerReferences.CurrentState != PlayerState.Playing) return;
         Move();
         Jump();
+
     }
 
     private void Move()
@@ -123,7 +124,8 @@ public class PlayerMovement : MonoBehaviour
     private void Look()
     {
         if (!canLook) return;
-        playerReferences.PlayerLook.LookPos = this.look;
+        Vector2 normalizedLookPos = new Vector2(this.look.x * Time.deltaTime, this.look.y * Time.deltaTime);
+        playerReferences.PlayerLook.LookPos = normalizedLookPos;
     }
 
     public void Freeze()

@@ -14,12 +14,8 @@ namespace tomi.CharacterController3D
 
         public void Look(Transform transform, Vector2 mouse, Transform playerTransform)
         {
-            float mouseX = mouse.x * SaveData.Current.playerProfile.aimSensitivity * Time.deltaTime;
-            float mouseY = 0;
-            if (!SaveData.Current.playerProfile.reverseMouse)
-                mouseY = mouse.y * SaveData.Current.playerProfile.aimSensitivity * Time.deltaTime;
-            else
-                mouseY = -mouse.y * SaveData.Current.playerProfile.aimSensitivity * Time.deltaTime;
+            float mouseX = mouse.x * SaveData.Current.playerProfile.aimSensitivity;
+            float mouseY = (reverseMouse ? -mouse.y : mouse.y) * SaveData.Current.playerProfile.aimSensitivity;
 
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, minViewDistance);

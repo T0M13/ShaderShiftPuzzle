@@ -15,7 +15,7 @@ namespace tomi.SaveSystem
         public float effectsVolume;
 
         [Header("Sensitivity")]
-        [Range(1, 100)] public float aimSensitivity;
+        public float aimSensitivity;
         public bool reverseMouse;
 
         [Header("Quality")]
@@ -32,7 +32,7 @@ namespace tomi.SaveSystem
             musicVolume = 0.5f;
             effectsVolume = 0.5f;
 
-            aimSensitivity = 20f;
+            aimSensitivity = 200f;
             reverseMouse = false;
 
             gamma = 0;
