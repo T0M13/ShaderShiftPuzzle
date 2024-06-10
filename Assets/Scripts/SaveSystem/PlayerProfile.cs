@@ -21,6 +21,7 @@ namespace tomi.SaveSystem
         [Header("Quality")]
         [Range(-.5f, .5f)] public float gamma;
         [Range(-.5f, .5f)] public float brightness;
+        public int vsync;
         public int resolutionValue;
         public int windowModeValue;
 
@@ -36,6 +37,8 @@ namespace tomi.SaveSystem
 
             gamma = 0;
             brightness = 0;
+
+            vsync = 1;
         }
     }
 }

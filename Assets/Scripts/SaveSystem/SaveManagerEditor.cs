@@ -41,6 +41,7 @@ public class SaveManagerEditor : Editor
             EditorGUILayout.Space();
             EditorGUILayout.Slider("Brightness", SaveData.Current.playerProfile.brightness, -.5f, .5f);
             EditorGUILayout.Slider("Gamma", SaveData.Current.playerProfile.gamma, -.5f, .5f);
+            EditorGUILayout.IntField("Vsync", SaveData.Current.playerProfile.vsync);
 
 
         }

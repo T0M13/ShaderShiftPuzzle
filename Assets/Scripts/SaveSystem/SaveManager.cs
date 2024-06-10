@@ -9,8 +9,8 @@ using tomi.SaveSystem;
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
-    public List<string> saveFiles = new List<string>(); 
-    public Sprite[] levelImages; 
+    public List<string> saveFiles = new List<string>();
+    public Sprite[] levelImages;
     private const string SaveFileName = "GameData.json";
     //private const int MaxAutosaves = 4;
 
@@ -33,7 +33,12 @@ public class SaveManager : MonoBehaviour
         string path = GetFilePath(SaveFileName);
         if (!File.Exists(path))
         {
-            SaveData saveData = new SaveData(); 
+            SaveData saveData = new SaveData();
+
+            //vsync
+            QualitySettings.vSyncCount = 1;
+            saveData.playerProfile.vsync = 1;
+
             SaveAsync(saveData);
         }
         else
