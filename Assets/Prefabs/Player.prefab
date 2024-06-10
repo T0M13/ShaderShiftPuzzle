@@ -793,7 +793,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   rayDistance: 2
-  resetColorAfterSetting: 0
+  resetColorAfterSetting: 1
 --- !u!114 &798564424066607219
 MonoBehaviour:
   m_ObjectHideFlags: 0

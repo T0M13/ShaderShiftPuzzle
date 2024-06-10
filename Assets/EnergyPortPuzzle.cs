@@ -13,26 +13,26 @@ public class EnergyPortPuzzle : MonoBehaviour, IEnergy
     public bool needsToStay = true;
 
 
-    public void OffEnergy()
+    public void OffEnergy(LaserEnd laserEnd)
     {
-        if(!needsToStay) return;
+        if (!needsToStay) return;
         if (isEnergyOn)
         {
             isEnergyOn = false;
-            onEnergyGone.Invoke();
+            onEnergyGone?.Invoke();
         }
     }
 
-    public void OnEnergy()
+    public void OnEnergy(LaserEnd laserEnd)
     {
         if (!isEnergyOn)
         {
             isEnergyOn = true;
-            onEnergyReceived.Invoke();
+            onEnergyReceived?.Invoke();
         }
     }
 
-    public bool IsEnergyOn()
+    protected virtual bool IsEnergyOn()
     {
         return isEnergyOn;
     }

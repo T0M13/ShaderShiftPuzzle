@@ -15,7 +15,15 @@ public class LaserEnd : MonoBehaviour
     {
         if(other.GetComponent<IEnergy>() != null)
         {
-            other.GetComponent<IEnergy>().OnEnergy();
+            other.GetComponent<IEnergy>().OnEnergy(this);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<IEnergy>() != null)
+        {
+            other.GetComponent<IEnergy>().OnEnergy(this);
         }
     }
 
@@ -23,7 +31,7 @@ public class LaserEnd : MonoBehaviour
     {
         if (other.GetComponent<IEnergy>() != null)
         {
-            other.GetComponent<IEnergy>().OffEnergy();
+            other.GetComponent<IEnergy>().OffEnergy(this);
         }
     }
 }

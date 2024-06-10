@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a214302e95e5fb46a6c5f1d62ce7f46, type: 3}
   m_Name: CanSetColorObject
   m_EditorClassIdentifier: 
-  canGetColor: 1
+  canGetColor: 0
   canSetColor: 1
   canBecomeInvisible: 0
   invisiblityThreshold: 0.2

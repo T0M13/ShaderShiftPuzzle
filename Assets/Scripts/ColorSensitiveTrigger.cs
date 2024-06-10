@@ -1,47 +1,28 @@
 using UnityEngine;
+using UnityEngine.Events;
 
-public class ColorSensitiveTrigger : EnergyPortPuzzle
+public class ColorSensitiveTrigger : MonoBehaviour, IEnergy
 {
+    public bool isEnergyOn = false;
+    public bool needsToStay = true;
+
     [SerializeField] private Color targetColor;
     [SerializeField] private float tolerance = 0.1f;
-    [SerializeField] private bool performOnce = true;
-    [SerializeField][ShowOnly] private bool performed = false;
+    [SerializeField]
+    protected UnityEvent onEnergyReceived;
 
-    private void OnTriggerStay(Collider other)
-    {
-        Debug.Log("OnTriggerStay called with: " + other.gameObject.name);
-        if (performed) return;
+    [SerializeField]
+    protected UnityEvent onEnergyGone;
 
-        if (other.GetComponent<LaserEnd>())
-        {
-            var laserEnd = other.GetComponent<LaserEnd>();
-
-            if (laserEnd.LaserParent)
-            {
-                CheckLaserColor(laserEnd.LaserParent.CurrentColor);
-            }
-
-            if (laserEnd.LaserCloneParent)
-            {
-                CheckLaserColor(laserEnd.LaserCloneParent.CurrentColor);
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<LaserEnd>())
-        {
-            ResetAction();
-        }
-    }
 
     private void CheckLaserColor(Color laserColor)
     {
         if (IsColorMatch(laserColor))
         {
-            PerformAction();
+            isEnergyOn = true;
+            onEnergyReceived?.Invoke();
         }
+      
     }
 
     private bool IsColorMatch(Color color)
@@ -60,28 +41,32 @@ public class ColorSensitiveTrigger : EnergyPortPuzzle
 
         Debug.Log($"Distance between colors: {distance}");
 
-        if (distance <= tolerance)
+        return distance <= tolerance;
+    }
+
+    public void OnEnergy(LaserEnd laserEnd)
+    {
+        if (!isEnergyOn)
         {
-            return true;
-        }
-        else
-        {
-            return false;
+            if (laserEnd.LaserParent)
+            {
+                CheckLaserColor(laserEnd.LaserParent.CurrentColor);
+            }
+
+            if (laserEnd.LaserCloneParent)
+            {
+                CheckLaserColor(laserEnd.LaserCloneParent.CurrentColor);
+            }
         }
     }
 
-    private void PerformAction()
+    public void OffEnergy(LaserEnd laserEnd)
     {
-        if (performOnce && !performed)
+        if (!needsToStay) return;
+        if (isEnergyOn)
         {
-            performed = true;
-            OnEnergy();
+            isEnergyOn = false;
+            onEnergyGone?.Invoke();
         }
-    }
-
-    public void ResetAction()
-    {
-        if (performOnce) return;
-        OffEnergy();
     }
 }

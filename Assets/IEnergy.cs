@@ -1,5 +1,5 @@
 public interface IEnergy
 {
-    public void OnEnergy();
-    public void OffEnergy();
+    public void OnEnergy(LaserEnd laserEnd);
+    public void OffEnergy(LaserEnd laserEnd);
 }

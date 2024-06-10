@@ -25,7 +25,7 @@ public class PlayerColorTool : MonoBehaviour
     [ShowOnly][SerializeField] private Coroutine shootCoroutine;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float rayDistance = 6;
-    [SerializeField] private bool resetColorAfterSetting = false;
+    [SerializeField] private bool resetColorAfterSetting = true;
 
 
     public ColorToolManager ColorToolManager { get => colorToolManager; set => colorToolManager = value; }

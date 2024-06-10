@@ -1,23 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ColorObject : MonoBehaviour, IColor
 {
-     protected static string _DEFAULTCOLOR = "_DefaultColor";
-     protected static string _DEFAULTALPHA = "_DefaultAlpha";
-     protected static string _ALPHA = "_Alpha";
-     protected static string _COLOR = "_Color";
-    [SerializeField] protected Material myMaterial;
+    protected static string _DEFAULTCOLOR = "_DefaultColor";
+    protected static string _DEFAULTALPHA = "_DefaultAlpha";
+    protected static string _ALPHA = "_Alpha";
+    protected static string _COLOR = "_Color";
+    [Header("Current Settings")]
+    [SerializeField] protected Color currentColor;
+    [SerializeField] protected float currentAlpha = 1;
+    [Header("Default Settings")]
+    [SerializeField] protected Color defaultColor;
+    [SerializeField] protected float defaultAlpha = 1;
+    [SerializeField] protected MaterialPropertyBlock propBlock;
+    [SerializeField] protected Renderer myRenderer;
     [SerializeField] protected Collider myCollider;
     [SerializeField] protected ColorSettingsComponent colorSettings;
     protected Coroutine resetObjectCor;
+    [Header("Events")]
 
-
-    protected virtual void OnValidate()
-    {
-        GetRefs();
-    }
+    public UnityEvent onBeforeSet;
+    public UnityEvent onBeforeGet;
+    public UnityEvent onAfterSet;
+    public UnityEvent onAfterGet;
 
     protected virtual void Awake()
     {
@@ -27,25 +35,27 @@ public class ColorObject : MonoBehaviour, IColor
 
     protected virtual void GetRefs()
     {
-        myMaterial = GetComponent<Renderer>().sharedMaterial;
-
         if (myCollider == null)
             myCollider = GetComponent<Collider>();
+        if (propBlock == null)
+            propBlock = new MaterialPropertyBlock();
     }
 
     protected virtual void ResetObject()
     {
-        SetColorAndAlpha(myMaterial.GetColor(_DEFAULTCOLOR), myMaterial.GetFloat(_DEFAULTALPHA));
+        myRenderer.material = new Material(myRenderer.sharedMaterial);
+        SetColor(defaultColor);
+        SetAlpha(defaultAlpha);
     }
 
     public virtual Color GetColor()
     {
-        return myMaterial.GetColor(_COLOR);
+        return myRenderer.material.GetColor(_COLOR);
     }
 
     public virtual float GetAlpha()
     {
-        return myMaterial.GetFloat(_ALPHA);
+        return myRenderer.material.GetFloat(_ALPHA);
     }
 
     public virtual void GetColorAndAlpha(out Color color, out float alpha, out bool canGetColor)
@@ -59,12 +69,14 @@ public class ColorObject : MonoBehaviour, IColor
 
     public virtual void SetColor(Color color)
     {
-        myMaterial.SetColor(_COLOR, color);
+        currentColor = color;
+        myRenderer.material.SetColor(_COLOR, color);
     }
 
     public virtual void SetAlpha(float alpha)
     {
-        myMaterial.SetFloat(_ALPHA, alpha);
+        currentAlpha = alpha;
+        myRenderer.material.SetFloat(_ALPHA, alpha);
     }
 
     public virtual void SetColorAndAlpha(Color color, float alpha)
@@ -86,36 +98,27 @@ public class ColorObject : MonoBehaviour, IColor
 
     protected virtual void InteractionAfterSet()
     {
-        if (colorSettings.canBecomeInvisible)
-        {
-            InvisibleInteraction();
-        }
-
-        if (colorSettings.canReset)
-        {
-            ResetInteraction();
-        }
+        onAfterSet?.Invoke();
     }
 
     protected virtual void InteractionAfterGet()
     {
-
+        onAfterGet?.Invoke();
     }
 
     protected virtual void InteractionBeforeSet()
     {
-
+        onBeforeSet?.Invoke();
     }
 
     protected virtual void InteractionBeforeGet()
     {
-
+        onBeforeGet?.Invoke();
     }
-
 
     #region Interactions
 
-    private void InvisibleInteraction()
+    public void InvisibleInteraction()
     {
         if (GetAlpha() <= colorSettings.invisiblityThreshold)
         {
@@ -123,7 +126,7 @@ public class ColorObject : MonoBehaviour, IColor
         }
     }
 
-    private void ResetInteraction()
+    public void ResetInteraction()
     {
         if (colorSettings.canReset)
         {
@@ -141,5 +144,4 @@ public class ColorObject : MonoBehaviour, IColor
     }
 
     #endregion
-
 }
