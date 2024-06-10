@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Outlines
   m_EditorClassIdentifier: 
   m_Active: 1
-  renderPassEvent: 300
+  renderPassEvent: 500
   outlinesLayerMask:
     serializedVersion: 2
     m_Bits: 65536

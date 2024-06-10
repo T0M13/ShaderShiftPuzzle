@@ -60,7 +60,14 @@ public class ColorSensitiveTrigger : EnergyPortPuzzle
 
         Debug.Log($"Distance between colors: {distance}");
 
-        return distance <= tolerance;
+        if (distance <= tolerance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void PerformAction()
