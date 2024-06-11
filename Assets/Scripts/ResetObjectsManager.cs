@@ -6,17 +6,27 @@ using UnityEngine;
 public class ResetObjectsManager : MonoBehaviour
 {
     [SerializeField] private HoldableObject[] holdableObjects;
+    [SerializeField] private bool useList = false;
     [SerializeField] private bool isActive = true;
 
     private void OnTriggerEnter(Collider other)
     {
         if (!isActive) return;
-        if (holdableObjects.Contains(other.GetComponent<HoldableObject>()))
+        if (useList)
         {
-            HoldableObject currentHoldableObject = other.GetComponent<HoldableObject>();
-
-            currentHoldableObject.Respawn();
-            
+            if (holdableObjects.Contains(other.GetComponent<HoldableObject>()))
+            {
+                HoldableObject currentHoldableObject = other.GetComponent<HoldableObject>();
+                currentHoldableObject.Respawn();
+            }
+        }
+        else
+        {
+            if (other.GetComponent<HoldableObject>())
+            {
+                HoldableObject currentHoldableObject = other.GetComponent<HoldableObject>();
+                currentHoldableObject.Respawn();
+            }
         }
     }
 
