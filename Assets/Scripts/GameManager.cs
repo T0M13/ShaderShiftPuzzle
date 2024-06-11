@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         if (loadingScreenManager != null)
         {
-            loadingScreenManager.SwitchToScene(currentScene.name);
+            SwitchToLevel(currentScene.name);
         }
         else
         {
@@ -225,7 +225,7 @@ public class GameManager : MonoBehaviour
         //Save before?
         if (loadingScreenManager != null)
         {
-            loadingScreenManager.SwitchToScene("MainMenu");
+            SwitchToLevel("MainMenu");
         }
         else
         {

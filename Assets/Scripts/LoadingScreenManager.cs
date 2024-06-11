@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class LoadingScreenManager : MonoBehaviour
 {
-
     public static LoadingScreenManager instance;
     [SerializeField] private GameObject loadingScreenUI;
     [SerializeField] private Slider progressbar;
@@ -17,8 +16,6 @@ public class LoadingScreenManager : MonoBehaviour
     [SerializeField] private float additionalWaitTime = 0.2f;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private List<LevelBackgrounds> levelBackgrounds = new List<LevelBackgrounds>();
-    private Dictionary<string, Sprite> levelBackgroundsDic = new Dictionary<string, Sprite>();
-
 
     public Action onBeforeLoadingScreen;
     public Action onAfterLoadingScreen;
@@ -27,7 +24,7 @@ public class LoadingScreenManager : MonoBehaviour
     private class LevelBackgrounds
     {
         public string levelName;
-        public Sprite backgroundImage;
+        public Sprite[] backgroundImage;
     }
 
     private void Awake()
@@ -43,17 +40,8 @@ public class LoadingScreenManager : MonoBehaviour
         }
 
         loadingScreenUI.SetActive(false);
-        InitializeLevelBackgrounds();
-
     }
 
-    private void InitializeLevelBackgrounds()
-    {
-        foreach (var levelbackground in levelBackgrounds)
-        {
-            levelBackgroundsDic.Add(levelbackground.levelName, levelbackground.backgroundImage);
-        }
-    }
 
     public void SwitchToScene(int id)
     {
@@ -78,6 +66,7 @@ public class LoadingScreenManager : MonoBehaviour
     {
         StartCoroutine(SwitchToSceneAsync(levelName));
     }
+
     IEnumerator SwitchToSceneAsync(string levelName)
     {
         uIDissolveEffect.gameObject.SetActive(true);
@@ -101,21 +90,26 @@ public class LoadingScreenManager : MonoBehaviour
 
     public void ChangeBackground(string levelName)
     {
-        if (levelBackgrounds.Count == 0)
+        foreach (var levelBackground in levelBackgrounds)
         {
-            Debug.LogWarning("No background images set in the LoadingScreenManager.");
-            return;
-        }
+            if (levelBackground.levelName == levelName)
+            {
+                if (levelBackground.backgroundImage.Length > 1)
+                {
+                    Debug.Log("Multiple sprites available.");
+                }
+                else
+                {
+                    Debug.Log("Only one sprite available.");
+                }
 
-        if (levelBackgroundsDic.TryGetValue(levelName, out Sprite backgroundImageSprite))
-        {
-            backgroundImage.sprite = backgroundImageSprite;
+                int index = UnityEngine.Random.Range(0, levelBackground.backgroundImage.Length);
+                Debug.Log($"Selected sprite index: {index}");
+                backgroundImage.sprite = levelBackground.backgroundImage[index];
+                return;
+            }
         }
-        else
-        {
-            Debug.LogWarning("No background found for level: " + levelName);
-        }
-
+        Debug.LogWarning("No background found for level: " + levelName);
     }
 
 }

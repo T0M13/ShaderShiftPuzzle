@@ -32,7 +32,7 @@ namespace tomi.SaveSystem
             musicVolume = 0.5f;
             effectsVolume = 0.5f;
 
-            aimSensitivity = 200f;
+            aimSensitivity = 20f;
             reverseMouse = false;
 
             gamma = 0;
