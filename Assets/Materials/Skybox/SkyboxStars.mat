@@ -57,17 +57,17 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _StarDensity: 4
-    - _StarDensityOffset: 45
+    - _StarDensity: 0
+    - _StarDensityOffset: 0
     - _StarDensityOffsetSpeed: 0
     - _StarOffsetSpeed: -0.1
     - _StarPower: 100
     m_Colors:
-    - _HorizontColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 0}
-    - _SkyColor: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 0}
+    - _HorizontColor: {r: 1, g: 1, b: 1, a: 0}
+    - _SkyColor: {r: 0.28502133, g: 0.9103278, b: 0.990566, a: 1}
     - _StarColor: {r: 1, g: 1, b: 1, a: 0}
     - _StarOffset: {r: 0, g: 0, b: 0, a: 0}
     - _StarOffsetSpeed: {r: 0, g: 0, b: 0, a: 0}
-    - _StarTiling: {r: 20, g: 8, b: 0, a: 0}
+    - _StarTiling: {r: 0, g: 0, b: 0, a: 0}
     - _StarTilingSpeed: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

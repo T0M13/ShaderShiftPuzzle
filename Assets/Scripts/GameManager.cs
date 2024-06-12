@@ -131,6 +131,10 @@ public class GameManager : MonoBehaviour
                 InitializeGame();
                 ChangeState(GameState.Game);
                 break;
+            case "Level2":
+                InitializeGame();
+                ChangeState(GameState.Game);
+                break;
             default:
                 Debug.LogWarning("Loaded scene not explicitly handled: " + scene.name);
                 break;

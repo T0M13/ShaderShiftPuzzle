@@ -16,7 +16,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -38,23 +38,23 @@ Material:
     m_Ints: []
     m_Floats:
     - _MaxTessDistance: 100
-    - _NoiseScale: 0.154
+    - _NoiseScale: 0.07
     - _NoiseWeight: 2
     - _PathBlending: 3
     - _RimPower: 20
-    - _SnowDepth: 74.7
-    - _SnowHeight: 0.3
+    - _SnowDepth: 3
+    - _SnowHeight: 0.4
     - _SnowPathStrength: 2
-    - _SnowTextureOpacity: 0.784
-    - _SnowTextureScale: 0.2
-    - _SparkCutoff: 0.6
+    - _SnowTextureOpacity: 0.5
+    - _SnowTextureScale: 0.17
+    - _SparkCutoff: 0.46
     - _SparkleScale: 0.26
     - _Tess: 32
     - _Weight: 1
     m_Colors:
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _PathColorIn: {r: 0.12477186, g: 0.13013652, b: 0.13563336, a: 1}
-    - _PathColorOut: {r: 0.10461649, g: 0.12213881, b: 0.14126332, a: 1}
-    - _RimColor: {r: 0.10461649, g: 0.12213881, b: 0.14126332, a: 1}
+    - _PathColorIn: {r: 0.32137772, g: 0.37141532, b: 0.4339623, a: 1}
+    - _PathColorOut: {r: 0.32156864, g: 0.37254903, b: 0.43529412, a: 1}
+    - _RimColor: {r: 0.05660379, g: 0.05660379, b: 0.05660379, a: 1}
     - _ShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_BuildTextureStacks: []
