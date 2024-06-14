@@ -60,7 +60,7 @@ public class InteractableDoor : InteractableObject
         {
             CanInteract = false;
             ShowOutlineValue = false;
-            message = "";
+            Message = "";
         }
     }
 }

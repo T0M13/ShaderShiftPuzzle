@@ -30,7 +30,7 @@ public class AnimalBT : Tree
     [UnityEngine.SerializeField] protected float runAwaySpeed = 18f;
     [UnityEngine.SerializeField] protected float runAwayDisplacementDist = 6f;
     [UnityEngine.SerializeField] protected float waitHidden = 3f;
-    [UnityEngine.SerializeField] protected bool hide = true;
+    [UnityEngine.SerializeField] protected bool hide = false;
     [UnityEngine.SerializeField] protected UnityEngine.Transform[] hidePoints;
     public static UnityEngine.Vector3 pointToRunAwayTo;
 

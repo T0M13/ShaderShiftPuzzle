@@ -34,18 +34,18 @@ public class AIMouse : MonoBehaviour
     [SerializeField] private Vector3 pointToRunAwayTo;
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (agent == null)
             agent = GetComponent<NavMeshAgent>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         currentMouseState = MouseState.Idle;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (agent == null) return;
 
@@ -57,14 +57,10 @@ public class AIMouse : MonoBehaviour
             case MouseState.RunAway:
                 MouseRunAway();
                 break;
-            case MouseState.GetCheese:
-                break;
         }
         CheckSurrounding();
-
-
     }
-    private void MouseIdle()
+    protected virtual void MouseIdle()
     {
 
         if (agent.remainingDistance <= agent.stoppingDistance + agentChangeDirModifier)
@@ -79,7 +75,7 @@ public class AIMouse : MonoBehaviour
         }
     }
 
-    private void MouseRunAway()
+    protected virtual void MouseRunAway()
     {
         if (chaser == null) return;
         if (runAwayPositions.Length > 0)
@@ -116,12 +112,12 @@ public class AIMouse : MonoBehaviour
 
     }
 
-    private void MoveToPos(Vector3 pos)
+    protected virtual void MoveToPos(Vector3 pos)
     {
         agent.SetDestination(pos);
     }
 
-    private void CheckSurrounding()
+    protected virtual void CheckSurrounding()
     {
         if (!checkSurroundings) return;
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, checkRange, Vector3.up);
@@ -138,7 +134,7 @@ public class AIMouse : MonoBehaviour
         }
     }
 
-    private bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    protected virtual bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
         Vector3 randomPoint = center + Random.insideUnitSphere * range;
         NavMeshHit hit;
@@ -152,7 +148,7 @@ public class AIMouse : MonoBehaviour
         return false;
     }
 
-    private bool RandomRunAwayPoint(out Vector3 randomRunAwayPoint)
+    protected virtual bool RandomRunAwayPoint(out Vector3 randomRunAwayPoint)
     {
         Transform randomP = runAwayPositions[Random.Range(0, runAwayPositions.Length - 1)];
         NavMeshHit hit;
@@ -166,7 +162,7 @@ public class AIMouse : MonoBehaviour
         return false;
     }
 
-    private void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(centerPoint.position, idleRange);
@@ -177,11 +173,10 @@ public class AIMouse : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, checkRange);
     }
 
-    private enum MouseState
+    public enum MouseState
     {
         Idle,
-        RunAway,
-        GetCheese
+        RunAway
     }
 
 }
