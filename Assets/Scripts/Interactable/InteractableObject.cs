@@ -66,12 +66,13 @@ public class InteractableObject : MonoBehaviour, IInteractable
     //}
 
 
-    public void SetEmpty()
+    public virtual void SetEmpty()
     {
         canInteract = false;
         outline = false;
         Message = "";
         PressButtonMessage = "";
+        
     }
   
 }
