@@ -26,7 +26,10 @@ public class InteractableDoor : InteractableObject
     {
         if (oneInteraction) return;
         if (interactOnce)
+        {
             oneInteraction = true;
+            SetEmpty();
+        }
         StopAllCoroutines();
         StartCoroutine(AdjustDoorRotation());
     }

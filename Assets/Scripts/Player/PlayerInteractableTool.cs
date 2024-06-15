@@ -106,7 +106,7 @@ public class PlayerInteractableTool : MonoBehaviour
         RaycastHit rayhit;
         if (Physics.Raycast(rayposition, out rayhit, interactDistance, layerMask, QueryTriggerInteraction.Ignore))
         {
-            if (rayhit.transform.GetComponent<IInteractable>() != null && rayhit.transform.GetComponent<IInteractable>().CanIInteract())
+            if (rayhit.transform.GetComponent<IInteractable>() != null && rayhit.transform.GetComponent<IInteractable>().CanShowPressButtonMessage())
             {
                 rayhit.transform.GetComponent<IInteractable>().ShowUseButtonMessage();
             }

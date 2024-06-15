@@ -6,6 +6,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
 {
     [SerializeField] private bool canInteract = true;
     [SerializeField] private bool outline = false;
+    [SerializeField] private bool showPressButtonMessage = true;
     [SerializeField] private string message = "";
     [SerializeField] private string pressButtonMessage = "";
     //[SerializeField] protected string taskMessage = "";
@@ -14,6 +15,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
     public bool ShowOutlineValue { get => outline; set => outline = value; }
     protected string PressButtonMessage { get => pressButtonMessage; set => pressButtonMessage = value; }
     protected string Message { get => message; set => message = value; }
+    public bool ShowPressButtonMessage { get => showPressButtonMessage; set => showPressButtonMessage = value; }
 
     public virtual bool CanIInteract()
     {
@@ -70,9 +72,13 @@ public class InteractableObject : MonoBehaviour, IInteractable
     {
         canInteract = false;
         outline = false;
+        showPressButtonMessage = false;
         Message = "";
         PressButtonMessage = "";
-        
     }
-  
+
+    public bool CanShowPressButtonMessage()
+    {
+       return showPressButtonMessage;
+    }
 }

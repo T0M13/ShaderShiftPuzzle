@@ -7,5 +7,6 @@ public interface IInteractable
     public bool ShowOutline();
     public void ShowMessage();
     public void ShowUseButtonMessage();
+    public bool CanShowPressButtonMessage();
 }
 
