@@ -72,7 +72,7 @@ public class AudioManager : MonoBehaviour
         PlayMusic(scene.name);
     }
 
-    public void PlaySound(string soundName, GameObject targetObject = null)
+    public void PlaySound(string soundName, GameObject targetObject = null, float? randomStartTimeMin = null, float? randomStartTimeMax = null)
     {
         Sound s = System.Array.Find(soundEffects, sound => sound.name == soundName);
         if (s == null)
@@ -84,7 +84,10 @@ public class AudioManager : MonoBehaviour
         GameObject soundObject = targetObject ?? new GameObject("Sound_" + soundName);
         AudioSource audioSource = soundObject.AddComponent<AudioSource>();
         SoundPlayer soundPlayer = soundObject.AddComponent<SoundPlayer>();
-        soundPlayer.Initialize(s, sfxMixerGroup, audioSource);
+
+        float startTime = randomStartTimeMin.HasValue && randomStartTimeMax.HasValue ? Random.Range(randomStartTimeMin.Value, randomStartTimeMax.Value) : s.startTime;
+
+        soundPlayer.Initialize(s, sfxMixerGroup, audioSource, startTime: startTime);
         soundPlayer.Play();
 
         activeSoundPlayers.Add(soundPlayer);
@@ -94,6 +97,7 @@ public class AudioManager : MonoBehaviour
             StartCoroutine(StopSoundAfterTime(soundPlayer, s.endTime));
         }
     }
+
 
     public void StopSound(GameObject targetObject)
     {

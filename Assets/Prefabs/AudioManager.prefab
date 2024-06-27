@@ -75,6 +75,16 @@ MonoBehaviour:
     loop: 1
     fadeInDuration: 1
     fadeOutDuration: 1
+  - name: Fire
+    clip: {fileID: 8300000, guid: a48301f0f15853a4db9e2035e648313d, type: 3}
+    volume: 0.25
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 1
+    loop: 1
+    fadeInDuration: 1
+    fadeOutDuration: 1
   levelMusicTracks:
   - levelName: MainMenu
     musicTracks:

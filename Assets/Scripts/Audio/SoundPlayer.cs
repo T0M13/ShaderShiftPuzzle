@@ -7,18 +7,19 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     public AudioManager.Sound sound;
 
-    public void Initialize(AudioManager.Sound sound, AudioMixerGroup mixerGroup, AudioSource source = null)
+    public void Initialize(AudioManager.Sound sound, AudioMixerGroup mixerGroup, AudioSource source = null, float? startTime = null)
     {
         this.sound = sound;
         audioSource = source ? source : gameObject.AddComponent<AudioSource>();
         audioSource.clip = sound.clip;
         audioSource.volume = sound.volume;
         audioSource.pitch = sound.pitch;
-        audioSource.time = sound.startTime;
+        audioSource.time = startTime ?? sound.startTime;
         audioSource.outputAudioMixerGroup = mixerGroup;
         audioSource.spatialBlend = sound.spatialBlend;
         audioSource.loop = sound.loop;
     }
+
 
 
     public void Play()
