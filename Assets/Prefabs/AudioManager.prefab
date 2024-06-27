@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6270820499242685110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7671346294830485950}
+  - component: {fileID: 6950023381108704107}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7671346294830485950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6270820499242685110}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6950023381108704107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6270820499242685110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9385996ff9f6948acc3bc059df8195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEffects:
+  - name: Portal Open
+    clip: {fileID: 8300000, guid: 1f4b60439e6b2497781f487dfdfc4eb8, type: 3}
+    volume: 1
+    pitch: 0.75
+    startTime: 0
+    endTime: 1
+    spatialBlend: 1
+    loop: 0
+    fadeInDuration: 0
+    fadeOutDuration: 1
+  - name: Portal Close
+    clip: {fileID: 8300000, guid: 1f4b60439e6b2497781f487dfdfc4eb8, type: 3}
+    volume: 1
+    pitch: 1.85
+    startTime: 0
+    endTime: 0.5
+    spatialBlend: 1
+    loop: 0
+    fadeInDuration: 0
+    fadeOutDuration: 2
+  - name: AuraBell
+    clip: {fileID: 8300000, guid: 46fcbc6f93e08024dba40fbe88155614, type: 3}
+    volume: 0.45
+    pitch: 0.6
+    startTime: 0
+    endTime: 0
+    spatialBlend: 1
+    loop: 1
+    fadeInDuration: 1
+    fadeOutDuration: 1
+  levelMusicTracks:
+  - levelName: MainMenu
+    musicTracks:
+    - name: Ambient
+      clip: {fileID: 8300000, guid: 651a044eefa12214cb1a94f22c077fd7, type: 3}
+      volume: 1
+      pitch: 1
+      startTime: 0
+      endTime: 0
+      spatialBlend: 0
+      loop: 1
+      fadeInDuration: 0
+      fadeOutDuration: 1
+  - levelName: Level0
+    musicTracks:
+    - name: OldSpaceship
+      clip: {fileID: 8300000, guid: af7f2ef9288cb4d93bbfb71ab2d04f18, type: 3}
+      volume: 1
+      pitch: 2
+      startTime: 0
+      endTime: 0
+      spatialBlend: 0
+      loop: 1
+      fadeInDuration: 1
+      fadeOutDuration: 1
+  musicMixerGroup: {fileID: 243864778437365490, guid: c4382341a39a10b46a6bc574f22f5974,
+    type: 2}
+  sfxMixerGroup: {fileID: 243485103152924164, guid: c4382341a39a10b46a6bc574f22f5974,
+    type: 2}
+  musicStartDelay: 0

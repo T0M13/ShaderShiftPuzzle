@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class InteractiveHelpPad : InteractableObject
 {
@@ -10,6 +12,16 @@ public class InteractiveHelpPad : InteractableObject
     [SerializeField] private int currentMessageIndex = 0;
     public GameObject[] helpParticles;
     public Collider helpPadCollider;
+
+    [SerializeField] private bool enableOnStart = true;
+
+    private void Start()
+    {
+        if (enableOnStart)
+        {
+            EnableHelppad();
+        }
+    }
 
     public override void Interact(PlayerReferences playerRef)
     {
@@ -21,6 +33,7 @@ public class InteractiveHelpPad : InteractableObject
 
         StopAllCoroutines();
         ChangeTaskMessage(taskMessages[currentMessageIndex]);
+        DisableParticles();
         StartCoroutine(DisplayMessageSequence());
     }
 
@@ -55,6 +68,7 @@ public class InteractiveHelpPad : InteractableObject
         foreach (var particle in helpParticles)
         {
             particle.SetActive(value);
+           
         }
     }
 
@@ -62,12 +76,29 @@ public class InteractiveHelpPad : InteractableObject
     {
         helpPadCollider.enabled = true;
         UpdateParticles(true);
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.PlaySound("AuraBell", gameObject);
+        }
     }
 
     public void DisableHelppad()
     {
         helpPadCollider.enabled = false;
         UpdateParticles(false);
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.StopSound(gameObject);
+        }
+    }
+
+    public void DisableParticles()
+    {
+        UpdateParticles(false);
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.StopSound(gameObject);
+        }
     }
 
     public override void SetEmpty()

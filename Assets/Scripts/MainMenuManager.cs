@@ -121,7 +121,7 @@ public class MainMenuManager : MonoBehaviour
                 chapterLoadSaveButton.title.text = "CONTINUE";
                 chapterLoadSaveButton.backgroundTitle.text = "CONTINUE";
                 chapterLoadSaveButton.desc.text = SaveData.Current.saveMetaData.description;
-                chapterLoadSaveButton.thumbnail.sprite = saveManager.levelImages[SaveData.Current.playerGameData.currentLevelThumbnailIndex];
+                chapterLoadSaveButton.thumbnail.sprite = saveManager.levelImages[SaveData.Current.playerGameData.currentLevelThumbnailIndex ];
 
                 chapterLoadSaveButton.button.onClick.AddListener(() => AddLoadGameString(SaveData.Current.playerGameData.currentLevelName));
 

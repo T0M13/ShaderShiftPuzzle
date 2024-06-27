@@ -71,6 +71,12 @@ public class LoadingScreenManager : MonoBehaviour
     {
         uIDissolveEffect.gameObject.SetActive(true);
         uIDissolveEffect.DissolveIn();
+
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.StopMusic();
+        }
+
         yield return new WaitForSeconds(beforeWaitTime);
         onBeforeLoadingScreen?.Invoke();
         loadingScreenUI.SetActive(true);

@@ -56,6 +56,10 @@ namespace Knife.Portal
             {
                 OnPortalOpen();
             }
+            if (AudioManager.Instance)
+            {
+                AudioManager.Instance.PlaySound("Portal Open", gameObject);
+            }
             boxVolume.SetActive(true);
             PortalMesh.gameObject.SetActive(true);
             portalMeshBack.gameObject.SetActive(true);
@@ -70,6 +74,10 @@ namespace Knife.Portal
             if (OnPortalClose != null)
             {
                 OnPortalClose();
+            }
+            if (AudioManager.Instance)
+            {
+                AudioManager.Instance.PlaySound("Portal Close", gameObject);
             }
             boxVolume.SetActive(false);
             PortalMesh.gameObject.SetActive(false);
