@@ -1017,6 +1017,13 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 18856714bf55a1643a15ccb378c06ec5, type: 3}
     - {fileID: 21300000, guid: 4de5c177d22436641947cad84719e110, type: 3}
     - {fileID: 21300000, guid: 581d371b361144e458e54f55260c46f1, type: 3}
+  - levelName: Level2
+    backgroundImage:
+    - {fileID: 21300000, guid: f5e2c998185ce744bab9d5827fef9fdd, type: 3}
+    - {fileID: 21300000, guid: df8dadb1eead8fc48af4649cbe0308dc, type: 3}
+    - {fileID: 21300000, guid: c6d2a5e9549c4ef49a0214f650272039, type: 3}
+    - {fileID: 21300000, guid: 47d3197430464c948a5e8c23d7d11e94, type: 3}
+    - {fileID: 21300000, guid: 030c5494ec4582149b8c3e73016a5d0a, type: 3}
   - levelName: Feedback
     backgroundImage:
     - {fileID: 21300000, guid: ceb4e471675181741b53b8592beaca7a, type: 3}

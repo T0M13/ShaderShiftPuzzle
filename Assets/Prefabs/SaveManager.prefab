@@ -48,3 +48,4 @@ MonoBehaviour:
   levelImages:
   - {fileID: 21300000, guid: 7a0e6cb85eb7b79479dd3b18ccfb7dcd, type: 3}
   - {fileID: 21300000, guid: a3d877ed2b73b6d41b90c4ea63cb6db4, type: 3}
+  - {fileID: 21300000, guid: d2c7f9145beeb3f42820a226d615bd84, type: 3}
