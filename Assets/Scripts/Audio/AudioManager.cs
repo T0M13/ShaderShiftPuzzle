@@ -34,11 +34,10 @@ public class AudioManager : MonoBehaviour
     public LevelMusic[] levelMusicTracks;
     public AudioMixerGroup musicMixerGroup;
     public AudioMixerGroup sfxMixerGroup;
-    public float musicStartDelay = 1f;
     private Coroutine musicCoroutine;
 
     private List<SoundPlayer> activeSoundPlayers = new List<SoundPlayer>();
-    private MusicPlayer currentMusicPlayer;
+    private AudioSource musicSource;
     private int currentTrackIndex = 0;
 
     private void Awake()
@@ -47,7 +46,10 @@ public class AudioManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            currentMusicPlayer = gameObject.AddComponent<MusicPlayer>();
+            musicSource = gameObject.AddComponent<AudioSource>();
+            musicSource.outputAudioMixerGroup = musicMixerGroup;
+            musicSource.playOnAwake = false;
+            musicSource.loop = true;
         }
         else
         {
@@ -120,37 +122,48 @@ public class AudioManager : MonoBehaviour
     private void PlayMusicTrack(LevelMusic levelMusic, int trackIndex)
     {
         Sound track = levelMusic.musicTracks[trackIndex];
-        currentMusicPlayer.Initialize(track, musicMixerGroup, currentMusicPlayer.GetComponent<AudioSource>());
-        currentMusicPlayer.Play();
+        musicSource.clip = track.clip;
+        musicSource.volume = 0; // Start at 0 volume for fade-in
+        musicSource.pitch = track.pitch;
+        musicSource.time = track.startTime;
+        musicSource.loop = track.loop;
+        musicSource.Play();
+
+        StartCoroutine(FadeIn(musicSource, track.fadeInDuration, track.volume));
 
         if (track.endTime > 0)
         {
-            StartCoroutine(StopMusicAfterTime(currentMusicPlayer, track.endTime));
+            StartCoroutine(StopMusicAfterTime(track.endTime, track.fadeOutDuration));
         }
         else
         {
-            musicCoroutine = StartCoroutine(PlayNextTrack(levelMusic, currentMusicPlayer));
+            musicCoroutine = StartCoroutine(PlayNextTrack(levelMusic, track.fadeOutDuration));
         }
     }
 
-    private IEnumerator PlayNextTrack(LevelMusic levelMusic, MusicPlayer currentMusicPlayer)
+    private IEnumerator PlayNextTrack(LevelMusic levelMusic, float fadeOutDuration)
     {
         while (true)
         {
-            yield return new WaitForSeconds(currentMusicPlayer.GetComponent<AudioSource>().clip.length - currentMusicPlayer.sound.fadeOutDuration * 2);
+            yield return new WaitForSeconds(musicSource.clip.length - fadeOutDuration * 2);
+
+            StartCoroutine(FadeOut(musicSource, fadeOutDuration));
+            yield return new WaitForSeconds(fadeOutDuration);
 
             currentTrackIndex = (currentTrackIndex + 1) % levelMusic.musicTracks.Length;
             PlayMusicTrack(levelMusic, currentTrackIndex);
-
-            currentMusicPlayer.Stop();
         }
     }
 
     public void StopMusic()
     {
-        if (currentMusicPlayer != null)
+        if (musicSource.isPlaying)
         {
-            currentMusicPlayer.Stop();
+            Sound currentTrack = System.Array.Find(levelMusicTracks[currentTrackIndex].musicTracks, track => track.clip == musicSource.clip);
+            if (currentTrack != null)
+            {
+                StartCoroutine(FadeOutAndStop(musicSource, currentTrack.fadeOutDuration));
+            }
         }
     }
 
@@ -162,10 +175,52 @@ public class AudioManager : MonoBehaviour
         activeSoundPlayers.Remove(soundPlayer);
     }
 
-    private IEnumerator StopMusicAfterTime(MusicPlayer musicPlayer, float endTime)
+    private IEnumerator StopMusicAfterTime(float endTime, float fadeOutDuration)
     {
-        float remainingTime = endTime - musicPlayer.GetComponent<AudioSource>().time;
-        yield return new WaitForSeconds(remainingTime - musicPlayer.sound.fadeOutDuration);
-        musicPlayer.Stop();
+        float remainingTime = endTime - musicSource.time;
+        yield return new WaitForSeconds(remainingTime - fadeOutDuration);
+        StartCoroutine(FadeOutAndStop(musicSource, fadeOutDuration));
+    }
+
+    private IEnumerator FadeIn(AudioSource audioSource, float duration, float targetVolume)
+    {
+        if (duration <= 0)
+        {
+            audioSource.volume = targetVolume;
+            yield break;
+        }
+
+        float currentTime = 0;
+        audioSource.volume = 0;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(0, targetVolume, currentTime / duration);
+            yield return null;
+        }
+    }
+
+    private IEnumerator FadeOut(AudioSource audioSource, float duration)
+    {
+        if (duration <= 0)
+        {
+            audioSource.volume = 0.0f;
+            yield break;
+        }
+
+        float currentTime = 0;
+        float startVolume = audioSource.volume;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, 0, currentTime / duration);
+            yield return null;
+        }
+    }
+
+    private IEnumerator FadeOutAndStop(AudioSource audioSource, float duration)
+    {
+        yield return StartCoroutine(FadeOut(audioSource, duration));
+        audioSource.Stop();
     }
 }

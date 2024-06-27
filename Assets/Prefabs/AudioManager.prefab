@@ -100,8 +100,19 @@ MonoBehaviour:
       loop: 1
       fadeInDuration: 1
       fadeOutDuration: 1
+  - levelName: Level1
+    musicTracks:
+    - name: DarkMatter
+      clip: {fileID: 8300000, guid: 39c22178890ab41ffa906f50f4cd1df8, type: 3}
+      volume: 1
+      pitch: 1
+      startTime: 0
+      endTime: 0
+      spatialBlend: 0
+      loop: 1
+      fadeInDuration: 1
+      fadeOutDuration: 1
   musicMixerGroup: {fileID: 243864778437365490, guid: c4382341a39a10b46a6bc574f22f5974,
     type: 2}
   sfxMixerGroup: {fileID: 243485103152924164, guid: c4382341a39a10b46a6bc574f22f5974,
     type: 2}
-  musicStartDelay: 0
