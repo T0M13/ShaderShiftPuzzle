@@ -59,9 +59,7 @@ public class MainMenuManager : MonoBehaviour
         }
         else
         {
-            UpdateChapters();
-            UpdateChapterLoadButton();
-            UpdateSettings();
+            UpdateEverything();
             //CreateLoadButtons();
         }
 
@@ -75,6 +73,7 @@ public class MainMenuManager : MonoBehaviour
         SetNewTimer();
     }
 
+
     private void Update()
     {
         timer -= Time.deltaTime;
@@ -83,6 +82,13 @@ public class MainMenuManager : MonoBehaviour
             TogglePortal();
             SetNewTimer();
         }
+    }
+
+    public void UpdateEverything()
+    {
+        UpdateChapters();
+        UpdateChapterLoadButton();
+        UpdateSettings();
     }
 
     private void UpdateSettings()
@@ -178,6 +184,15 @@ public class MainMenuManager : MonoBehaviour
             portalOpen?.Invoke();
             isPortalOpen = true;
         }
+    }
+
+
+    public void ResetStory()
+    {
+        saveManager.DeleteSave();
+        SaveData.Current = saveManager.Load();
+        LoadChapter("MainMenu");
+        UpdateEverything();
     }
 
     private void SetNewTimer()
