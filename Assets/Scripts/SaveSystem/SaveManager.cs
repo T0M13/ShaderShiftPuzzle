@@ -43,7 +43,15 @@ public class SaveManager : MonoBehaviour
         }
         else
         {
-            SaveData.Current = Load();
+            /*----IMPORTANT--REMOVE WHEN GAME DONE-----*/
+            //SaveData.Current = Load();
+            SaveData saveData = new SaveData();
+
+            //vsync
+            QualitySettings.vSyncCount = 1;
+            saveData.playerProfile.vsync = 1;
+
+            SaveAsync(saveData);
         }
     }
 
