@@ -5,14 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using tomi.SaveSystem;
+using System.Runtime.Serialization.Json;
+using System.Text;
 
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
+
     public List<string> saveFiles = new List<string>();
     public Sprite[] levelImages;
     private const string SaveFileName = "GameData.json";
-    //private const int MaxAutosaves = 4;
+    public int currentGameVersion = 2;
 
     private void Awake()
     {
@@ -34,24 +37,13 @@ public class SaveManager : MonoBehaviour
         if (!File.Exists(path))
         {
             SaveData saveData = new SaveData();
-
-            //vsync
             QualitySettings.vSyncCount = 1;
             saveData.playerProfile.vsync = 1;
-
             SaveAsync(saveData);
         }
         else
         {
-            /*----IMPORTANT--REMOVE WHEN GAME DONE-----*/
-            //SaveData.Current = Load();
-            SaveData saveData = new SaveData();
-
-            //vsync
-            QualitySettings.vSyncCount = 1;
-            saveData.playerProfile.vsync = 1;
-
-            SaveAsync(saveData);
+            SaveData.Current = Load();
         }
     }
 
@@ -108,6 +100,44 @@ public class SaveManager : MonoBehaviour
             Directory.CreateDirectory(folderPath);
         }
         return Path.Combine(folderPath, fileName);
+    }
+
+    public bool EnsureCurrentGameVersion()
+    {
+        string path = GetFilePath(SaveFileName);
+        string jsonData = File.ReadAllText(path);
+        Dictionary<string, object> jsonDict = DeserializeToDictionary(jsonData);
+
+        if (jsonDict.ContainsKey("playerGameData"))
+        {
+            var playerGameData = jsonDict["playerGameData"] as Dictionary<string, object>;
+            if (!playerGameData.ContainsKey("currentGameVersion"))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Dictionary<string, object> DeserializeToDictionary(string jsonData)
+    {
+        var dict = new Dictionary<string, object>();
+        using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonData)))
+        {
+            var ser = new DataContractJsonSerializer(dict.GetType());
+            dict = ser.ReadObject(ms) as Dictionary<string, object>;
+        }
+        return dict;
+    }
+
+    private string SerializeDictionaryToJson(Dictionary<string, object> dict)
+    {
+        using (var ms = new MemoryStream())
+        {
+            var ser = new DataContractJsonSerializer(dict.GetType());
+            ser.WriteObject(ms, dict);
+            return Encoding.UTF8.GetString(ms.ToArray());
+        }
     }
 
 }

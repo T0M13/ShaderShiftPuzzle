@@ -23,6 +23,7 @@ public class SaveManagerEditor : Editor
             EditorGUILayout.LabelField("Player Game Data", EditorStyles.boldLabel);
             EditorGUILayout.TextField("Current Level Name", SaveData.Current.playerGameData.currentLevelName);
             EditorGUILayout.IntField("Current Level Thumbnail Index", SaveData.Current.playerGameData.currentLevelThumbnailIndex);
+            EditorGUILayout.IntField("Current Game Version", SaveData.Current.playerGameData.currentGameVersion);
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Unlocked Levels", EditorStyles.boldLabel);
             for (int i = 0; i < SaveData.Current.playerGameData.unlockedLevels.Count; i++)
