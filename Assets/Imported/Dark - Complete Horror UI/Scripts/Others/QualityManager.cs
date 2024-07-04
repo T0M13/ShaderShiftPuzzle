@@ -10,6 +10,9 @@ namespace Michsky.UI.Dark
 {
     public class QualityManager : MonoBehaviour
     {
+        //SaveManager
+        [SerializeField] private SaveManager saveManager;
+
         // Audio
         public AudioMixer mixer;
         public SliderManager masterSlider;
@@ -26,103 +29,144 @@ namespace Michsky.UI.Dark
         public bool isMobile = false;
 
         [System.Serializable] public class DynamicRes : UnityEvent<int> { }
-        Resolution[] resolutions;
+        [SerializeField][ShowOnly] Resolution[] resolutions;
 
         void Start()
         {
+
+            saveManager = GameObject.FindGameObjectWithTag("SaveManager")?.GetComponent<SaveManager>();
+            if (saveManager == null)
+            {
+                Debug.LogError("MainMenuManager: No saveManager object found! ");
+            }
+
+            // Audio settings
             if (mixer != null && masterSlider != null) { mixer.SetFloat("Master", Mathf.Log10(SaveData.Current.playerProfile.masterVolume) * 20); }
             if (mixer != null && musicSlider != null) { mixer.SetFloat("Music", Mathf.Log10(SaveData.Current.playerProfile.musicVolume) * 20); }
             if (mixer != null && sfxSlider != null) { mixer.SetFloat("SFX", Mathf.Log10(SaveData.Current.playerProfile.effectsVolume) * 20); }
+
             if (isMobile == false)
             {
                 resolutions = Screen.resolutions;
 
-                if (preferCustomDropdown == true)
+                #region Irrelevant
+
+                //                if (preferCustomDropdown == true)
+                //                {
+                //                    if (defaultDropdown != null)
+                //                        defaultDropdown.gameObject.SetActive(false);
+
+                //                    if (customDropdown != null) { customDropdown.gameObject.SetActive(true); }
+                //                    else { return; }
+
+                //                    customDropdown.dropdownItems.Clear();
+
+                //                    List<string> options = new List<string>();
+
+                //                    int currentResolutionIndex = 0;
+                //                    for (int i = 0; i < resolutions.Length; i++)
+                //                    {
+                //#if UNITY_2022_2_OR_NEWER
+                //                        string option = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRateRatio + "hz";
+                //#else
+                //                string option = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRate + "hz";
+                //#endif
+                //                        customDropdown.CreateNewItem(option, null);
+
+                //                        if (resolutions[i].width == Screen.currentResolution.width
+                //                            && resolutions[i].height == Screen.currentResolution.height)
+                //                            currentResolutionIndex = i;
+                //                    }
+
+                //                    customDropdown.selectedItemIndex = currentResolutionIndex;
+                //                    customDropdown.UpdateValues();
+                //                }
+                //else
+                //{
+                #endregion
+
+                if (customDropdown != null)
+                    customDropdown.gameObject.SetActive(false);
+
+                if (defaultDropdown != null) { defaultDropdown.gameObject.SetActive(true); }
+                else { return; }
+
+                defaultDropdown.ClearOptions();
+
+                List<string> options = new List<string>();
+
+                int currentResolutionIndex = 0;
+                for (int i = 0; i < resolutions.Length; i++)
                 {
-                    if (defaultDropdown != null)
-                        defaultDropdown.gameObject.SetActive(false);
-
-                    if (customDropdown != null) { customDropdown.gameObject.SetActive(true); }
-                    else { return; }
-
-                    customDropdown.dropdownItems.Clear();
-
-                    List<string> options = new List<string>();
-
-                    int currentResolutionIndex = 0;
-                    for (int i = 0; i < resolutions.Length; i++)
-                    {
 #if UNITY_2022_2_OR_NEWER
-                        string option = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRateRatio + "hz";
+                    string option = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRateRatio + "hz";
 #else
-                        string option = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRate + "hz";
+                string option = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRate + "hz";
 #endif
-                        customDropdown.CreateNewItem(option, null);
+                    options.Add(option);
+                    //if (resolutions[i].width == Screen.currentResolution.width
+                    //    && resolutions[i].height == Screen.currentResolution.height)
+                    //    currentResolutionIndex = i;
 
-                        if (resolutions[i].width == Screen.currentResolution.width
-                            && resolutions[i].height == Screen.currentResolution.height)
-                            currentResolutionIndex = i;
-                    }
+                    if (resolutions[i].width == SaveData.Current.playerProfile.currentResolutionWidth
+                       && resolutions[i].height == SaveData.Current.playerProfile.currentResolutionHeight)
+                        currentResolutionIndex = i;
 
-                    customDropdown.selectedItemIndex = currentResolutionIndex;
-                    customDropdown.UpdateValues();
                 }
 
-                else
-                {
-                    if (customDropdown != null)
-                        customDropdown.gameObject.SetActive(false);
+                defaultDropdown.AddOptions(options);
+                defaultDropdown.onValueChanged.AddListener(SetResolution);
+                defaultDropdown.value = currentResolutionIndex;
+                defaultDropdown.RefreshShownValue();
+                //}
+            }
 
-                    if (defaultDropdown != null) { defaultDropdown.gameObject.SetActive(true); }
-                    else { return; }
-
-                    defaultDropdown.ClearOptions();
-
-                    List<string> options = new List<string>();
-
-                    int currentResolutionIndex = 0;
-                    for (int i = 0; i < resolutions.Length; i++)
-                    {
-#if UNITY_2022_2_OR_NEWER
-                        string option = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRateRatio + "hz";
-#else
-                        string option = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRate + "hz";
-#endif
-                        options.Add(option);
-
-                        if (resolutions[i].width == Screen.currentResolution.width
-                            && resolutions[i].height == Screen.currentResolution.height)
-                            currentResolutionIndex = i;
-                    }
-
-                    defaultDropdown.AddOptions(options);
-                    defaultDropdown.onValueChanged.AddListener(SetResolution);
-                    defaultDropdown.value = currentResolutionIndex;
-                    defaultDropdown.RefreshShownValue();
-                }
+            switch (SaveData.Current.playerProfile.currentScreenMode)
+            {
+                case FullScreenMode.FullScreenWindow:
+                    WindowFullscreen();
+                    break;
+                case FullScreenMode.MaximizedWindow:
+                    WindowBorderless();
+                    break;
+                case FullScreenMode.Windowed:
+                    WindowWindowed();
+                    break;
+                default:
+                    WindowWindowed();
+                    break;
             }
         }
 
+
         public void UpdateResolution()
         {
-            if (preferCustomDropdown == true)
-            {
-                clickEvent.Invoke(customDropdown.index);
-                customDropdown.UpdateValues();
-            }
+            //if (preferCustomDropdown == true)
+            //{
+            //    clickEvent.Invoke(customDropdown.index);
+            //    customDropdown.UpdateValues();
+            //}
 
-            else
-            {
-                clickEvent.Invoke(defaultDropdown.value);
-                defaultDropdown.RefreshShownValue();
-            }
+            //else
+            //{
+            //clickEvent.Invoke(defaultDropdown.value);
+            SetResolution(defaultDropdown.value);
+            defaultDropdown.RefreshShownValue();
+            //}
 
             StartCoroutine("FixResolution");
         }
 
         public void SetResolution(int resolutionIndex)
         {
-            Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, Screen.fullScreen);
+            Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, Screen.fullScreenMode);
+
+            SaveData.Current.playerProfile.currentResolutionWidth = resolutions[resolutionIndex].width;
+            SaveData.Current.playerProfile.currentResolutionHeight = resolutions[resolutionIndex].height;
+
+            saveManager.SaveAsync(SaveData.Current);
+
+
         }
 
         public void AnisotrpicFilteringSet(int index)
@@ -202,17 +246,26 @@ namespace Michsky.UI.Dark
         {
             Screen.fullScreen = true;
             Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+
+            SaveData.Current.playerProfile.currentScreenMode = FullScreenMode.FullScreenWindow;
+            saveManager.SaveAsync(SaveData.Current);
         }
 
         public void WindowBorderless()
         {
             Screen.fullScreenMode = FullScreenMode.MaximizedWindow;
+
+            SaveData.Current.playerProfile.currentScreenMode = FullScreenMode.MaximizedWindow;
+            saveManager.SaveAsync(SaveData.Current);
         }
 
         public void WindowWindowed()
         {
             Screen.fullScreen = false;
             Screen.fullScreenMode = FullScreenMode.Windowed;
+
+            SaveData.Current.playerProfile.currentScreenMode = FullScreenMode.Windowed;
+            saveManager.SaveAsync(SaveData.Current);
         }
     }
 }

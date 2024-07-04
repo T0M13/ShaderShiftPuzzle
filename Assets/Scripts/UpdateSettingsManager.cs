@@ -15,6 +15,12 @@ public class UpdateSettingsManager : MonoBehaviour
         UpdateVsync();
     }
 
+    public void UpdateQualitySettings()
+    {
+        UpdateSettings();
+        UpdateVsync();
+    }
+
     private void UpdateSettings()
     {
         foreach (var slider in sliders)
@@ -26,6 +32,9 @@ public class UpdateSettingsManager : MonoBehaviour
     private void UpdateVsync()
     {
         qualityManager.VsyncSet(SaveData.Current.playerProfile.vsync);
-        Debug.Log("Vsync: " +QualitySettings.vSyncCount);
     }
+
+ 
+
+
 }

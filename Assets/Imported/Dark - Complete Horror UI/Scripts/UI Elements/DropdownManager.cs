@@ -111,10 +111,10 @@ namespace Michsky.UI.Dark
 
             if (saveSelected == true)
             {
-                if (invokeAtStart == true)
-                    dropdownItems[PlayerPrefs.GetInt(dropdownTag + "DarkUIDropdown")].OnItemSelection.Invoke();
-                else
-                    ChangeDropdownInfo(PlayerPrefs.GetInt(dropdownTag + "DarkUIDropdown"));
+                //if (invokeAtStart == true)
+                //    dropdownItems[PlayerPrefs.GetInt(dropdownTag + "DarkUIDropdown")].OnItemSelection.Invoke();
+                //else
+                //    ChangeDropdownInfo(PlayerPrefs.GetInt(dropdownTag + "DarkUIDropdown"));
             }
         }
 
@@ -149,8 +149,8 @@ namespace Michsky.UI.Dark
                     ChangeDropdownInfo(index = go.transform.GetSiblingIndex());
                     dropdownEvent.Invoke(index = go.transform.GetSiblingIndex());
 
-                    if (saveSelected == true)
-                        PlayerPrefs.SetInt(dropdownTag + "DarkUIDropdown", go.transform.GetSiblingIndex());
+                    //if (saveSelected == true)
+                    //    PlayerPrefs.SetInt(dropdownTag + "DarkUIDropdown", go.transform.GetSiblingIndex());
                 });
 
                 if (dropdownItems[i].OnItemSelection != null)

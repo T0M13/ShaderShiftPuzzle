@@ -13,11 +13,13 @@ namespace tomi.SaveSystem
         public int currentLevelThumbnailIndex;
         public int currentGameVersion;
 
+
         public PlayerGameData()
         {
             unlockedLevels = new List<string>();
             unlockedLevels.Add("Level0");
-            currentGameVersion = 2;
+
+
         }
     }
 }

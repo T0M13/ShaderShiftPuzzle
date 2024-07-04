@@ -43,6 +43,9 @@ public class SaveManagerEditor : Editor
             EditorGUILayout.Slider("Brightness", SaveData.Current.playerProfile.brightness, -.5f, .5f);
             EditorGUILayout.Slider("Gamma", SaveData.Current.playerProfile.gamma, -.5f, .5f);
             EditorGUILayout.IntField("Vsync", SaveData.Current.playerProfile.vsync);
+            EditorGUILayout.IntField("Resolution Width", SaveData.Current.playerProfile.currentResolutionWidth);
+            EditorGUILayout.IntField("Resolution Height", SaveData.Current.playerProfile.currentResolutionHeight);
+            EditorGUILayout.LabelField("Window Mode", SaveData.Current.playerProfile.currentScreenMode.ToString());
 
 
         }

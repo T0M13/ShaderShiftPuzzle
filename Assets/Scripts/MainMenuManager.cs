@@ -187,6 +187,11 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
+    public void SaveGame()
+    {
+        saveManager.SaveAsync(SaveData.Current);
+    }
+
     public void CheckGameVersion()
     {
         if (SaveData.Current.playerGameData == null || !saveManager.EnsureCurrentGameVersion()|| SaveData.Current.playerGameData.currentGameVersion != saveManager.currentGameVersion)

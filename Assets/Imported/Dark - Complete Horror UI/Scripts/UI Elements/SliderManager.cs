@@ -30,20 +30,20 @@ namespace Michsky.UI.Dark
         void Awake()
         {
             if (mainSlider == null) { mainSlider = gameObject.GetComponent<Slider>(); }
-            if (enableSaving)
-            {
-                if (PlayerPrefs.HasKey(sliderTag + "Slider") == false) { saveValue = mainSlider.value; }
-                else { saveValue = PlayerPrefs.GetFloat(sliderTag + "Slider"); }
+            //if (enableSaving)
+            //{
+            //    if (PlayerPrefs.HasKey(sliderTag + "Slider") == false) { saveValue = mainSlider.value; }
+            //    else { saveValue = PlayerPrefs.GetFloat(sliderTag + "Slider"); }
 
-                mainSlider.value = saveValue;
-            }
+            //    mainSlider.value = saveValue;
+            //}
 
             mainSlider.onValueChanged.AddListener(delegate
             {
                 saveValue = mainSlider.value;
                 UpdateUI();
 
-                PlayerPrefs.SetFloat(sliderTag + "Slider", saveValue);
+                //PlayerPrefs.SetFloat(sliderTag + "Slider", saveValue);
             });
 
             if (invokeOnAwake) { mainSlider.onValueChanged.Invoke(mainSlider.value); }

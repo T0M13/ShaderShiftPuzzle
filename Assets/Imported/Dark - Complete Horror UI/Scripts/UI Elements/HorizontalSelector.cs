@@ -77,13 +77,13 @@ namespace Michsky.UI.Dark
         {
             if (itemList.Count != 0)
             {
-                if (saveValue == true)
-                {
-                    if (PlayerPrefs.HasKey("HorizontalSelector" + selectorTag) == true)
-                        defaultIndex = PlayerPrefs.GetInt("HorizontalSelector" + selectorTag);
-                    else
-                        PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, defaultIndex);
-                }
+                //if (saveValue == true)
+                //{
+                //    if (PlayerPrefs.HasKey("HorizontalSelector" + selectorTag) == true)
+                //        defaultIndex = PlayerPrefs.GetInt("HorizontalSelector" + selectorTag);
+                //    else
+                //        PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, defaultIndex);
+                //}
 
                 label.text = itemList[defaultIndex].itemTitle;
                 labelHelper.text = label.text;
@@ -142,8 +142,8 @@ namespace Michsky.UI.Dark
                     else
                         selectorAnimator.Play("Previous");
 
-                    if (saveValue == true)
-                        PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
+                    //if (saveValue == true)
+                    //    PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
                 }
             }
 
@@ -174,14 +174,14 @@ namespace Michsky.UI.Dark
                 else
                     selectorAnimator.Play("Previous");
 
-                if (saveValue == true)
-                {
-                    PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
-                }
+                //if (saveValue == true)
+                //{
+                //    PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
+                //}
             }
 
-            if (saveValue == true)
-                PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
+            //if (saveValue == true)
+            //    PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
 
             if (enableIndicators == true)
             {
@@ -237,8 +237,8 @@ namespace Michsky.UI.Dark
                     else
                         selectorAnimator.Play("Forward");
 
-                    if (saveValue == true)
-                        PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
+                    //if (saveValue == true)
+                    //    PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
                 }
             }
 
@@ -269,12 +269,12 @@ namespace Michsky.UI.Dark
                 else
                     selectorAnimator.Play("Forward");
 
-                if (saveValue == true)
-                    PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
+                //if (saveValue == true)
+                //    PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
             }
 
-            if (saveValue == true)
-                PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
+            //if (saveValue == true)
+            //    PlayerPrefs.SetInt("HorizontalSelector" + selectorTag, index);
 
             if (enableIndicators == true)
             {

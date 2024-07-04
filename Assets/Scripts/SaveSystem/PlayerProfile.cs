@@ -22,8 +22,10 @@ namespace tomi.SaveSystem
         [Range(-.5f, .5f)] public float gamma;
         [Range(-.5f, .5f)] public float brightness;
         public int vsync;
-        public int resolutionValue;
-        public int windowModeValue;
+
+        public int currentResolutionWidth;
+        public int currentResolutionHeight;
+        public FullScreenMode currentScreenMode;
 
 
         public PlayerProfile()
@@ -39,6 +41,11 @@ namespace tomi.SaveSystem
             brightness = 0;
 
             vsync = 1;
+
+            currentResolutionWidth = 1280;
+            currentResolutionHeight = 720;
+
+            currentScreenMode = FullScreenMode.Windowed;
         }
     }
 }

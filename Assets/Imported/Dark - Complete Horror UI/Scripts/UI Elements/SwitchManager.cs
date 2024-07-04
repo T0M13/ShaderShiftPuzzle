@@ -36,40 +36,40 @@ namespace Michsky.UI.Dark
 
         void Start()
         {
-            if (saveValue == true)
-            {
-                if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "")
-                {
-                    if (isOn == true)
-                    {
-                        switchAnimator.Play("Switch On");
-                        isOn = true;
-                        PlayerPrefs.SetString(switchTag + "DarkUISwitch", "true");
-                    }
+            //if (saveValue == true)
+            //{
+            //    //if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "")
+            //    //{
+            //    //    if (isOn == true)
+            //    //    {
+            //    //        switchAnimator.Play("Switch On");
+            //    //        isOn = true;
+            //    //        PlayerPrefs.SetString(switchTag + "DarkUISwitch", "true");
+            //    //    }
 
-                    else
-                    {
-                        switchAnimator.Play("Switch Off");
-                        isOn = false;
-                        PlayerPrefs.SetString(switchTag + "DarkUISwitch", "false");
-                    }
-                }
+            //    //    else
+            //    //    {
+            //    //        switchAnimator.Play("Switch Off");
+            //    //        isOn = false;
+            //    //        PlayerPrefs.SetString(switchTag + "DarkUISwitch", "false");
+            //    //    }
+            //    //}
 
-                else if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "true")
-                {
-                    switchAnimator.Play("Switch On");
-                    isOn = true;
-                }
+            //    //else if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "true")
+            //    //{
+            //    //    switchAnimator.Play("Switch On");
+            //    //    isOn = true;
+            //    //}
 
-                else if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "false")
-                {
-                    switchAnimator.Play("Switch Off");
-                    isOn = false;
-                }
-            }
+            //    //else if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "false")
+            //    //{
+            //    //    switchAnimator.Play("Switch Off");
+            //    //    isOn = false;
+            //    //}
+            //}
 
-            else
-            {
+            //else
+            //{
                 if (isOn == true)
                 {
                     switchAnimator.Play("Switch On");
@@ -81,7 +81,7 @@ namespace Michsky.UI.Dark
                     switchAnimator.Play("Switch Off");
                     isOn = false;
                 }
-            }
+            //}
 
             if (invokeAtStart == true && isOn == true)
                 onEvents.Invoke();
@@ -94,40 +94,40 @@ namespace Michsky.UI.Dark
             if (switchAnimator == null)
                 return;
 
-            if (saveValue == true)
-            {
-                if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "")
-                {
-                    if (isOn == true)
-                    {
-                        switchAnimator.Play("Switch On");
-                        isOn = true;
-                        PlayerPrefs.SetString(switchTag + "DarkUISwitch", "true");
-                    }
+            //if (saveValue == true)
+            //{
+            //    if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "")
+            //    {
+            //        if (isOn == true)
+            //        {
+            //            switchAnimator.Play("Switch On");
+            //            isOn = true;
+            //            PlayerPrefs.SetString(switchTag + "DarkUISwitch", "true");
+            //        }
 
-                    else
-                    {
-                        switchAnimator.Play("Switch Off");
-                        isOn = false;
-                        PlayerPrefs.SetString(switchTag + "DarkUISwitch", "false");
-                    }
-                }
+            //        else
+            //        {
+            //            switchAnimator.Play("Switch Off");
+            //            isOn = false;
+            //            PlayerPrefs.SetString(switchTag + "DarkUISwitch", "false");
+            //        }
+            //    }
 
-                else if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "true")
-                {
-                    switchAnimator.Play("Switch On");
-                    isOn = true;
-                }
+            //    else if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "true")
+            //    {
+            //        switchAnimator.Play("Switch On");
+            //        isOn = true;
+            //    }
 
-                else if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "false")
-                {
-                    switchAnimator.Play("Switch Off");
-                    isOn = false;
-                }
-            }
+            //    else if (PlayerPrefs.GetString(switchTag + "DarkUISwitch") == "false")
+            //    {
+            //        switchAnimator.Play("Switch Off");
+            //        isOn = false;
+            //    }
+            //}
 
-            else
-            {
+            //else
+            //{
                 if (isOn == true)
                 {
                     switchAnimator.Play("Switch On");
@@ -139,7 +139,7 @@ namespace Michsky.UI.Dark
                     switchAnimator.Play("Switch Off");
                     isOn = false;
                 }
-            }
+            //}
         }
 
         public void AnimateSwitch()
@@ -150,8 +150,8 @@ namespace Michsky.UI.Dark
                 isOn = false;
                 offEvents.Invoke();
 
-                if (saveValue == true)
-                    PlayerPrefs.SetString(switchTag + "DarkUISwitch", "false");
+                //if (saveValue == true)
+                //    PlayerPrefs.SetString(switchTag + "DarkUISwitch", "false");
             }
 
             else
@@ -160,8 +160,8 @@ namespace Michsky.UI.Dark
                 isOn = true;
                 onEvents.Invoke();
 
-                if (saveValue == true)
-                    PlayerPrefs.SetString(switchTag + "DarkUISwitch", "true");
+                //if (saveValue == true)
+                //    PlayerPrefs.SetString(switchTag + "DarkUISwitch", "true");
             }
         }
     }
