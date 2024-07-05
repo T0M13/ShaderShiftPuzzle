@@ -515,6 +515,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2767472371084600883}
+        m_TargetAssemblyTypeName: PlayerHoldTool, Assembly-CSharp
+        m_MethodName: OnLook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f61eeed3-b61b-419b-92dc-6180e9e4e782
     m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
@@ -549,6 +561,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8743849563700366706}
         m_TargetAssemblyTypeName: PlayerColorTool, Assembly-CSharp
+        m_MethodName: OnAim
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2767472371084600883}
+        m_TargetAssemblyTypeName: PlayerHoldTool, Assembly-CSharp
         m_MethodName: OnAim
         m_Mode: 0
         m_Arguments:
@@ -716,6 +740,7 @@ MonoBehaviour:
   playerCollider: {fileID: 6990219065714296215}
   currentToolState: 0
   currentState: 0
+  isInteractingRotatingObject: 0
 --- !u!114 &8092869307736730234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,6 +790,9 @@ MonoBehaviour:
   currentObjectLayerTemp: 0
   currentTransientObjectPortal: {fileID: 0}
   currentTransientTempCanUse: 0
+  rotationSpeed: 2000
+  isRotating: 0
+  rotationPos: {x: 0, y: 0}
 --- !u!114 &8743849563700366706
 MonoBehaviour:
   m_ObjectHideFlags: 0

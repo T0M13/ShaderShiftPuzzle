@@ -21,6 +21,7 @@ public class PlayerReferences : MonoBehaviour
     [SerializeField] private CapsuleCollider playerCollider;
     [ShowOnly][SerializeField] private ToolState currentToolState = ToolState.HoldTool;
     [ShowOnly][SerializeField] private PlayerState currentState = PlayerState.Playing;
+    [ShowOnly][SerializeField] private bool isInteractingRotatingObject = false;
 
     public InputManager InputManager { get => inputManager; set => inputManager = value; }
     public PlayerMovement PlayerMovement { get => playerMovement; set => playerMovement = value; }
@@ -36,6 +37,7 @@ public class PlayerReferences : MonoBehaviour
     public PlayerInput PlayerInput { get => playerInput; set => playerInput = value; }
     public ToolState CurrentToolState { get => currentToolState; set => currentToolState = value; }
     public PlayerState CurrentState { get => currentState; set => currentState = value; }
+    public bool IsInteractingRotatingObject { get => isInteractingRotatingObject; set => isInteractingRotatingObject = value; }
 
     private void Awake()
     {

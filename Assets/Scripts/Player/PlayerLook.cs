@@ -30,6 +30,7 @@ public class PlayerLook : MonoBehaviour
     private void LateUpdate()
     {
         if (playerReferences.CurrentState != PlayerState.Playing) return;
+        if (playerReferences.IsInteractingRotatingObject) return;
         Look();
     }
 

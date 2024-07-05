@@ -36,6 +36,10 @@ public class PlayerHoldTool : MonoBehaviour
     [ShowOnly][SerializeField] private PortalTransientObject currentTransientObjectPortal;
     [ShowOnly][SerializeField] private bool currentTransientTempCanUse;
 
+    [Header("Rotation Settings")]
+    [SerializeField] private float rotationSpeed = 100f;
+    [ShowOnly][SerializeField] private bool isRotating = false;
+    [ShowOnly][SerializeField] private Vector2 rotationPos;
 
     public bool HoldingObject { get => holdingObject; set => holdingObject = value; }
 
@@ -68,6 +72,11 @@ public class PlayerHoldTool : MonoBehaviour
                 InteractiveMessageUI.Instance.SetChargeValue(holdTimer / maxChargeTime);
             else
                 Debug.Log("InteractiveMessageUI is missing");
+        }
+
+        if (isRotating)
+        {
+            RotateObject();
         }
     }
 
@@ -176,6 +185,8 @@ public class PlayerHoldTool : MonoBehaviour
             currentTransientObjectPortal = null;
         }
 
+        isRotating = false;
+        playerReferences.IsInteractingRotatingObject = isRotating;
     }
 
     private void MoveObject()
@@ -256,6 +267,42 @@ public class PlayerHoldTool : MonoBehaviour
             DropObject();
         }
     }
+
+    public void OnAim(InputAction.CallbackContext context)
+    {
+        if (!ActiveToolState() || playerReferences.CurrentState != PlayerState.Playing) return;
+
+        if (context.started && holdingObject)
+        {
+            isRotating = true;
+
+
+        }
+        else if (context.canceled)
+        {
+            isRotating = false;
+        }
+
+        playerReferences.IsInteractingRotatingObject = isRotating;
+    }
+
+
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        this.rotationPos = playerReferences.PlayerLook.LookPos;
+    }
+
+    private void RotateObject()
+    {
+        if (currentObjectBody == null) return;
+        float mouseX = rotationPos.x * rotationSpeed * Time.deltaTime;
+        float mouseY = rotationPos.y * rotationSpeed * Time.deltaTime;
+
+        currentObjectBody.transform.Rotate(Camera.main.transform.up, -mouseX, Space.World);
+        currentObjectBody.transform.Rotate(Camera.main.transform.right, mouseY, Space.World);
+    }
+
+
 }
 
 
