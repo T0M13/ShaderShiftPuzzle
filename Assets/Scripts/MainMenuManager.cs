@@ -147,6 +147,7 @@ public class MainMenuManager : MonoBehaviour
     {
         if (loadingScreenManager != null)
         {
+            loadingScreenManager.ChangeTips();
             loadingScreenManager.ChangeBackground(level);
             loadingScreenManager.SwitchToScene(level);
         }
@@ -185,11 +186,6 @@ public class MainMenuManager : MonoBehaviour
             portalOpen?.Invoke();
             isPortalOpen = true;
         }
-    }
-
-    public void SaveGame()
-    {
-        saveManager.SaveAsync(SaveData.Current);
     }
 
     public void CheckGameVersion()

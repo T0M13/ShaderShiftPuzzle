@@ -215,6 +215,7 @@ public class GameManager : MonoBehaviour
         //Load Level/Save File?
         if (loadingScreenManager != null)
         {
+            loadingScreenManager.ChangeTips();
             loadingScreenManager.ChangeBackground(levelName);
             loadingScreenManager.SwitchToScene(levelName);
         }

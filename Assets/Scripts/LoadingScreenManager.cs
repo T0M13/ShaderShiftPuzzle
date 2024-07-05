@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class LoadingScreenManager : MonoBehaviour
 {
@@ -15,8 +16,13 @@ public class LoadingScreenManager : MonoBehaviour
     [SerializeField] private float beforeWaitTime = 1f;
     [SerializeField] private float additionalWaitTime = 0.2f;
     [SerializeField] private Image backgroundImage;
+    [Header("Backgrounds")]
     [SerializeField] private List<LevelBackgrounds> levelBackgrounds = new List<LevelBackgrounds>();
-
+    [Header("Tipps")]
+    [SerializeField] private List<LevelTip> levelTipps = new List<LevelTip>();
+    [SerializeField] [ShowOnly] private List<int> shownTipIndices = new List<int>();
+    [SerializeField] private TextMeshProUGUI tippsUIText;
+    [Header("Actions")]
     public Action onBeforeLoadingScreen;
     public Action onAfterLoadingScreen;
 
@@ -25,6 +31,13 @@ public class LoadingScreenManager : MonoBehaviour
     {
         public string levelName;
         public Sprite[] backgroundImage;
+    }
+
+    [System.Serializable]
+    public class LevelTip
+    {
+        [TextArea]
+        public string tip;
     }
 
     private void Awake()
@@ -92,6 +105,40 @@ public class LoadingScreenManager : MonoBehaviour
         loadingScreenUI.SetActive(false);
         onAfterLoadingScreen?.Invoke();
         uIDissolveEffect.DissolveOut();
+    }
+
+    public void ChangeTips()
+    {
+        if (levelTipps.Count == 0) return;
+
+        int index = GetRandomTipIndex();
+        if (index == -1)
+        {
+            shownTipIndices.Clear();
+            index = GetRandomTipIndex();
+        }
+
+        string selectedTip = levelTipps[index].tip;
+        tippsUIText.text = selectedTip;
+
+        shownTipIndices.Add(index);
+    }
+
+    private int GetRandomTipIndex()
+    {
+        List<int> availableIndices = new List<int>();
+        for (int i = 0; i < levelTipps.Count; i++)
+        {
+            if (!shownTipIndices.Contains(i))
+            {
+                availableIndices.Add(i);
+            }
+        }
+
+        if (availableIndices.Count == 0) return -1;
+
+        int randomIndex = UnityEngine.Random.Range(0, availableIndices.Count);
+        return availableIndices[randomIndex];
     }
 
     public void ChangeBackground(string levelName)
