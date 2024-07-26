@@ -18,6 +18,8 @@ public class SoundPlayer : MonoBehaviour
         audioSource.outputAudioMixerGroup = mixerGroup;
         audioSource.spatialBlend = sound.spatialBlend;
         audioSource.loop = sound.loop;
+        audioSource.minDistance = sound.minDistance;
+        audioSource.maxDistance = sound.maxDistance;
     }
 
 

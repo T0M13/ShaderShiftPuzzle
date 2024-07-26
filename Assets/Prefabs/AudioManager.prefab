@@ -55,6 +55,8 @@ MonoBehaviour:
     loop: 0
     fadeInDuration: 0
     fadeOutDuration: 1
+    minDistance: 0
+    maxDistance: 7
   - name: Portal Close
     clip: {fileID: 8300000, guid: 1f4b60439e6b2497781f487dfdfc4eb8, type: 3}
     volume: 1
@@ -65,6 +67,8 @@ MonoBehaviour:
     loop: 0
     fadeInDuration: 0
     fadeOutDuration: 2
+    minDistance: 0
+    maxDistance: 7
   - name: AuraBell
     clip: {fileID: 8300000, guid: 46fcbc6f93e08024dba40fbe88155614, type: 3}
     volume: 0.45
@@ -75,6 +79,8 @@ MonoBehaviour:
     loop: 1
     fadeInDuration: 1
     fadeOutDuration: 1
+    minDistance: 0
+    maxDistance: 1
   - name: Fire
     clip: {fileID: 8300000, guid: a48301f0f15853a4db9e2035e648313d, type: 3}
     volume: 0.25
@@ -85,6 +91,8 @@ MonoBehaviour:
     loop: 1
     fadeInDuration: 1
     fadeOutDuration: 1
+    minDistance: 0
+    maxDistance: 1
   levelMusicTracks:
   - levelName: MainMenu
     musicTracks:
@@ -98,6 +106,8 @@ MonoBehaviour:
       loop: 1
       fadeInDuration: 0
       fadeOutDuration: 1
+      minDistance: 1
+      maxDistance: 500
   - levelName: Feedback
     musicTracks:
     - name: Ambient
@@ -110,6 +120,8 @@ MonoBehaviour:
       loop: 1
       fadeInDuration: 0
       fadeOutDuration: 1
+      minDistance: 1
+      maxDistance: 500
   - levelName: Level0
     musicTracks:
     - name: OldSpaceship
@@ -122,6 +134,8 @@ MonoBehaviour:
       loop: 1
       fadeInDuration: 1
       fadeOutDuration: 1
+      minDistance: 1
+      maxDistance: 500
   - levelName: Level1
     musicTracks:
     - name: DarkMatter
@@ -134,6 +148,8 @@ MonoBehaviour:
       loop: 1
       fadeInDuration: 1
       fadeOutDuration: 1
+      minDistance: 1
+      maxDistance: 500
   musicMixerGroup: {fileID: 243864778437365490, guid: c4382341a39a10b46a6bc574f22f5974,
     type: 2}
   sfxMixerGroup: {fileID: 243485103152924164, guid: c4382341a39a10b46a6bc574f22f5974,

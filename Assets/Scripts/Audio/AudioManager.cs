@@ -21,6 +21,8 @@ public class AudioManager : MonoBehaviour
         public bool loop = false;
         public float fadeInDuration = 1f;
         public float fadeOutDuration = 1f;
+        public float minDistance = 1f;
+        public float maxDistance = 500f;
     }
 
     [System.Serializable]
