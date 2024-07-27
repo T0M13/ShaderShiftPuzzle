@@ -49,14 +49,12 @@ public class LaserLine : MonoBehaviour
         ChangeLaserColor(CurrentColor);
     }
 
-
     protected virtual void Update()
     {
         if (!laserOn) return;
         EmitLaser();
-
     }
-  
+
     public void ChangeLaserColor(Color oldColor, Color newColor)
     {
         Color mixedColor = ColorUtils.MixColors(oldColor, newColor);

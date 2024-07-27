@@ -92,11 +92,11 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 2
+  m_RenderingMode: 0
   m_DepthPrimingMode: 0
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
-  m_IntermediateTextureMode: 1
+  m_IntermediateTextureMode: 0
 --- !u!114 &6199023658690310787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,12 +120,12 @@ MonoBehaviour:
     depthThreshold: 1.5
     robertsCrossMultiplier: 0
     normalThreshold: 0.9
-    steepAngleThreshold: 0.2
-    steepAngleMultiplier: 25
-    colorFormat: 8
-    depthBufferBits: 0
-    filterMode: 0
+    steepAngleThreshold: 0
+    steepAngleMultiplier: 0
+    colorFormat: 0
+    depthBufferBits: -1
+    filterMode: 1
     backgroundColor: {r: 0, g: 0, b: 0, a: 0}
     perObjectData: 0
-    enableDynamicBatching: 0
-    enableInstancing: 0
+    enableDynamicBatching: 1
+    enableInstancing: 1
