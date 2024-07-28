@@ -36,7 +36,7 @@ public class TaskRunAway : Node
     [SerializeField] private string HIDING_ANIMATION;
     [SerializeField] private string HIDING_EMOTION;
 
-    [SerializeField] private GameObject _mouseCam;
+    //[SerializeField] private GameObject _mouseCam;
 
     public TaskRunAway(Transform transform, Animator anim, NavMeshAgent agent, float checkRange, float checkRangeAddModifier, float runAwaySpeed, float runAwayDisplacementDist, bool hide, Transform[] hidePoints, float waitHidden)
     {
@@ -73,7 +73,7 @@ public class TaskRunAway : Node
         HIDING_ANIMATION = hideAnim;
         HIDING_EMOTION = hideEmote;
 
-        _mouseCam = mouseCam;
+        //_mouseCam = mouseCam;
     }
 
     public override NodeState Evaluate()
@@ -99,7 +99,7 @@ public class TaskRunAway : Node
                 _agent.SetDestination(newHidePoint);
                 SetRunAwayAnimation();
                 hiding = true;
-                _mouseCam.SetActive(true);
+                //_mouseCam.SetActive(true);
             }
             if (_agent.remainingDistance <= _agent.stoppingDistance)
             {
@@ -112,7 +112,7 @@ public class TaskRunAway : Node
                         waitTimer = 0;
                         hiding = false;
                         ClearData("target");
-                        _mouseCam.SetActive(false);
+                        //_mouseCam.SetActive(false);
                     }
                 }
             }
