@@ -29,10 +29,13 @@ public class TaskCheckCheeseInRange : Node
 
             if (colliders.Length > 0)
             {
-                if (colliders[0].gameObject.GetComponent<IAIInteractable>() != null)
-                    colliders[0].gameObject.GetComponent<IAIInteractable>().AIInteract();
-                parent.parent.SetData("cheese", colliders[0].transform);
-                state = NodeState.SUCCESS;
+                if (colliders[0].gameObject.GetComponent<CheeseObject>().CanBeEaten)
+                {
+                    parent.parent.SetData("cheese", colliders[0].transform);
+                    state = NodeState.SUCCESS;
+                    return state;
+                }
+                state = NodeState.FAILURE;
                 return state;
             }
 

@@ -10,7 +10,7 @@ public class ColorObject : MonoBehaviour, IColor
     protected static string _ALPHA = "_Alpha";
     protected static string _COLOR = "_Color";
     [Header("Current Settings")]
-    [SerializeField] protected Color currentColor;
+    [SerializeField] private Color currentColor;
     [SerializeField] protected float currentAlpha = 1;
     [Header("Default Settings")]
     [SerializeField] protected Color defaultColor;
@@ -26,6 +26,8 @@ public class ColorObject : MonoBehaviour, IColor
     public UnityEvent onBeforeGet;
     public UnityEvent onAfterSet;
     public UnityEvent onAfterGet;
+
+    public Color CurrentColor { get => currentColor; set => currentColor = value; }
 
     protected virtual void Awake()
     {
@@ -69,7 +71,7 @@ public class ColorObject : MonoBehaviour, IColor
 
     public virtual void SetColor(Color color)
     {
-        currentColor = color;
+        CurrentColor = color;
         myRenderer.material.SetColor(_COLOR, color);
     }
 

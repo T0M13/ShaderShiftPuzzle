@@ -75,10 +75,16 @@ public class TaskRunToCheese : Node
                 if (canEat)
                 {
                     Transform temp = (Transform)GetData("cheese");
-                    if (temp.gameObject.GetComponent<AIInteractable>())
-                        temp.gameObject.GetComponent<AIInteractable>().AIInteract(_eatTime);
-                    MouseBT.checkForEnemy = false;
-                    ClearData("cheese");
+                    if (temp.gameObject.GetComponent<CheeseObject>())
+                    {
+                        if (temp.gameObject.GetComponent<CheeseObject>().CanBeEaten)
+                        {
+                            if (temp.gameObject.GetComponent<AIInteractable>())
+                                temp.gameObject.GetComponent<AIInteractable>().AIInteract(_eatTime);
+                            MouseBT.checkForEnemy = false;
+                            ClearData("cheese");
+                        }
+                    }
                 }
             }
         }
