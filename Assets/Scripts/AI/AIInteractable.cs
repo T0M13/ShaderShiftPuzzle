@@ -20,9 +20,8 @@ public class AIInteractable : MonoBehaviour, IAIInteractable
     }
 
 
-    public void ConsoleLog()
+    public void ChangeMouseBehaviour(AnimalBT animal)
     {
-        Debug.Log("YAY AI Interacted with the Object: " + gameObject.name);
     }
 
     public void AIInteract()

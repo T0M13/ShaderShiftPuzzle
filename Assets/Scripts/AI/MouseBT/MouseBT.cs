@@ -26,6 +26,16 @@ public class MouseBT : AnimalBT
     [UnityEngine.SerializeField] private float eatTime = 3f;
     [UnityEngine.SerializeField] private bool shouldEat = true;
     [UnityEngine.SerializeField] private UnityEngine.LayerMask cheeseMask;
+
+    [UnityEngine.Header("After Cheese Settings")]
+    [UnityEngine.SerializeField] protected float checkTaskRange = 15f;
+    [UnityEngine.SerializeField] protected UnityEngine.LayerMask taskLayerMask;
+    [UnityEngine.SerializeField] protected UnityEngine.Transform taskLocation;
+    [UnityEngine.SerializeField] protected float maxInRangeTask = 12f;
+    [UnityEngine.SerializeField] public static bool checkForTask = true;
+    [UnityEngine.SerializeField] protected float noCheckTaskTime = 5f;
+    [UnityEngine.SerializeField] protected float taskDoneRange = 1f;
+
     public float EatTime { get => eatTime; set => eatTime = value; }
 
     protected override Node SetupTree()
@@ -34,8 +44,13 @@ public class MouseBT : AnimalBT
         {
             new Sequence(new List<Node>
             {
+                new TaskCheckDoTask(agent, anim, transform,  checkTaskRange, taskLayerMask, noCheckTaskTime),
+                new TaskDoTask(agent, anim, transform, maxInRangeTask, taskDoneRange),
+            }),
+            new Sequence(new List<Node>
+            {
                 new TaskCheckCheeseInRange(transform, cheeseRange, cheeseMask),
-                new TaskRunToCheese(transform, anim, agent, maxCheeseRange, eatRange, EatTime, shouldEat, CHASECHEESE_ANIMATION, CHASECHEESE_EMOTION, EAT_ANIMATION, EAT_EMOTION),
+                new TaskRunToCheese(transform, anim, agent, maxCheeseRange, eatRange, EatTime, shouldEat, CHASECHEESE_ANIMATION, CHASECHEESE_EMOTION, EAT_ANIMATION, EAT_EMOTION, IDLE_ANIMATION, IDLE_EMOTION),
             }),
             new Sequence(new List<Node>
             {
@@ -48,6 +63,7 @@ public class MouseBT : AnimalBT
         return root;
     }
 
+
     protected override void OnDrawGizmosSelected()
     {
         base.OnDrawGizmosSelected();
@@ -59,5 +75,9 @@ public class MouseBT : AnimalBT
         UnityEngine.Gizmos.DrawWireSphere(transform.position, maxCheeseRange);
         UnityEngine.Gizmos.color = UnityEngine.Color.cyan;
         UnityEngine.Gizmos.DrawWireSphere(transform.position, eatRange);
+        UnityEngine.Gizmos.color = UnityEngine.Color.magenta;
+        UnityEngine.Gizmos.DrawWireSphere(transform.position, maxInRangeTask);
+        UnityEngine.Gizmos.color = UnityEngine.Color.black;
+        UnityEngine.Gizmos.DrawWireSphere(transform.position, taskDoneRange);
     }
 }

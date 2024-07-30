@@ -34,7 +34,6 @@ public class AnimalBT : Tree
     [UnityEngine.SerializeField] protected UnityEngine.Transform[] hidePoints;
     public static UnityEngine.Vector3 pointToRunAwayTo;
 
-
     private void OnValidate()
     {
         if(agent == null)

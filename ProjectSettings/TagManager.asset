@@ -32,8 +32,8 @@ TagManager:
   - IgnoreLaser
   - Cheese
   - IgnoreAI_Default
-  - 
-  - 
+  - EnemyLayer
+  - TaskLayer
   - 
   - 
   - 

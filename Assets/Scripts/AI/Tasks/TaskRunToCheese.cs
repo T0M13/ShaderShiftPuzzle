@@ -29,7 +29,8 @@ public class TaskRunToCheese : Node
     [SerializeField] private string CHASECHEESE_EMOTION;
     [SerializeField] private string EAT_ANIMATION;
     [SerializeField] private string EAT_EMOTION;
-
+    [SerializeField] private string IDLE_ANIMATION;
+    [SerializeField] private string IDLE_EMOTION;
 
 
     public TaskRunToCheese(Transform transform, Animator anim, NavMeshAgent agent, float maxDistance, float eatRange, float eatTime, bool shouldEat)
@@ -43,7 +44,7 @@ public class TaskRunToCheese : Node
         canEat = shouldEat;
     }
 
-    public TaskRunToCheese(Transform transform, Animator anim, NavMeshAgent agent, float maxDistance, float eatRange, float eatTime, bool shouldEat, string chaseCheeseAnim, string chaseCheeseEmote, string eatAnim, string eatEmote)
+    public TaskRunToCheese(Transform transform, Animator anim, NavMeshAgent agent, float maxDistance, float eatRange, float eatTime, bool shouldEat, string chaseCheeseAnim, string chaseCheeseEmote, string eatAnim, string eatEmote, string idleAnimation, string idleEmotion)
     {
         _transform = transform;
         _agent = agent;
@@ -56,6 +57,8 @@ public class TaskRunToCheese : Node
         CHASECHEESE_EMOTION = chaseCheeseEmote;
         EAT_ANIMATION = eatAnim;
         EAT_EMOTION = eatEmote;
+        IDLE_ANIMATION = idleAnimation;
+        IDLE_EMOTION = idleEmotion;
     }
 
     public override NodeState Evaluate()
@@ -83,6 +86,9 @@ public class TaskRunToCheese : Node
                                 temp.gameObject.GetComponent<AIInteractable>().AIInteract(_eatTime);
                             MouseBT.checkForEnemy = false;
                             ClearData("cheese");
+                            SetAnimation();
+                            state = NodeState.SUCCESS;
+                            return state;
                         }
                     }
                 }
@@ -118,6 +124,14 @@ public class TaskRunToCheese : Node
             _anim.Play(EAT_ANIMATION);
         if (!string.IsNullOrEmpty(EAT_EMOTION))
             _anim.Play(EAT_EMOTION);
+    }
+
+    private void SetAnimation()
+    {
+        if (!string.IsNullOrEmpty(IDLE_ANIMATION))
+            _anim.Play(IDLE_ANIMATION);
+        if (!string.IsNullOrEmpty(IDLE_EMOTION))
+            _anim.Play(IDLE_EMOTION);
     }
 }
 
