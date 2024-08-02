@@ -6,7 +6,13 @@ public class LoadNextChapter : MonoBehaviour
 {
     [SerializeField] private string chapterName;
 
+
     private void OnTriggerEnter(Collider other)
+    {
+        GameManager.Instance.SwitchToLevel(chapterName);
+    }
+
+    public void LoadChapter()
     {
         GameManager.Instance.SwitchToLevel(chapterName);
     }

@@ -139,6 +139,10 @@ public class GameManager : MonoBehaviour
                 InitializeGame();
                 ChangeState(GameState.Game);
                 break;
+            case "End":
+                InitializeGame();
+                ChangeState(GameState.MainMenu);
+                break;
             default:
                 Debug.LogWarning("Loaded scene not explicitly handled: " + scene.name);
                 break;
@@ -163,6 +167,9 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.CheatMenu:
                 EnterCheatMenu();
+                break;
+            case GameState.MainMenu:
+                EnterMainMenu();
                 break;
         }
     }
@@ -200,6 +207,13 @@ public class GameManager : MonoBehaviour
         SetCursorState(true);
     }
 
+    private void EnterMainMenu()
+    {
+        Debug.Log("Entering MainMenu Mode.");
+        //SetPlayerState(PlayerState.Playing);
+        SetCursorState(true);
+    }
+
     public void RestartLevel()
     {
         //Load Level/Save File?
@@ -219,6 +233,7 @@ public class GameManager : MonoBehaviour
         //Load Level/Save File?
         if (loadingScreenManager != null)
         {
+            SetCursorState(true);
             loadingScreenManager.ChangeTips();
             loadingScreenManager.ChangeBackground(levelName);
             loadingScreenManager.SwitchToScene(levelName);
@@ -248,7 +263,7 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    private void SetCursorState(bool visible)
+    public void SetCursorState(bool visible)
     {
         Cursor.visible = visible;
         Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
