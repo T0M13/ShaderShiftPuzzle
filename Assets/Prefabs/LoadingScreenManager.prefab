@@ -1207,6 +1207,20 @@ MonoBehaviour:
     - {fileID: 21300000, guid: c6d2a5e9549c4ef49a0214f650272039, type: 3}
     - {fileID: 21300000, guid: 47d3197430464c948a5e8c23d7d11e94, type: 3}
     - {fileID: 21300000, guid: 030c5494ec4582149b8c3e73016a5d0a, type: 3}
+  - levelName: Level3
+    backgroundImage:
+    - {fileID: 21300000, guid: 21f0373c3459784409a36e33d879be06, type: 3}
+    - {fileID: 21300000, guid: e7fbeb38a6650db4fa06b9881df9b286, type: 3}
+    - {fileID: 21300000, guid: eab60476244418e4094bac328c7f4a5e, type: 3}
+    - {fileID: 21300000, guid: 8f320f913a3932f43bdc10e9f87ba84a, type: 3}
+    - {fileID: 21300000, guid: e557bfe6e6dd4394293d96ff829ac371, type: 3}
+    - {fileID: 21300000, guid: 63df027afed451d41a5696006f809cfa, type: 3}
+    - {fileID: 21300000, guid: 00950637fb3750b4e888cd50095cfb69, type: 3}
+    - {fileID: 21300000, guid: 8baef6cd6f53a304b919ee88e2bffb09, type: 3}
+    - {fileID: 21300000, guid: 077847c73af9b9f47a61228c04ba7abc, type: 3}
+    - {fileID: 21300000, guid: 3eae53318127ef24084dcc0b2e0c275d, type: 3}
+    - {fileID: 21300000, guid: ea7121eda12cc8f4bbf978ed6cc4fa87, type: 3}
+    - {fileID: 21300000, guid: 57c63bb03a038e541a55bb54086fb8d4, type: 3}
   - levelName: Feedback
     backgroundImage:
     - {fileID: 21300000, guid: ceb4e471675181741b53b8592beaca7a, type: 3}
