@@ -84,15 +84,43 @@ public class AudioManager : MonoBehaviour
         }
 
         GameObject soundObject = targetObject ?? new GameObject("Sound_" + soundName);
-        AudioSource audioSource = soundObject.AddComponent<AudioSource>();
-        SoundPlayer soundPlayer = soundObject.AddComponent<SoundPlayer>();
+
+        // Check if AudioSource exists, if not add it
+        AudioSource audioSource = soundObject.GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = soundObject.AddComponent<AudioSource>();
+        }
+
+        // Check if SoundPlayer exists, if not add it
+        SoundPlayer soundPlayer = soundObject.GetComponent<SoundPlayer>();
+        if (soundPlayer == null)
+        {
+            soundPlayer = soundObject.AddComponent<SoundPlayer>();
+        }
 
         float startTime = randomStartTimeMin.HasValue && randomStartTimeMax.HasValue ? Random.Range(randomStartTimeMin.Value, randomStartTimeMax.Value) : s.startTime;
 
         soundPlayer.Initialize(s, sfxMixerGroup, audioSource, startTime: startTime);
         soundPlayer.Play();
 
+        // Fade in if necessary
+        if (s.fadeInDuration > 0)
+        {
+            StartCoroutine(FadeIn(audioSource, s.fadeInDuration, s.volume));
+        }
+        else
+        {
+            audioSource.volume = s.volume;
+        }
+
         activeSoundPlayers.Add(soundPlayer);
+
+        // Schedule a fade-out to start fadeOutDuration time before the clip naturally ends
+        if (!s.loop && s.fadeOutDuration > 0)
+        {
+            StartCoroutine(FadeOutAtClipEnd(audioSource, s.fadeOutDuration));
+        }
 
         if (s.endTime > 0 && !s.loop)
         {
@@ -106,10 +134,36 @@ public class AudioManager : MonoBehaviour
         SoundPlayer soundPlayer = targetObject.GetComponent<SoundPlayer>();
         if (soundPlayer != null)
         {
-            soundPlayer.Stop();
-            activeSoundPlayers.Remove(soundPlayer);
+            // Fade out if necessary
+            if (soundPlayer.sound.fadeOutDuration > 0)
+            {
+                StartCoroutine(FadeOutAndStop(soundPlayer.GetComponent<AudioSource>(), soundPlayer.sound.fadeOutDuration));
+            }
+            else
+            {
+                soundPlayer.Stop();
+                activeSoundPlayers.Remove(soundPlayer);
+            }
         }
     }
+
+    private IEnumerator FadeOutAtClipEnd(AudioSource audioSource, float fadeOutDuration)
+    {
+        yield return new WaitForSeconds(audioSource.clip.length - fadeOutDuration);
+
+        float startVolume = audioSource.volume;
+        float currentTime = 0;
+
+        while (currentTime < fadeOutDuration)
+        {
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, 0, currentTime / fadeOutDuration);
+            yield return null;
+        }
+
+        audioSource.volume = 0;
+    }
+
 
     public void PlayMusic(string levelName)
     {
@@ -229,4 +283,5 @@ public class AudioManager : MonoBehaviour
         yield return StartCoroutine(FadeOut(audioSource, duration));
         audioSource.Stop();
     }
+
 }

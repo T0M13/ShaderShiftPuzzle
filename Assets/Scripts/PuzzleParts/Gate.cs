@@ -11,6 +11,7 @@ public class Gate : MonoBehaviour
     protected Vector3 targetPosition;
     protected bool open = false;
 
+   
     protected virtual void Start()
     {
         UpdatePositions();
@@ -32,6 +33,7 @@ public class Gate : MonoBehaviour
     {
         targetPosition = openedPosition;
         StopAllCoroutines();
+        StartCoroutine(PlayGateSound());
         StartCoroutine(MoveGate(targetPosition));
         open = true;
     }
@@ -40,8 +42,16 @@ public class Gate : MonoBehaviour
     {
         targetPosition = closedPosition;
         StopAllCoroutines();
+        StartCoroutine(PlayGateSound());
         StartCoroutine(MoveGate(targetPosition));
         open = false;
+    }
+
+    protected IEnumerator PlayGateSound()
+    {
+        yield return null;
+        //AudioManager.Instance.PlaySound("MetalGate", gameObject);
+        GetComponent<SoundPlayerOnObject>().PlaySelectedSound();
     }
 
     protected IEnumerator MoveGate(Vector3 target)

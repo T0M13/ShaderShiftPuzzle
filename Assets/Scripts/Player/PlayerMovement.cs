@@ -90,7 +90,9 @@ public class PlayerMovement : MonoBehaviour
         moveComponent.Move(playerRigidBody, this.movement, this.isSprinting);
 
         if (this.movement != Vector2.zero)
+        {
             isMoving = true;
+        }
         else
             isMoving = false;
     }

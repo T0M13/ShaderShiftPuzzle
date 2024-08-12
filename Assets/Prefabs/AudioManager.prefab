@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6950023381108704107}
   m_Layer: 0
   m_Name: AudioManager
-  m_TagString: Untagged
+  m_TagString: AudioManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
     loop: 0
     fadeInDuration: 0
     fadeOutDuration: 1
-    minDistance: 0
+    minDistance: 1
     maxDistance: 7
   - name: Portal Close
     clip: {fileID: 8300000, guid: 1f4b60439e6b2497781f487dfdfc4eb8, type: 3}
@@ -67,7 +67,7 @@ MonoBehaviour:
     loop: 0
     fadeInDuration: 0
     fadeOutDuration: 2
-    minDistance: 0
+    minDistance: 1
     maxDistance: 7
   - name: AuraBell
     clip: {fileID: 8300000, guid: 46fcbc6f93e08024dba40fbe88155614, type: 3}
@@ -79,11 +79,11 @@ MonoBehaviour:
     loop: 1
     fadeInDuration: 1
     fadeOutDuration: 1
-    minDistance: 0
+    minDistance: 0.3
     maxDistance: 1
   - name: Fire
     clip: {fileID: 8300000, guid: a48301f0f15853a4db9e2035e648313d, type: 3}
-    volume: 0.25
+    volume: 0.4
     pitch: 1
     startTime: 0
     endTime: 0
@@ -91,8 +91,56 @@ MonoBehaviour:
     loop: 1
     fadeInDuration: 1
     fadeOutDuration: 1
-    minDistance: 0
+    minDistance: 0.3
     maxDistance: 1
+  - name: MetalGate
+    clip: {fileID: 8300000, guid: 742968778454442438cf8eb3ae5776d0, type: 3}
+    volume: 3
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 1
+    loop: 0
+    fadeInDuration: 1
+    fadeOutDuration: 1
+    minDistance: 3
+    maxDistance: 5
+  - name: DungeonAmbience
+    clip: {fileID: 8300000, guid: 785c358630492a740b7ad91d36737141, type: 3}
+    volume: 0.4
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 0
+    loop: 1
+    fadeInDuration: 1
+    fadeOutDuration: 1
+    minDistance: 1
+    maxDistance: 500
+  - name: FootStepsAsphalt
+    clip: {fileID: 8300000, guid: 2e853c78c5eea96489c627ddd6e06fa4, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 1
+    loop: 0
+    fadeInDuration: 1
+    fadeOutDuration: 1
+    minDistance: 3
+    maxDistance: 5
+  - name: RumbleShake
+    clip: {fileID: 8300000, guid: c74ffc01c67639d41a4f3455518ea1b7, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 0.5
+    loop: 0
+    fadeInDuration: 1
+    fadeOutDuration: 1
+    minDistance: 1
+    maxDistance: 2
   levelMusicTracks:
   - levelName: MainMenu
     musicTracks:

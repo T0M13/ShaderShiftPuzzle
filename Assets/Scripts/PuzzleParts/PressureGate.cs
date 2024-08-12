@@ -8,7 +8,24 @@ public class PressureGate : Gate
     protected override void Start()
     {
         base.Start();
-        UpdateGatePosition(currentPressure);
+        UpdateGatePositionOnStart(currentPressure);
+    }
+
+    public void UpdateGatePositionOnStart(float pressure)
+    {
+        currentPressure = pressure;
+        float openRatio = Mathf.Clamp(currentPressure / pressureRequiredToFullyOpen, 0, 1);
+        targetPosition = Vector3.Lerp(closedPosition, openedPosition, openRatio);
+        StopAllCoroutines();
+        StartCoroutine(MoveGate(targetPosition));
+        if (currentPressure >= pressureRequiredToFullyOpen)
+        {
+            open = true;
+        }
+        else
+        {
+            open = false;
+        }
     }
 
     public void UpdateGatePosition(float pressure)
@@ -17,6 +34,7 @@ public class PressureGate : Gate
         float openRatio = Mathf.Clamp(currentPressure / pressureRequiredToFullyOpen, 0, 1);
         targetPosition = Vector3.Lerp(closedPosition, openedPosition, openRatio);
         StopAllCoroutines();
+        StartCoroutine(PlayGateSound());
         StartCoroutine(MoveGate(targetPosition));
         if(currentPressure >= pressureRequiredToFullyOpen)
         {

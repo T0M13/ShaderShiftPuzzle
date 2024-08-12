@@ -9,6 +9,7 @@ TagManager:
   - Canvas
   - SaveManager
   - LoadingScreenManager
+  - AudioManager
   layers:
   - Default
   - TransparentFX

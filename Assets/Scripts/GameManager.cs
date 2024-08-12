@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasManager canvasManager;
     [SerializeField] private SaveManager saveManager;
     [SerializeField] private LoadingScreenManager loadingScreenManager;
+    [SerializeField] private AudioManager audioManager;
     [Header("Settings")]
     [SerializeField] private bool canPause = true;
 
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
         get => loadingScreenManager;
         private set => loadingScreenManager = value;
     }
+    public AudioManager AudioManager { get => audioManager; set => audioManager = value; }
 
     private void Awake()
     {
@@ -103,7 +105,11 @@ public class GameManager : MonoBehaviour
             loadingScreenManager.onAfterLoadingScreen += OnAfterLoadingScreen;
         }
 
-
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager")?.GetComponent<AudioManager>();
+        if (audioManager == null)
+        {
+            Debug.LogError("GameManager: No AudioManager object found!");
+        }
 
     }
 
@@ -126,6 +132,7 @@ public class GameManager : MonoBehaviour
             case "Level0":
                 InitializeGame();
                 ChangeState(GameState.Game);
+                ChangeSound("DungeonAmbience");
                 break;
             case "Level1":
                 InitializeGame();
@@ -147,6 +154,11 @@ public class GameManager : MonoBehaviour
                 Debug.LogWarning("Loaded scene not explicitly handled: " + scene.name);
                 break;
         }
+    }
+
+    public void ChangeSound(string name)
+    {
+        audioManager.PlaySound(name);
     }
 
     public void ChangeState(GameState newState)
