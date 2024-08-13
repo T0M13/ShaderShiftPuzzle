@@ -149,19 +149,21 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator FadeOutAtClipEnd(AudioSource audioSource, float fadeOutDuration)
     {
-        yield return new WaitForSeconds(audioSource.clip.length - fadeOutDuration);
-
         float startVolume = audioSource.volume;
         float currentTime = 0;
+
+        yield return new WaitForSeconds(audioSource.clip.length - fadeOutDuration);
+
 
         while (currentTime < fadeOutDuration)
         {
             currentTime += Time.deltaTime;
-            audioSource.volume = Mathf.Lerp(startVolume, 0, currentTime / fadeOutDuration);
+            if (audioSource != null)
+                audioSource.volume = Mathf.Lerp(startVolume, 0, currentTime / fadeOutDuration);
             yield return null;
         }
-
-        audioSource.volume = 0;
+        if (audioSource != null)
+            audioSource.volume = 0;
     }
 
 

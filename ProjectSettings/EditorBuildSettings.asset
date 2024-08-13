@@ -23,9 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/End/End.unity
     guid: 10b2d7b9213163d4f9395755ffe1cdc8
-  - enabled: 1
-    path: Assets/Scenes/Feedback/Feedback.unity
-    guid: 5bd1e2e3abc905d40a3a718657333800
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d64efbff14127da488151015e9a521a7,
       type: 2}
