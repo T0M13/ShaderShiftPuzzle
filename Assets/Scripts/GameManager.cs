@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("GameManager: No AudioManager object found!");
         }
+      
 
     }
 
@@ -155,7 +156,6 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-
     public void ChangeSound(string name)
     {
         audioManager.PlaySound(name);

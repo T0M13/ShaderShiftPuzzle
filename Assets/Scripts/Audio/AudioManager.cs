@@ -74,6 +74,52 @@ public class AudioManager : MonoBehaviour
         PlayMusic(scene.name);
     }
 
+    public SoundPlayer InitializeSound(string soundName, GameObject targetObject = null, float? randomStartTimeMin = null, float? randomStartTimeMax = null)
+    {
+        Sound s = System.Array.Find(soundEffects, sound => sound.name == soundName);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound not found: " + soundName);
+            return null;
+        }
+
+        GameObject soundObject = targetObject ?? new GameObject("Sound_" + soundName);
+
+        // Check if AudioSource exists, if not add it
+        AudioSource audioSource = soundObject.GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = soundObject.AddComponent<AudioSource>();
+        }
+
+        // Check if SoundPlayer exists, if not add it
+        SoundPlayer soundPlayer = soundObject.GetComponent<SoundPlayer>();
+        if (soundPlayer == null)
+        {
+            soundPlayer = soundObject.AddComponent<SoundPlayer>();
+        }
+
+        float startTime = randomStartTimeMin.HasValue && randomStartTimeMax.HasValue ? Random.Range(randomStartTimeMin.Value, randomStartTimeMax.Value) : s.startTime;
+
+        soundPlayer.Initialize(s, sfxMixerGroup, audioSource, startTime: startTime);
+
+        // Set initial volume based on fade-in, but do not start playing
+        if (s.fadeInDuration > 0)
+        {
+            audioSource.volume = 0;  // Start volume at 0 if there's a fade-in
+        }
+        else
+        {
+            audioSource.volume = s.volume; // Otherwise, set it directly
+        }
+
+        activeSoundPlayers.Add(soundPlayer);
+
+        // Return the initialized SoundPlayer, so the user can control playback
+        return soundPlayer;
+    }
+
+
     public void PlaySound(string soundName, GameObject targetObject = null, float? randomStartTimeMin = null, float? randomStartTimeMax = null)
     {
         Sound s = System.Array.Find(soundEffects, sound => sound.name == soundName);
@@ -149,11 +195,10 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator FadeOutAtClipEnd(AudioSource audioSource, float fadeOutDuration)
     {
+        
+        yield return new WaitForSeconds(audioSource.clip.length - fadeOutDuration);
         float startVolume = audioSource.volume;
         float currentTime = 0;
-
-        yield return new WaitForSeconds(audioSource.clip.length - fadeOutDuration);
-
 
         while (currentTime < fadeOutDuration)
         {

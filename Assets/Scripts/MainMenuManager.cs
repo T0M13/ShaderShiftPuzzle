@@ -92,6 +92,11 @@ public class MainMenuManager : MonoBehaviour
         UpdateSettings();
     }
 
+    public void PlayMainMenuSFX()
+    {
+        AudioManager.Instance.PlaySound("DungeonAmbience");
+    }
+
     private void UpdateSettings()
     {
         foreach (var slider in sliders)
@@ -116,6 +121,7 @@ public class MainMenuManager : MonoBehaviour
             }
         }
     }
+
 
     private void UpdateChapterLoadButton()
     {

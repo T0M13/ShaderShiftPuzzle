@@ -34,7 +34,7 @@ public class PressureGate : Gate
         float openRatio = Mathf.Clamp(currentPressure / pressureRequiredToFullyOpen, 0, 1);
         targetPosition = Vector3.Lerp(closedPosition, openedPosition, openRatio);
         StopAllCoroutines();
-        StartCoroutine(PlayGateSound());
+        PlayGateSound();
         StartCoroutine(MoveGate(targetPosition));
         if(currentPressure >= pressureRequiredToFullyOpen)
         {

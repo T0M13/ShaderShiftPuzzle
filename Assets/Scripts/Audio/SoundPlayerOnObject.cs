@@ -5,6 +5,7 @@ public class SoundPlayerOnObject : MonoBehaviour
     [SerializeField]
     private string soundName;
     public string SoundName { get => soundName; set => soundName = value; }
+    public GameObject SoundObject { get => soundObject; set => soundObject = value; }
 
     [SerializeField]
     private GameObject soundObject;
@@ -13,6 +14,7 @@ public class SoundPlayerOnObject : MonoBehaviour
 
     private void Start()
     {
+        AudioManager.Instance.InitializeSound(SoundName, SoundObject);
         if (!onAwake) return;
         PlaySelectedSound();
     }
@@ -21,7 +23,7 @@ public class SoundPlayerOnObject : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(SoundName))
         {
-            AudioManager.Instance.PlaySound(SoundName, soundObject);
+            AudioManager.Instance.PlaySound(SoundName, SoundObject);
         }
         else
         {
