@@ -137,6 +137,17 @@ public class PlayerInteractableTool : MonoBehaviour
             if (interactable != null && interactable.CanIInteract())
             {
                 rayhit.transform.GetComponent<IInteractable>().Interact(playerReferences);
+                if (AudioManager.Instance)
+                {
+                    AudioManager.Instance.PlaySound("InteractionPos");
+                }
+            }
+            else
+            {
+                if (AudioManager.Instance)
+                {
+                    AudioManager.Instance.PlaySound("InteractionNeg");
+                }
             }
         }
     }

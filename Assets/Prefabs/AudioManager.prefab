@@ -53,6 +53,7 @@ MonoBehaviour:
     endTime: 1
     spatialBlend: 1
     loop: 0
+    destroy: 0
     fadeInDuration: 0
     fadeOutDuration: 1
     minDistance: 1
@@ -65,6 +66,7 @@ MonoBehaviour:
     endTime: 0.5
     spatialBlend: 1
     loop: 0
+    destroy: 0
     fadeInDuration: 0
     fadeOutDuration: 2
     minDistance: 1
@@ -77,6 +79,7 @@ MonoBehaviour:
     endTime: 0
     spatialBlend: 1
     loop: 1
+    destroy: 0
     fadeInDuration: 1
     fadeOutDuration: 1
     minDistance: 0.3
@@ -89,6 +92,7 @@ MonoBehaviour:
     endTime: 0
     spatialBlend: 1
     loop: 1
+    destroy: 0
     fadeInDuration: 1
     fadeOutDuration: 1
     minDistance: 0.3
@@ -101,6 +105,7 @@ MonoBehaviour:
     endTime: 0
     spatialBlend: 1
     loop: 0
+    destroy: 0
     fadeInDuration: 1
     fadeOutDuration: 1
     minDistance: 3
@@ -113,6 +118,7 @@ MonoBehaviour:
     endTime: 0
     spatialBlend: 0
     loop: 1
+    destroy: 0
     fadeInDuration: 1
     fadeOutDuration: 1
     minDistance: 1
@@ -125,8 +131,9 @@ MonoBehaviour:
     endTime: 0
     spatialBlend: 1
     loop: 0
-    fadeInDuration: 1
-    fadeOutDuration: 1
+    destroy: 0
+    fadeInDuration: 0
+    fadeOutDuration: 0
     minDistance: 3
     maxDistance: 5
   - name: RumbleShake
@@ -137,10 +144,89 @@ MonoBehaviour:
     endTime: 0
     spatialBlend: 0.5
     loop: 0
-    fadeInDuration: 1
-    fadeOutDuration: 1
+    destroy: 0
+    fadeInDuration: 0
+    fadeOutDuration: 2
     minDistance: 1
     maxDistance: 2
+  - name: InteractionPos
+    clip: {fileID: 8300000, guid: 065f237a203216d4fb924f8c8db86d8e, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 0
+    loop: 0
+    destroy: 0
+    fadeInDuration: 0
+    fadeOutDuration: 0
+    minDistance: 1
+    maxDistance: 2
+  - name: InteractionNeg
+    clip: {fileID: 8300000, guid: daee7759f7c937445887052f86d417ee, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 0
+    loop: 0
+    destroy: 0
+    fadeInDuration: 0
+    fadeOutDuration: 0
+    minDistance: 1
+    maxDistance: 2
+  - name: Laser
+    clip: {fileID: 8300000, guid: 8c7151ef8a22d1d4a80d97f29146940d, type: 3}
+    volume: 0.1
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 1
+    loop: 1
+    destroy: 0
+    fadeInDuration: 0
+    fadeOutDuration: 0
+    minDistance: 1
+    maxDistance: 2
+  - name: ElectricLoopedHigh
+    clip: {fileID: 8300000, guid: c770bdb62a7eb3249acc31a3dbff05ef, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 1
+    loop: 1
+    destroy: 0
+    fadeInDuration: 0.4
+    fadeOutDuration: 0.4
+    minDistance: 3
+    maxDistance: 5
+  - name: ElectricLoopedLow
+    clip: {fileID: 8300000, guid: c770bdb62a7eb3249acc31a3dbff05ef, type: 3}
+    volume: 0.3
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 1
+    loop: 1
+    destroy: 0
+    fadeInDuration: 0.4
+    fadeOutDuration: 0.4
+    minDistance: 3
+    maxDistance: 5
+  - name: Electric
+    clip: {fileID: 8300000, guid: d89ba9fcb6991344fbb58be354094b3c, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 1
+    loop: 0
+    destroy: 1
+    fadeInDuration: 0
+    fadeOutDuration: 1.4
+    minDistance: 3
+    maxDistance: 5
   levelMusicTracks:
   - levelName: MainMenu
     musicTracks:
@@ -152,6 +238,7 @@ MonoBehaviour:
       endTime: 0
       spatialBlend: 0
       loop: 1
+      destroy: 0
       fadeInDuration: 0
       fadeOutDuration: 1
       minDistance: 1
@@ -166,6 +253,7 @@ MonoBehaviour:
       endTime: 0
       spatialBlend: 0
       loop: 1
+      destroy: 0
       fadeInDuration: 0
       fadeOutDuration: 1
       minDistance: 1
@@ -180,6 +268,7 @@ MonoBehaviour:
       endTime: 0
       spatialBlend: 0
       loop: 1
+      destroy: 0
       fadeInDuration: 1
       fadeOutDuration: 1
       minDistance: 1
@@ -194,6 +283,7 @@ MonoBehaviour:
       endTime: 0
       spatialBlend: 0
       loop: 1
+      destroy: 0
       fadeInDuration: 1
       fadeOutDuration: 1
       minDistance: 1

@@ -49,6 +49,17 @@ public class LaserLine : MonoBehaviour
         ChangeLaserColor(CurrentColor);
     }
 
+    private void Start()
+    {
+        if (laserOn)
+        {
+            if (AudioManager.Instance)
+            {
+                AudioManager.Instance.PlaySound("Laser", gameObject);
+            }
+        }
+    }
+
     protected virtual void Update()
     {
         if (!laserOn) return;
@@ -109,6 +120,8 @@ public class LaserLine : MonoBehaviour
             {
                 laserEndPoint.position = laserPath[laserPath.Length - 1];
             }
+
+            
         }
     }
 

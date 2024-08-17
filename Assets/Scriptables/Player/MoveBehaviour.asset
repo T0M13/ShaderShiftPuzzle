@@ -14,3 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   runSpeed: 5
+  walkStepDistance: 1.5
+  runStepDistance: 1.1
+  stepSoundName: FootStepsAsphalt
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  groundCheckDistance: 0.1

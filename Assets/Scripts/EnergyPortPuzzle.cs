@@ -13,6 +13,14 @@ public class EnergyPortPuzzle : MonoBehaviour, IEnergy
     public bool needsToStay = true;
 
 
+    private void Start()
+    {
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.InitializeSound("ElectricLoopedHigh", gameObject);
+        }
+    }
+
     public void OffEnergy(LaserEnd laserEnd)
     {
         if (!needsToStay) return;
@@ -35,5 +43,21 @@ public class EnergyPortPuzzle : MonoBehaviour, IEnergy
     protected virtual bool IsEnergyOn()
     {
         return isEnergyOn;
+    }
+
+    public void PlaySound(string name)
+    {
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.PlaySound(name, gameObject);
+        }
+    }
+
+    public void StopSound()
+    {
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.StopSound(gameObject);
+        }
     }
 }

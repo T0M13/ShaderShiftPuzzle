@@ -31,6 +31,12 @@ public class PathFollower : MonoBehaviour
             onStartPath.Invoke();
             isFollowingPath = true;
         }
+
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.PlaySound("ElectricLoopedLow", gameObject);
+        }
+
     }
 
     private void OnEnable()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,7 @@ public class AudioManager : MonoBehaviour
         public float endTime = 0.0f;
         public float spatialBlend = 0.0f;
         public bool loop = false;
+        public bool destroy = false;
         public float fadeInDuration = 1f;
         public float fadeOutDuration = 1f;
         public float minDistance = 1f;
@@ -129,7 +131,18 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        GameObject soundObject = targetObject ?? new GameObject("Sound_" + soundName);
+
+        GameObject soundObject;
+
+        if (s.destroy || targetObject != null)
+        {
+            soundObject = targetObject ?? new GameObject("Sound_" + soundName);
+        }
+        else
+        {
+            soundObject = GameObject.Find("Persistent_Sound_" + soundName) ?? new GameObject("Persistent_Sound_" + soundName);
+        }
+
 
         // Check if AudioSource exists, if not add it
         AudioSource audioSource = soundObject.GetComponent<AudioSource>();
@@ -148,7 +161,7 @@ public class AudioManager : MonoBehaviour
         float startTime = randomStartTimeMin.HasValue && randomStartTimeMax.HasValue ? Random.Range(randomStartTimeMin.Value, randomStartTimeMax.Value) : s.startTime;
 
         soundPlayer.Initialize(s, sfxMixerGroup, audioSource, startTime: startTime);
-        soundPlayer.Play();
+            soundPlayer.Play();
 
         // Fade in if necessary
         if (s.fadeInDuration > 0)
@@ -163,7 +176,7 @@ public class AudioManager : MonoBehaviour
         activeSoundPlayers.Add(soundPlayer);
 
         // Schedule a fade-out to start fadeOutDuration time before the clip naturally ends
-        if (!s.loop && s.fadeOutDuration > 0)
+        if (!s.loop && s.fadeOutDuration > 0 && !s.destroy)
         {
             StartCoroutine(FadeOutAtClipEnd(audioSource, s.fadeOutDuration));
         }
@@ -171,6 +184,16 @@ public class AudioManager : MonoBehaviour
         if (s.endTime > 0 && !s.loop)
         {
             StartCoroutine(StopSoundAfterTime(soundPlayer, s.endTime));
+        }
+
+
+        if (!s.loop && s.fadeOutDuration > 0 && s.destroy)
+        {
+            StartCoroutine(FadeOutAndDestroy(soundPlayer, audioSource, s.fadeOutDuration));
+        }
+        else if (!s.loop && s.destroy)
+        {
+            StartCoroutine(DestroySoundAfterPlay(soundPlayer));
         }
     }
 
@@ -185,17 +208,35 @@ public class AudioManager : MonoBehaviour
             {
                 StartCoroutine(FadeOutAndStop(soundPlayer.GetComponent<AudioSource>(), soundPlayer.sound.fadeOutDuration));
             }
-            else
+            if (soundPlayer.sound.destroy)
             {
                 soundPlayer.Stop();
                 activeSoundPlayers.Remove(soundPlayer);
             }
+            else
+            {
+                soundPlayer.Stop();
+            }
         }
+    }
+
+    private IEnumerator FadeOutAndDestroy(SoundPlayer soundPlayer, AudioSource audioSource, float fadeOutDuration)
+    {
+        yield return FadeOut(audioSource, fadeOutDuration);
+        Destroy(audioSource);
+        activeSoundPlayers.Remove(soundPlayer);
+    }
+
+    private IEnumerator DestroySoundAfterPlay(SoundPlayer soundPlayer)
+    {
+        yield return new WaitForSeconds(soundPlayer.GetComponent<AudioSource>().clip.length);
+        Destroy(soundPlayer);
+        activeSoundPlayers.Remove(soundPlayer);
     }
 
     private IEnumerator FadeOutAtClipEnd(AudioSource audioSource, float fadeOutDuration)
     {
-        
+
         yield return new WaitForSeconds(audioSource.clip.length - fadeOutDuration);
         float startVolume = audioSource.volume;
         float currentTime = 0;

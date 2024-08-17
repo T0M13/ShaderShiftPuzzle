@@ -77,6 +77,5 @@ public class SoundPlayer : MonoBehaviour
     {
         yield return StartCoroutine(FadeOut(audioSource, duration));
         audioSource.Stop();
-        Destroy(this);
     }
 }
