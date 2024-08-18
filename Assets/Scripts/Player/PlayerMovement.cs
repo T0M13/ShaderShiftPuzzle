@@ -40,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Gizmos")]
     [SerializeField] private bool showJumpGizmos = false;
 
+    public MoveComponent MoveComponent { get => moveComponent; set => moveComponent = value; }
+
     private void Awake()
     {
         GetReferences();
@@ -48,6 +50,11 @@ public class PlayerMovement : MonoBehaviour
     private void OnValidate()
     {
         GetReferences();
+    }
+
+    private void Start()
+    {
+        moveComponent.SetFootstepSoundForLevel();
     }
 
     private void GetReferences()
@@ -68,6 +75,8 @@ public class PlayerMovement : MonoBehaviour
             playerLook = playerReferences.PlayerLook;
     }
 
+
+
     private void Update()
     {
         if (playerReferences.CurrentState != PlayerState.Playing) return;
@@ -87,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         if (!canMove) return;
-        moveComponent.Move(playerRigidBody, this.movement, this.isSprinting);
+        MoveComponent.Move(playerRigidBody, this.movement, this.isSprinting, this.isMoving);
 
         if (this.movement != Vector2.zero)
         {
@@ -104,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
         jumpComponent.Jump(playerRigidBody);
         jump = 0;
     }
+
 
     private void Fall()
     {
@@ -133,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
     public void Freeze()
     {
         movement = Vector2.zero;
-        moveComponent.Move(playerRigidBody, this.movement, this.isSprinting);
+        MoveComponent.Move(playerRigidBody, this.movement, this.isSprinting, this.isMoving);
         look = Vector2.zero;
         playerReferences.PlayerLook.LookPos = this.look;
     }

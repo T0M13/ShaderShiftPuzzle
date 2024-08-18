@@ -40,9 +40,11 @@ public class AudioManager : MonoBehaviour
     public AudioMixerGroup sfxMixerGroup;
     private Coroutine musicCoroutine;
 
-    private List<SoundPlayer> activeSoundPlayers = new List<SoundPlayer>();
-    private AudioSource musicSource;
-    private int currentTrackIndex = 0;
+    [SerializeField][ShowOnly] private List<SoundPlayer> activeSoundPlayers = new List<SoundPlayer>();
+    [SerializeField][ShowOnly] private List<AudioSource> allAudioSources = new List<AudioSource>();
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField][ShowOnly] private int currentTrackIndex = 0;
+    [SerializeField][ShowOnly] private Sound currentMusicSound;
 
     private void Awake()
     {
@@ -50,10 +52,11 @@ public class AudioManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            musicSource = gameObject.AddComponent<AudioSource>();
+            musicSource = gameObject.GetComponent<AudioSource>();
             musicSource.outputAudioMixerGroup = musicMixerGroup;
             musicSource.playOnAwake = false;
             musicSource.loop = true;
+            allAudioSources.Add(musicSource);
         }
         else
         {
@@ -76,6 +79,21 @@ public class AudioManager : MonoBehaviour
         PlayMusic(scene.name);
     }
 
+    public void StopAllAudioSources()
+    {
+        foreach (var audioSource in allAudioSources)
+        {
+            if (audioSource != null && audioSource.gameObject != null)
+            {
+                if (audioSource != musicSource)  
+                {
+                    StopSound(audioSource.gameObject);
+                }
+            }
+        }
+    }
+
+
     public SoundPlayer InitializeSound(string soundName, GameObject targetObject = null, float? randomStartTimeMin = null, float? randomStartTimeMax = null)
     {
         Sound s = System.Array.Find(soundEffects, sound => sound.name == soundName);
@@ -92,6 +110,7 @@ public class AudioManager : MonoBehaviour
         if (audioSource == null)
         {
             audioSource = soundObject.AddComponent<AudioSource>();
+            allAudioSources.Add(audioSource); // Add to tracking list
         }
 
         // Check if SoundPlayer exists, if not add it
@@ -121,7 +140,6 @@ public class AudioManager : MonoBehaviour
         return soundPlayer;
     }
 
-
     public void PlaySound(string soundName, GameObject targetObject = null, float? randomStartTimeMin = null, float? randomStartTimeMax = null)
     {
         Sound s = System.Array.Find(soundEffects, sound => sound.name == soundName);
@@ -130,7 +148,6 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound not found: " + soundName);
             return;
         }
-
 
         GameObject soundObject;
 
@@ -143,12 +160,12 @@ public class AudioManager : MonoBehaviour
             soundObject = GameObject.Find("Persistent_Sound_" + soundName) ?? new GameObject("Persistent_Sound_" + soundName);
         }
 
-
         // Check if AudioSource exists, if not add it
         AudioSource audioSource = soundObject.GetComponent<AudioSource>();
         if (audioSource == null)
         {
             audioSource = soundObject.AddComponent<AudioSource>();
+            allAudioSources.Add(audioSource); // Add to tracking list
         }
 
         // Check if SoundPlayer exists, if not add it
@@ -161,7 +178,7 @@ public class AudioManager : MonoBehaviour
         float startTime = randomStartTimeMin.HasValue && randomStartTimeMax.HasValue ? Random.Range(randomStartTimeMin.Value, randomStartTimeMax.Value) : s.startTime;
 
         soundPlayer.Initialize(s, sfxMixerGroup, audioSource, startTime: startTime);
-            soundPlayer.Play();
+        soundPlayer.Play();
 
         // Fade in if necessary
         if (s.fadeInDuration > 0)
@@ -186,7 +203,6 @@ public class AudioManager : MonoBehaviour
             StartCoroutine(StopSoundAfterTime(soundPlayer, s.endTime));
         }
 
-
         if (!s.loop && s.fadeOutDuration > 0 && s.destroy)
         {
             StartCoroutine(FadeOutAndDestroy(soundPlayer, audioSource, s.fadeOutDuration));
@@ -196,7 +212,6 @@ public class AudioManager : MonoBehaviour
             StartCoroutine(DestroySoundAfterPlay(soundPlayer));
         }
     }
-
 
     public void StopSound(GameObject targetObject)
     {
@@ -224,19 +239,21 @@ public class AudioManager : MonoBehaviour
     {
         yield return FadeOut(audioSource, fadeOutDuration);
         Destroy(audioSource);
+        allAudioSources.Remove(audioSource); // Remove from tracking list
         activeSoundPlayers.Remove(soundPlayer);
     }
 
     private IEnumerator DestroySoundAfterPlay(SoundPlayer soundPlayer)
     {
         yield return new WaitForSeconds(soundPlayer.GetComponent<AudioSource>().clip.length);
+        Destroy(soundPlayer.GetComponent<AudioSource>());
+        allAudioSources.Remove(soundPlayer.GetComponent<AudioSource>()); // Remove from tracking list
         Destroy(soundPlayer);
         activeSoundPlayers.Remove(soundPlayer);
     }
 
     private IEnumerator FadeOutAtClipEnd(AudioSource audioSource, float fadeOutDuration)
     {
-
         yield return new WaitForSeconds(audioSource.clip.length - fadeOutDuration);
         float startVolume = audioSource.volume;
         float currentTime = 0;
@@ -251,7 +268,6 @@ public class AudioManager : MonoBehaviour
         if (audioSource != null)
             audioSource.volume = 0;
     }
-
 
     public void PlayMusic(string levelName)
     {
@@ -269,23 +285,23 @@ public class AudioManager : MonoBehaviour
 
     private void PlayMusicTrack(LevelMusic levelMusic, int trackIndex)
     {
-        Sound track = levelMusic.musicTracks[trackIndex];
-        musicSource.clip = track.clip;
+        currentMusicSound = levelMusic.musicTracks[trackIndex];
+        musicSource.clip = currentMusicSound.clip;
         musicSource.volume = 0; // Start at 0 volume for fade-in
-        musicSource.pitch = track.pitch;
-        musicSource.time = track.startTime;
-        musicSource.loop = track.loop;
+        musicSource.pitch = currentMusicSound.pitch;
+        musicSource.time = currentMusicSound.startTime;
+        musicSource.loop = currentMusicSound.loop;
         musicSource.Play();
 
-        StartCoroutine(FadeIn(musicSource, track.fadeInDuration, track.volume));
+        StartCoroutine(FadeIn(musicSource, currentMusicSound.fadeInDuration, currentMusicSound.volume));
 
-        if (track.endTime > 0)
+        if (currentMusicSound.endTime > 0)
         {
-            StartCoroutine(StopMusicAfterTime(track.endTime, track.fadeOutDuration));
+            StartCoroutine(StopMusicAfterTime(currentMusicSound.endTime, currentMusicSound.fadeOutDuration));
         }
         else
         {
-            musicCoroutine = StartCoroutine(PlayNextTrack(levelMusic, track.fadeOutDuration));
+            musicCoroutine = StartCoroutine(PlayNextTrack(levelMusic, currentMusicSound.fadeOutDuration));
         }
     }
 
@@ -302,18 +318,22 @@ public class AudioManager : MonoBehaviour
             PlayMusicTrack(levelMusic, currentTrackIndex);
         }
     }
-
-    public void StopMusic()
+    public IEnumerator StopMusic()
     {
-        if (musicSource.isPlaying)
+        if (musicSource != null && musicSource.isPlaying)
         {
-            Sound currentTrack = System.Array.Find(levelMusicTracks[currentTrackIndex].musicTracks, track => track.clip == musicSource.clip);
-            if (currentTrack != null)
+            if (currentMusicSound != null && currentMusicSound.fadeOutDuration > 0)
             {
-                StartCoroutine(FadeOutAndStop(musicSource, currentTrack.fadeOutDuration));
+                yield return StartCoroutine(FadeOutAndStop(musicSource, currentMusicSound.fadeOutDuration));
+            }
+            else
+            {
+                musicSource.Stop();
             }
         }
     }
+
+
 
     private IEnumerator StopSoundAfterTime(SoundPlayer soundPlayer, float endTime)
     {
@@ -369,7 +389,14 @@ public class AudioManager : MonoBehaviour
     private IEnumerator FadeOutAndStop(AudioSource audioSource, float duration)
     {
         yield return StartCoroutine(FadeOut(audioSource, duration));
-        audioSource.Stop();
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource was null during FadeOutAndStop");
+        }
     }
 
 }

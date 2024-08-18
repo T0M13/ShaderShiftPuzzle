@@ -14,6 +14,13 @@ public class ColorSensitiveTrigger : MonoBehaviour, IEnergy
     [SerializeField]
     protected UnityEvent onEnergyGone;
 
+    private void Start()
+    {
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.InitializeSound("ElectricLoopedHigh", gameObject);
+        }
+    }
 
     private void CheckLaserColor(Color laserColor)
     {
@@ -67,6 +74,22 @@ public class ColorSensitiveTrigger : MonoBehaviour, IEnergy
         {
             isEnergyOn = false;
             onEnergyGone?.Invoke();
+        }
+    }
+
+    public void PlaySound(string name)
+    {
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.PlaySound(name, gameObject);
+        }
+    }
+
+    public void StopSound()
+    {
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.StopSound(gameObject);
         }
     }
 }

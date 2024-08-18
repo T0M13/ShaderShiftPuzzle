@@ -11,6 +11,7 @@ public class InteractableDoor : InteractableObject
     [SerializeField] private bool interactOnce = false;
     [SerializeField][ShowOnly] private bool oneInteraction = false;
     [SerializeField] private float speedMultiplier = 1.0f;
+    [SerializeField] private string soundName;
 
     public override void Interact(PlayerReferences playerRef)
     {
@@ -21,7 +22,6 @@ public class InteractableDoor : InteractableObject
         OpenDoor();
     }
 
-
     public void OpenDoor()
     {
         if (oneInteraction) return;
@@ -29,6 +29,7 @@ public class InteractableDoor : InteractableObject
         {
             oneInteraction = true;
             SetEmpty();
+            PlaySound();
         }
         StopAllCoroutines();
         StartCoroutine(AdjustDoorRotation());
@@ -64,6 +65,14 @@ public class InteractableDoor : InteractableObject
             CanInteract = false;
             ShowOutlineValue = false;
             Message = "";
+        }
+    }
+
+    public void PlaySound()
+    {
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.PlaySound(soundName, gameObject);
         }
     }
 }

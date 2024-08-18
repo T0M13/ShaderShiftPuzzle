@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerReferences>();
         if (Player == null)
         {
-            Debug.LogError("GameManager: No player object found!");
+            Debug.LogWarning("GameManager: No player object found!");
         }
         else
         {
@@ -142,14 +142,16 @@ public class GameManager : MonoBehaviour
             case "Level2":
                 InitializeGame();
                 ChangeState(GameState.Game);
+                ChangeSound("SnowAmbience");
                 break;
             case "Level3":
                 InitializeGame();
                 ChangeState(GameState.Game);
+                ChangeSound("DungeonAmbience");
                 break;
             case "End":
                 InitializeGame();
-                ChangeState(GameState.MainMenu);
+                ChangeState(GameState.Game);
                 break;
             default:
                 Debug.LogWarning("Loaded scene not explicitly handled: " + scene.name);
@@ -240,9 +242,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
+
     public void SwitchToLevel(string levelName)
     {
-        //Load Level/Save File?
+
+
         if (loadingScreenManager != null)
         {
             SetCursorState(true);

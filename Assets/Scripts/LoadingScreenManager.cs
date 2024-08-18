@@ -20,7 +20,7 @@ public class LoadingScreenManager : MonoBehaviour
     [SerializeField] private List<LevelBackgrounds> levelBackgrounds = new List<LevelBackgrounds>();
     [Header("Tipps")]
     [SerializeField] private List<LevelTip> levelTipps = new List<LevelTip>();
-    [SerializeField] [ShowOnly] private List<int> shownTipIndices = new List<int>();
+    [SerializeField][ShowOnly] private List<int> shownTipIndices = new List<int>();
     [SerializeField] private TextMeshProUGUI tippsUIText;
     [Header("Actions")]
     public Action onBeforeLoadingScreen;
@@ -80,14 +80,15 @@ public class LoadingScreenManager : MonoBehaviour
         StartCoroutine(SwitchToSceneAsync(levelName));
     }
 
-    IEnumerator SwitchToSceneAsync(string levelName)
+    private IEnumerator SwitchToSceneAsync(string levelName)
     {
         uIDissolveEffect.gameObject.SetActive(true);
         uIDissolveEffect.DissolveIn();
 
         if (AudioManager.Instance)
         {
-            AudioManager.Instance.StopMusic();
+            AudioManager.Instance.StopAllAudioSources();
+            yield return StartCoroutine(AudioManager.Instance.StopMusic());
         }
 
         yield return new WaitForSeconds(beforeWaitTime);
@@ -101,11 +102,14 @@ public class LoadingScreenManager : MonoBehaviour
             progressbar.value = asyncLoad.progress;
             yield return null;
         }
+
         yield return new WaitForSeconds(additionalWaitTime);
         loadingScreenUI.SetActive(false);
         onAfterLoadingScreen?.Invoke();
         uIDissolveEffect.DissolveOut();
     }
+
+
 
     public void ChangeTips()
     {

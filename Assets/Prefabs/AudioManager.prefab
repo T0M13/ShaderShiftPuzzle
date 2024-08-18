@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7671346294830485950}
   - component: {fileID: 6950023381108704107}
+  - component: {fileID: 777738915018807611}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: AudioManager
@@ -127,7 +128,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 2e853c78c5eea96489c627ddd6e06fa4, type: 3}
     volume: 1
     pitch: 1
-    startTime: 0
+    startTime: 0.08
     endTime: 0
     spatialBlend: 1
     loop: 0
@@ -190,7 +191,7 @@ MonoBehaviour:
     maxDistance: 2
   - name: ElectricLoopedHigh
     clip: {fileID: 8300000, guid: c770bdb62a7eb3249acc31a3dbff05ef, type: 3}
-    volume: 1
+    volume: 0.4
     pitch: 1
     startTime: 0
     endTime: 0
@@ -199,11 +200,11 @@ MonoBehaviour:
     destroy: 0
     fadeInDuration: 0.4
     fadeOutDuration: 0.4
-    minDistance: 3
-    maxDistance: 5
+    minDistance: 1
+    maxDistance: 2
   - name: ElectricLoopedLow
     clip: {fileID: 8300000, guid: c770bdb62a7eb3249acc31a3dbff05ef, type: 3}
-    volume: 0.3
+    volume: 0.15
     pitch: 1
     startTime: 0
     endTime: 0
@@ -212,11 +213,11 @@ MonoBehaviour:
     destroy: 0
     fadeInDuration: 0.4
     fadeOutDuration: 0.4
-    minDistance: 3
-    maxDistance: 5
+    minDistance: 1
+    maxDistance: 2
   - name: Electric
     clip: {fileID: 8300000, guid: d89ba9fcb6991344fbb58be354094b3c, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     startTime: 0
     endTime: 0
@@ -225,6 +226,45 @@ MonoBehaviour:
     destroy: 1
     fadeInDuration: 0
     fadeOutDuration: 1.4
+    minDistance: 3
+    maxDistance: 5
+  - name: MetalDoor
+    clip: {fileID: 8300000, guid: 8fdcddff8c9f1984bbc3d3fcff082a56, type: 3}
+    volume: 0.5
+    pitch: 1
+    startTime: 0.4
+    endTime: 0
+    spatialBlend: 1
+    loop: 0
+    destroy: 1
+    fadeInDuration: 0
+    fadeOutDuration: 1.4
+    minDistance: 3
+    maxDistance: 5
+  - name: FootStepsSnow
+    clip: {fileID: 8300000, guid: 2e853c78c5eea96489c627ddd6e06fa4, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 1
+    loop: 0
+    destroy: 0
+    fadeInDuration: 0
+    fadeOutDuration: 0
+    minDistance: 3
+    maxDistance: 5
+  - name: SnowAmbience
+    clip: {fileID: 8300000, guid: 9f2d2d215a998954495c82255834d972, type: 3}
+    volume: 0.3
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 0
+    loop: 1
+    destroy: 0
+    fadeInDuration: 2
+    fadeOutDuration: 2
     minDistance: 3
     maxDistance: 5
   levelMusicTracks:
@@ -288,7 +328,167 @@ MonoBehaviour:
       fadeOutDuration: 1
       minDistance: 1
       maxDistance: 500
+  - levelName: Level2
+    musicTracks:
+    - name: SnowWind
+      clip: {fileID: 8300000, guid: 8bf328688d6e8064683811e3dd948695, type: 3}
+      volume: 1
+      pitch: 1
+      startTime: 0
+      endTime: 0
+      spatialBlend: 0
+      loop: 1
+      destroy: 0
+      fadeInDuration: 1
+      fadeOutDuration: 1
+      minDistance: 1
+      maxDistance: 500
+  - levelName: Level3
+    musicTracks:
+    - name: DarkMatter
+      clip: {fileID: 8300000, guid: 39c22178890ab41ffa906f50f4cd1df8, type: 3}
+      volume: 1
+      pitch: 1
+      startTime: 0
+      endTime: 0
+      spatialBlend: 0
+      loop: 1
+      destroy: 0
+      fadeInDuration: 1
+      fadeOutDuration: 1
+      minDistance: 1
+      maxDistance: 500
+  - levelName: End
+    musicTracks:
+    - name: PhaseShift
+      clip: {fileID: 8300000, guid: 0a4bf37d81f6a234785cbf2e08932416, type: 3}
+      volume: 1
+      pitch: 1
+      startTime: 0
+      endTime: 0
+      spatialBlend: 0
+      loop: 1
+      destroy: 0
+      fadeInDuration: 2
+      fadeOutDuration: 2
+      minDistance: 1
+      maxDistance: 500
   musicMixerGroup: {fileID: 243864778437365490, guid: c4382341a39a10b46a6bc574f22f5974,
     type: 2}
   sfxMixerGroup: {fileID: 243485103152924164, guid: c4382341a39a10b46a6bc574f22f5974,
     type: 2}
+  activeSoundPlayers: []
+  allAudioSources: []
+  musicSource: {fileID: 777738915018807611}
+  currentTrackIndex: 0
+  currentMusicSound:
+    name: 
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: 0
+    spatialBlend: 0
+    loop: 0
+    destroy: 0
+    fadeInDuration: 1
+    fadeOutDuration: 1
+    minDistance: 1
+    maxDistance: 500
+--- !u!82 &777738915018807611
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6270820499242685110}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 243864778437365490, guid: c4382341a39a10b46a6bc574f22f5974,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
