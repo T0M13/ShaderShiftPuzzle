@@ -1266,6 +1266,16 @@ MonoBehaviour:
     - {fileID: 21300000, guid: f98f9181508772f40ae2bb131d2386c4, type: 3}
     - {fileID: 21300000, guid: c0d47a12ee6111e40ad61286269af38e, type: 3}
     - {fileID: 21300000, guid: fd3e8fd28f7ff6147a59f02e5de6f76c, type: 3}
+  - levelName: End
+    backgroundImage:
+    - {fileID: 21300000, guid: c43f436987bc46a4d9a7014e7b6803ce, type: 3}
+    - {fileID: 21300000, guid: cf213435355ed394f8d629628b3a1106, type: 3}
+    - {fileID: 21300000, guid: f7a7fc32cfc48664e8c4c66c775b12bf, type: 3}
+    - {fileID: 21300000, guid: 93c9b0af30a976d4da3ae280ac541820, type: 3}
+    - {fileID: 21300000, guid: dcee479ad2d6eb44ebb03dd0a37f7eaf, type: 3}
+    - {fileID: 21300000, guid: 16ef4386533d217498954cd3c56de1df, type: 3}
+    - {fileID: 21300000, guid: 402449f6cf91aea4c83ea5c26a0346e8, type: 3}
+    - {fileID: 21300000, guid: df9a000454c75d44fae7413e62e6428e, type: 3}
   levelTipps:
   - tip: 'Tipp:
 
@@ -1288,5 +1298,9 @@ MonoBehaviour:
   - tip: 'Tipp:
 
       You can use the "Color Tool" to get and set colors on objects.'
+  - tip: 'Tipp:
+
+      When an object disappears, it will spawn where you picked
+      it up.'
   shownTipIndices: 
   tippsUIText: {fileID: 3819636689791576173}
