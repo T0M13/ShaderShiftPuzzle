@@ -31,6 +31,7 @@ public class DebugMenu : MonoBehaviour
         isOpen = !isOpen;
         menu.SetActive(isOpen);
         cheatConsole.DisablePanel();
-        GameManager.Instance.ToggleCheatMenu(isOpen);
+        if (GameManager.Instance)
+            GameManager.Instance.ToggleCheatMenu(isOpen);
     }
 }

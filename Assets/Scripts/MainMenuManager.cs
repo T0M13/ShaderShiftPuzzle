@@ -196,7 +196,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void CheckGameVersion()
     {
-        if (SaveData.Current.playerGameData == null || !saveManager.EnsureCurrentGameVersion()|| SaveData.Current.playerGameData.currentGameVersion != saveManager.currentGameVersion)
+        if (SaveData.Current.playerGameData == null || !saveManager.EnsureCurrentGameVersion() || SaveData.Current.playerGameData.currentGameVersion != saveManager.currentGameVersion)
         {
             loadGameVersionWindow.ModalWindowIn();
         }
@@ -207,6 +207,19 @@ public class MainMenuManager : MonoBehaviour
         saveManager.DeleteSave();
         SaveData.Current = saveManager.Load();
         SaveData.Current.playerGameData.currentGameVersion = saveManager.currentGameVersion;
+        saveManager.SaveAsync(SaveData.Current);
+        LoadChapter("MainMenu");
+        UpdateEverything();
+    }
+
+    public void UnlockAll()
+    {
+        saveManager.DeleteSave();
+        SaveData.Current = saveManager.Load();
+        SaveData.Current.playerGameData.currentGameVersion = saveManager.currentGameVersion;
+        SaveData.Current.playerGameData.unlockedLevels = new List<string> { "Level0", "Level1", "Level2", "Level3" };
+        SaveData.Current.playerGameData.currentLevelName = "Level3";
+        SaveData.Current.playerGameData.currentLevelThumbnailIndex = 3;
         saveManager.SaveAsync(SaveData.Current);
         LoadChapter("MainMenu");
         UpdateEverything();
